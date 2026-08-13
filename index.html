@@ -3,95 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zerry | Personal Bio & Links</title>
-    <meta name="description" content="Personal bio link & portfolio page for Zerry.">
-    <meta name="theme-color" content="#0f172a">
+    <title>Zerry | Personal Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome untuk Ikon Sosmed -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex items-center justify-center p-4">
+<body class="bg-slate-900 text-slate-100 min-h-screen flex items-center justify-center p-4 sm:p-8">
 
-    <!-- Container Card Bio -->
-    <main class="w-full max-w-md bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl text-center my-8">
+    <!-- Container Utama Card Bio -->
+    <div class="w-full max-w-4xl bg-[#12232b] rounded-3xl overflow-hidden shadow-2xl border border-slate-700/40">
         
-        <!-- Foto Profil / Avatar -->
-        <div class="relative w-28 h-28 mx-auto mb-4">
-            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Zerry" alt="Avatar Zerry" class="w-full h-full rounded-full border-2 border-indigo-500/50 bg-slate-800 p-1 shadow-lg shadow-indigo-500/20">
-            <span class="absolute bottom-1 right-1 w-4 h-4 bg-emerald-500 border-2 border-slate-900 rounded-full" title="Online"></span>
+        <!-- 1. Header Banner -->
+        <div class="h-48 sm:h-64 w-full relative">
+            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80" 
+                 alt="Landscape Banner" 
+                 class="w-full h-full object-cover">
         </div>
 
-        <!-- Nama & Status Bio -->
-        <h1 class="text-2xl font-bold text-white tracking-tight">Zerry</h1>
-        <p class="text-indigo-400 font-medium text-sm mt-1">Roblox Game Developer &amp; Creator</p>
-        <p class="text-slate-400 text-xs sm:text-sm mt-3 leading-relaxed px-2">
-            Passionate Luau programmer &amp; UI designer. Building immersive experiences and managing community projects.
-        </p>
+        <!-- 2. Konten Utama (Grid Layout Kiri & Kanan) -->
+        <div class="px-6 sm:px-10 pb-8 relative">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
+                
+                <!-- Kolom Kiri: Profil & Deskripsi Bio -->
+                <div class="lg:col-span-7 relative">
+                    
+                    <!-- Foto Profil Overlap Banner -->
+                    <div class="-mt-16 sm:-mt-20 mb-4 inline-block">
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Zerry" 
+                             alt="Avatar Zerry" 
+                             class="w-28 h-28 sm:w-36 sm:h-36 rounded-full border-4 border-[#12232b] bg-slate-800 object-cover shadow-xl">
+                    </div>
 
-        <!-- Link Sosmed -->
-        <div class="mt-8 space-y-3">
+                    <!-- Nama & Bio -->
+                    <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-wide">I'm Zerry</h1>
+                    <p class="text-slate-300 text-sm sm:text-base mt-2 leading-relaxed max-w-md">
+                        Roblox Game Developer &amp; Creator. Passionate Luau programmer &amp; UI designer. Building immersive experiences and managing community projects!
+                    </p>
 
-            <!-- YouTube -->
-            <a href="https://www.youtube.com/@ZerryDeP" target="_blank" rel="noopener noreferrer" 
-               class="flex items-center justify-between w-full bg-slate-800/80 hover:bg-red-600/20 border border-slate-700/80 hover:border-red-500/60 text-slate-100 hover:text-white font-medium py-3.5 px-5 rounded-2xl transition-all duration-200 active:scale-98 group">
-                <span class="flex items-center gap-3">
-                    <span class="text-xl">▶️</span>
-                    <span>YouTube</span>
-                </span>
-                <span class="text-slate-500 group-hover:text-red-400 transition-colors text-sm">↗</span>
-            </a>
+                    <!-- Social Icons (Kiri Bawah) -->
+                    <div class="mt-6">
+                        <p class="text-slate-400 text-xs font-semibold mb-2 uppercase tracking-wider">My Socials :</p>
+                        <div class="flex items-center gap-4 text-xl text-slate-300">
+                            <a href="https://www.youtube.com/@ZerryDeP" target="_blank" class="hover:text-red-500 transition-colors" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                            <a href="https://www.tiktok.com/@zerrydep" target="_blank" class="hover:text-cyan-400 transition-colors" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                            <a href="https://www.instagram.com/zerry3312/" target="_blank" class="hover:text-pink-500 transition-colors" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="https://discord.gg/Fw9weRr7c" target="_blank" class="hover:text-indigo-400 transition-colors" title="Discord"><i class="fa-brands fa-discord"></i></a>
+                            <a href="https://x.com/Qin_Zenn" target="_blank" class="hover:text-sky-400 transition-colors" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
 
-            <!-- TikTok -->
-            <a href="https://www.tiktok.com/@zerrydep" target="_blank" rel="noopener noreferrer" 
-               class="flex items-center justify-between w-full bg-slate-800/80 hover:bg-cyan-600/20 border border-slate-700/80 hover:border-cyan-500/60 text-slate-100 hover:text-white font-medium py-3.5 px-5 rounded-2xl transition-all duration-200 active:scale-98 group">
-                <span class="flex items-center gap-3">
-                    <span class="text-xl">🎵</span>
-                    <span>TikTok</span>
-                </span>
-                <span class="text-slate-500 group-hover:text-cyan-400 transition-colors text-sm">↗</span>
-            </a>
+                <!-- Kolom Kanan: Tombol-Tombol Kapsul -->
+                <div class="lg:col-span-5 flex flex-col gap-3 justify-center pt-4 lg:pt-0">
+                    <a href="https://www.youtube.com/@ZerryDeP" target="_blank" 
+                       class="w-full bg-[#273a44] hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/30 shadow-md">
+                        YouTube Channel
+                    </a>
+                    
+                    <a href="https://discord.gg/Fw9weRr7c" target="_blank" 
+                       class="w-full bg-[#273a44] hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/30 shadow-md">
+                        Discord Community
+                    </a>
 
-            <!-- Instagram -->
-            <a href="https://www.instagram.com/zerry3312/" target="_blank" rel="noopener noreferrer" 
-               class="flex items-center justify-between w-full bg-slate-800/80 hover:bg-pink-600/20 border border-slate-700/80 hover:border-pink-500/60 text-slate-100 hover:text-white font-medium py-3.5 px-5 rounded-2xl transition-all duration-200 active:scale-98 group">
-                <span class="flex items-center gap-3">
-                    <span class="text-xl">📸</span>
-                    <span>Instagram</span>
-                </span>
-                <span class="text-slate-500 group-hover:text-pink-400 transition-colors text-sm">↗</span>
-            </a>
+                    <a href="https://www.tiktok.com/@zerrydep" target="_blank" 
+                       class="w-full bg-[#273a44] hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/30 shadow-md">
+                        TikTok Profile
+                    </a>
 
-            <!-- Discord Server -->
-            <a href="https://discord.gg/Fw9weRr7c" target="_blank" rel="noopener noreferrer" 
-               class="flex items-center justify-between w-full bg-slate-800/80 hover:bg-indigo-600/20 border border-slate-700/80 hover:border-indigo-500/60 text-slate-100 hover:text-white font-medium py-3.5 px-5 rounded-2xl transition-all duration-200 active:scale-98 group">
-                <span class="flex items-center gap-3">
-                    <span class="text-xl">💬</span>
-                    <span>Discord Server</span>
-                </span>
-                <span class="text-slate-500 group-hover:text-indigo-400 transition-colors text-sm">↗</span>
-            </a>
+                    <a href="https://www.instagram.com/zerry3312/" target="_blank" 
+                       class="w-full bg-[#273a44] hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/30 shadow-md">
+                        Instagram
+                    </a>
 
-            <!-- X (Twitter) -->
-            <a href="https://x.com/Qin_Zenn" target="_blank" rel="noopener noreferrer" 
-               class="flex items-center justify-between w-full bg-slate-800/80 hover:bg-sky-600/20 border border-slate-700/80 hover:border-sky-500/60 text-slate-100 hover:text-white font-medium py-3.5 px-5 rounded-2xl transition-all duration-200 active:scale-98 group">
-                <span class="flex items-center gap-3">
-                    <span class="text-xl">🌐</span>
-                    <span>X (Twitter)</span>
-                </span>
-                <span class="text-slate-500 group-hover:text-sky-400 transition-colors text-sm">↗</span>
-            </a>
+                    <a href="https://x.com/Qin_Zenn" target="_blank" 
+                       class="w-full bg-[#273a44] hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/30 shadow-md">
+                        X (Twitter)
+                    </a>
+                </div>
+
+            </div>
 
         </div>
 
-        <!-- Footer Bio -->
-        <footer class="mt-8 pt-6 border-t border-slate-800/80 text-xs text-slate-500">
-            &copy; 2026 Zerry. All rights reserved.
-        </footer>
-
-    </main>
+    </div>
 
 </body>
 </html>
