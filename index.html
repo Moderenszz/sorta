@@ -43,6 +43,22 @@
             gap: 14px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
+        /* Intro Screen Overlay Styling */
+        #intro-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: #03071e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        #intro-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
         /* Custom Cursor Follower */
         #custom-cursor {
             pointer-events: none;
@@ -73,6 +89,26 @@
     </style>
 </head>
 <body class="relative min-h-screen bg-slate-950 flex flex-col justify-between overflow-x-hidden text-white">
+
+    <!-- OPENING INTRO SCREEN -->
+    <div id="intro-screen">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#03071e] via-[#03045e] to-[#0077b6] opacity-90 -z-10"></div>
+        <div class="absolute w-[25rem] h-[25rem] bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div class="text-center px-6 max-w-md">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-2xl shadow-cyan-500/40 font-bold text-2xl mx-auto mb-6 animate-bounce">
+                S
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-wider text-white mb-2">
+                SORTAMENFY HUB
+            </h1>
+            <p class="text-slate-400 text-sm mb-8">Click anywhere or tap the button below to enter my world.</p>
+            
+            <button onclick="dismissIntro()" class="sound-btn px-8 py-3.5 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold shadow-lg shadow-cyan-500/30 transition-all transform hover:scale-105">
+                ENTER WEBSITE <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+            </button>
+        </div>
+    </div>
 
     <!-- Custom Cursor -->
     <div id="custom-cursor" class="hidden md:block"></div>
@@ -372,6 +408,15 @@
 
     <!-- JavaScript Root -->
     <script>
+        // 0. Dismiss Opening Intro
+        function dismissIntro() {
+            const intro = document.getElementById('intro-screen');
+            if (intro) {
+                intro.classList.add('fade-out');
+                playBubbleSound();
+            }
+        }
+
         // 1. Tab Navigation Function
         function openTab(tabName) {
             const tabs = document.querySelectorAll('.tab-content');
@@ -565,18 +610,15 @@
                     const user = data.data.discord_user;
                     const status = data.data.discord_status;
                     
-                    // Set Avatar
                     const avatarUrl = user.avatar 
                         ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128`
                         : `https://cdn.discordapp.com/embed/avatars/0.png`;
                     const avatarEl = document.getElementById('dc-avatar');
                     if (avatarEl) avatarEl.src = avatarUrl;
 
-                    // Set Username
                     const usernameEl = document.getElementById('dc-username');
                     if (usernameEl) usernameEl.innerText = user.display_name || user.username;
 
-                    // Set Status Badge & Activity Text
                     const badgeEl = document.getElementById('dc-status-badge');
                     const activityEl = document.getElementById('dc-activity');
 
