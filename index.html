@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zerry | Personal Portfolio</title>
+    <title>Zerry | Personal Bio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome untuk Ikon Sosmed -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
@@ -13,40 +12,50 @@
         }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex items-center justify-center p-4 sm:p-8">
+<body class="relative min-h-screen flex items-center justify-center p-4 sm:p-8 bg-slate-950 overflow-x-hidden">
 
-    <!-- Container Utama Card Bio -->
-    <div class="w-full max-w-4xl bg-[#12232b] rounded-3xl overflow-hidden shadow-2xl border border-slate-700/40">
+    <!-- 1. Background Gambar Full Screen + Overlay Gelap -->
+    <div class="fixed inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=80" 
+             alt="Full Screen Background" 
+             class="w-full h-full object-cover">
+        <!-- Efek Hitam Transparan Biar Teks Tetap Jelas -->
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+    </div>
+
+    <!-- 2. Card Bio Utama (Melayang di Tengah Background Full) -->
+    <main class="relative z-10 w-full max-w-4xl bg-[#12232b]/90 rounded-3xl overflow-hidden shadow-2xl border border-slate-700/50 backdrop-blur-md">
         
-        <!-- 1. Header Banner -->
-        <div class="h-48 sm:h-64 w-full relative">
+        <!-- Header Banner Tipis -->
+        <div class="h-32 sm:h-44 w-full relative overflow-hidden border-b border-slate-700/30">
             <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80" 
-                 alt="Landscape Banner" 
+                 alt="Header Banner" 
                  class="w-full h-full object-cover">
         </div>
 
-        <!-- 2. Konten Utama (Grid Layout Kiri & Kanan) -->
+        <!-- Konten Utama (Grid Kiri & Kanan) -->
         <div class="px-6 sm:px-10 pb-8 relative">
             
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
                 
-                <!-- Kolom Kiri: Profil & Deskripsi Bio -->
+                <!-- Kolom Kiri: Profil & Deskripsi -->
                 <div class="lg:col-span-7 relative">
                     
-                    <!-- Foto Profil Overlap Banner -->
+                    <!-- Foto Profil Melayang (Mengarah ke file avatar.png) -->
                     <div class="-mt-16 sm:-mt-20 mb-4 inline-block">
-                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Zerry" 
+                        <img src="avatar.png" 
+                             onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=Zerry'" 
                              alt="Avatar Zerry" 
-                             class="w-28 h-28 sm:w-36 sm:h-36 rounded-full border-4 border-[#12232b] bg-slate-800 object-cover shadow-xl">
+                             class="w-28 h-28 sm:w-36 sm:h-36 rounded-full border-4 border-[#12232b] bg-slate-900 object-cover shadow-2xl">
                     </div>
 
-                    <!-- Nama & Bio -->
+                    <!-- Nama & Deskripsi -->
                     <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-wide">I'm Zerry</h1>
                     <p class="text-slate-300 text-sm sm:text-base mt-2 leading-relaxed max-w-md">
                         Roblox Game Developer &amp; Creator. Passionate Luau programmer &amp; UI designer. Building immersive experiences and managing community projects!
                     </p>
 
-                    <!-- Social Icons (Kiri Bawah) -->
+                    <!-- Social Icons -->
                     <div class="mt-6">
                         <p class="text-slate-400 text-xs font-semibold mb-2 uppercase tracking-wider">My Socials :</p>
                         <div class="flex items-center gap-4 text-xl text-slate-300">
@@ -59,30 +68,30 @@
                     </div>
                 </div>
 
-                <!-- Kolom Kanan: Tombol-Tombol Kapsul -->
+                <!-- Kolom Kanan: Tombol Kapsul -->
                 <div class="lg:col-span-5 flex flex-col gap-3 justify-center pt-4 lg:pt-0">
                     <a href="https://www.youtube.com/@ZerryDeP" target="_blank" 
-                       class="w-full bg-[#273a44] hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/30 shadow-md">
+                       class="w-full bg-[#273a44]/90 hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/40 shadow-lg">
                         YouTube Channel
                     </a>
                     
                     <a href="https://discord.gg/Fw9weRr7c" target="_blank" 
-                       class="w-full bg-[#273a44] hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/30 shadow-md">
+                       class="w-full bg-[#273a44]/90 hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/40 shadow-lg">
                         Discord Community
                     </a>
 
                     <a href="https://www.tiktok.com/@zerrydep" target="_blank" 
-                       class="w-full bg-[#273a44] hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/30 shadow-md">
+                       class="w-full bg-[#273a44]/90 hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/40 shadow-lg">
                         TikTok Profile
                     </a>
 
                     <a href="https://www.instagram.com/zerry3312/" target="_blank" 
-                       class="w-full bg-[#273a44] hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/30 shadow-md">
+                       class="w-full bg-[#273a44]/90 hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/40 shadow-lg">
                         Instagram
                     </a>
 
                     <a href="https://x.com/Qin_Zenn" target="_blank" 
-                       class="w-full bg-[#273a44] hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/30 shadow-md">
+                       class="w-full bg-[#273a44]/90 hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/40 shadow-lg">
                         X (Twitter)
                     </a>
                 </div>
@@ -91,7 +100,7 @@
 
         </div>
 
-    </div>
+    </main>
 
 </body>
 </html>
