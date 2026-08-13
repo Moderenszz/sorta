@@ -3,95 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sortamenfy | Personal Bio</title>
+    <title>Sortamenfy | Modern Landing Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
+        /* Tab switching animation */
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
-<body class="relative min-h-screen flex items-center justify-center p-4 sm:p-8 bg-slate-950 overflow-x-hidden">
+<body class="relative min-h-screen bg-slate-950 flex items-center justify-center p-4 sm:p-8 overflow-x-hidden text-white">
 
-    <!-- 1. Background Gambar Full Screen + Overlay Gelap -->
-    <div class="fixed inset-0 z-0">
-        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=80" 
-             alt="Full Screen Background" 
-             class="w-full h-full object-cover">
-        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+    <!-- 1. Fullscreen Mesh Background (Gradasi Biru Tua ke Biru Muda) -->
+    <div class="fixed inset-0 z-0 bg-gradient-to-br from-[#03071e] via-[#03045e] to-[#0077b6]">
+        <!-- Glow Orbs untuk efek modern -->
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-blue-600/30 rounded-full blur-3xl pointer-events-none"></div>
     </div>
 
-    <!-- 2. Card Bio Utama -->
-    <main class="relative z-10 w-full max-w-4xl bg-[#12232b]/90 rounded-3xl overflow-hidden shadow-2xl border border-slate-700/50 backdrop-blur-md">
+    <!-- 2. Main Glass Card Container -->
+    <main class="relative z-10 w-full max-w-5xl bg-slate-900/40 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl overflow-hidden p-6 sm:p-12 flex flex-col justify-between min-h-[580px]">
         
-        <!-- Header Banner Tipis -->
-        <div class="h-32 sm:h-44 w-full relative overflow-hidden border-b border-slate-700/30">
-            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80" 
-                 alt="Header Banner" 
-                 class="w-full h-full object-cover">
-        </div>
-
-        <!-- Konten Utama (Grid Kiri & Kanan) -->
-        <div class="px-6 sm:px-10 py-8 relative">
-            
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
-                
-                <!-- Kolom Kiri: Nama & Deskripsi -->
-                <div class="lg:col-span-7 relative">
-                    
-                    <!-- Nama & Bio -->
-                    <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-wide">I'm Sortamenfy</h1>
-                    <p class="text-slate-300 text-sm sm:text-base mt-3 leading-relaxed max-w-md italic">
-                        "Dunia ku itu tidak berwarna karna semua yang akan aku katakan secara jujur akan melukai diri ku sendiri."
-                    </p>
-
-                    <!-- Social Icons -->
-                    <div class="mt-6">
-                        <p class="text-slate-400 text-xs font-semibold mb-2 uppercase tracking-wider">My Socials :</p>
-                        <div class="flex items-center gap-4 text-xl text-slate-300">
-                            <a href="https://www.youtube.com/@ZerryDeP" target="_blank" class="hover:text-red-500 transition-colors" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                            <a href="https://www.tiktok.com/@zerrydep" target="_blank" class="hover:text-cyan-400 transition-colors" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-                            <a href="https://www.instagram.com/zerry3312/" target="_blank" class="hover:text-pink-500 transition-colors" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="https://discord.gg/Fw9weRr7c" target="_blank" class="hover:text-indigo-400 transition-colors" title="Discord"><i class="fa-brands fa-discord"></i></a>
-                            <a href="https://x.com/Qin_Zenn" target="_blank" class="hover:text-sky-400 transition-colors" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
-                        </div>
-                    </div>
+        <!-- Header Navigasi -->
+        <header class="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
+            <!-- Logo / Branding -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20 font-bold text-lg">
+                    S
                 </div>
-
-                <!-- Kolom Kanan: Tombol Kapsul -->
-                <div class="lg:col-span-5 flex flex-col gap-3 justify-center pt-4 lg:pt-0">
-                    <a href="https://www.youtube.com/@ZerryDeP" target="_blank" 
-                       class="w-full bg-[#273a44]/90 hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/40 shadow-lg">
-                        YouTube Channel
-                    </a>
-                    
-                    <a href="https://discord.gg/Fw9weRr7c" target="_blank" 
-                       class="w-full bg-[#273a44]/90 hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/40 shadow-lg">
-                        Discord Community
-                    </a>
-
-                    <a href="https://www.tiktok.com/@zerrydep" target="_blank" 
-                       class="w-full bg-[#273a44]/90 hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/40 shadow-lg">
-                        TikTok Profile
-                    </a>
-
-                    <a href="https://www.instagram.com/zerry3312/" target="_blank" 
-                       class="w-full bg-[#273a44]/90 hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/40 shadow-lg">
-                        Instagram
-                    </a>
-
-                    <a href="https://x.com/Qin_Zenn" target="_blank" 
-                       class="w-full bg-[#273a44]/90 hover:bg-[#344b58] text-slate-200 hover:text-white text-center font-medium py-3 rounded-full transition-all duration-200 border border-slate-600/40 shadow-lg">
-                        X (Twitter)
-                    </a>
-                </div>
-
+                <span class="font-bold tracking-widest text-xl bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-200">
+                    SORTAMENFY
+                </span>
             </div>
 
-        </div>
+            <!-- Menu Link (Kanan) -->
+            <nav class="flex items-center gap-2 sm:gap-6 text-sm font-medium text-slate-300">
+                <button onclick="openTab('home')" id="btn-home" class="nav-btn px-4 py-2 rounded-full transition-all text-white bg-cyan-500/20 border border-cyan-400/30 shadow-md">
+                    HOME
+                </button>
+                <button onclick="openTab('about')" id="btn-about" class="nav-btn px-4 py-2 rounded-full hover:text-white transition-all">
+                    ABOUT
+                </button>
+                <button onclick="openTab('socials')" id="btn-socials" class="nav-btn px-4 py-2 rounded-full hover:text-white transition-all">
+                    LINKS
+                </button>
+            </nav>
+        </header>
+
+        <!-- Dynamic Content Section -->
+        <section class="my-auto py-8">
+            
+            <!-- TAB 1: HOME -->
+            <div id="home" class="tab-content active max-w-2xl">
+                <span class="inline-block px-3 py-1 text-xs font-semibold tracking-widest text-cyan-300 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-4 uppercase">
+                    Welcome Page
+                </span>
+                <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-4 leading-tight">
+                    WELCOME TO <br>
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">
+                        MY WORLD
+                    </span>
+                </h1>
+                <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-8 italic">
+                    "Dunia ku itu tidak berwarna karna semua yang akan aku katakan secara jujur akan melukai diri ku sendiri."
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="openTab('socials')" class="px-7 py-3.5 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold shadow-lg shadow-cyan-500/25 transition-all transform hover:-translate-y-0.5">
+                        EXPLORE LINKS
+                    </button>
+                    <button onclick="openTab('about')" class="px-7 py-3.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 font-semibold backdrop-blur-md transition-all">
+                        MORE INFO
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB 2: ABOUT -->
+            <div id="about" class="tab-content max-w-2xl">
+                <span class="inline-block px-3 py-1 text-xs font-semibold tracking-widest text-cyan-300 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-4 uppercase">
+                    About Me
+                </span>
+                <h2 class="text-3xl sm:text-5xl font-bold text-white mb-4">
+                    About Sortamenfy
+                </h2>
+                <p class="text-slate-300 leading-relaxed mb-6">
+                    Selamat datang di ruang personal saya. Tempat di mana saya membagikan karya, proyek komunitas, dan tautan sosial media resmi.
+                </p>
+                <div class="grid grid-cols-2 gap-4 max-w-md">
+                    <div class="p-4 rounded-2xl bg-white/5 border border-white/10">
+                        <div class="text-2xl font-bold text-cyan-400">Creation</div>
+                        <div class="text-xs text-slate-400 mt-1">Digital & Development</div>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-white/5 border border-white/10">
+                        <div class="text-2xl font-bold text-blue-400">Community</div>
+                        <div class="text-xs text-slate-400 mt-1">Interactive Hub</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: LINKS / SOCIALS -->
+            <div id="socials" class="tab-content max-w-xl">
+                <span class="inline-block px-3 py-1 text-xs font-semibold tracking-widest text-cyan-300 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-4 uppercase">
+                    Connect
+                </span>
+                <h2 class="text-3xl font-bold text-white mb-6">
+                    Social Links
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <a href="https://www.youtube.com/@ZerryDeP" target="_blank" class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-500/30 text-slate-200 transition-all">
+                        <i class="fa-brands fa-youtube text-red-500 text-xl"></i>
+                        <span class="font-medium text-sm">YouTube Channel</span>
+                    </a>
+                    <a href="https://discord.gg/Fw9weRr7c" target="_blank" class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-500/30 text-slate-200 transition-all">
+                        <i class="fa-brands fa-discord text-indigo-400 text-xl"></i>
+                        <span class="font-medium text-sm">Discord Community</span>
+                    </a>
+                    <a href="https://www.tiktok.com/@zerrydep" target="_blank" class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-500/30 text-slate-200 transition-all">
+                        <i class="fa-brands fa-tiktok text-cyan-400 text-xl"></i>
+                        <span class="font-medium text-sm">TikTok Profile</span>
+                    </a>
+                    <a href="https://www.instagram.com/zerry3312/" target="_blank" class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-500/30 text-slate-200 transition-all">
+                        <i class="fa-brands fa-instagram text-pink-500 text-xl"></i>
+                        <span class="font-medium text-sm">Instagram</span>
+                    </a>
+                    <a href="https://x.com/Qin_Zenn" target="_blank" class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-500/30 text-slate-200 transition-all sm:col-span-2">
+                        <i class="fa-brands fa-x-twitter text-sky-400 text-xl"></i>
+                        <span class="font-medium text-sm">X (Twitter)</span>
+                    </a>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Footer -->
+        <footer class="flex flex-wrap items-center justify-between text-xs text-slate-400 border-t border-white/10 pt-4 gap-2">
+            <div>&copy; 2026 Sortamenfy. All rights reserved.</div>
+            <div class="flex items-center gap-4">
+                <a href="https://discord.gg/Fw9weRr7c" target="_blank" class="hover:text-cyan-400 transition-colors">Discord</a>
+                <a href="https://x.com/Qin_Zenn" target="_blank" class="hover:text-cyan-400 transition-colors">Twitter</a>
+            </div>
+        </footer>
 
     </main>
 
+    <!-- JavaScript Navigasi Tab -->
+    <script>
+        function openTab(tabName) {
+            // Sembunyikan semua tab
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Tampilkan tab yang dipilih
+            document.getElementById(tabName).classList.add('active');
+
+            // Reset style tombol navigasi
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('text-white', 'bg-cyan-500/20', 'border', 'border-cyan-400/30', 'shadow-md');
+                btn.classList.add('text-slate-300');
+            });
+
+            // Beri style aktif ke tombol yang diklik
+            const activeBtn = document.getElementById('btn-' + tabName);
+            if (activeBtn) {
+                activeBtn.classList.add('text-white', 'bg-cyan-500/20', 'border', 'border-cyan-400/30', 'shadow-md');
+                activeBtn.classList.remove('text-slate-300');
+            }
+        }
+    </script>
 </body>
 </html>
