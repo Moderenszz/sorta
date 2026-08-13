@@ -3,47 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Modern</title>
-    <!-- Framework Tailwind CSS via CDN -->
+    <title>Website Modern & Lengkap</title>
+    <!-- Framework Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col justify-between">
 
     <!-- Header / Navbar -->
-    <header class="bg-slate-800 border-b border-slate-700 py-4 px-6 flex justify-between items-center">
+    <header class="bg-slate-800/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-700/50 py-4 px-8 flex justify-between items-center">
         <h1 class="text-xl font-bold tracking-wide text-indigo-400">MyBrand</h1>
-        <nav class="space-x-4">
-            <a href="#" class="hover:text-indigo-400 transition">Beranda</a>
-            <a href="#" class="hover:text-indigo-400 transition">Fitur</a>
+        <nav class="space-x-6 text-sm font-medium">
+            <a href="#" class="text-slate-200 hover:text-indigo-400 transition">Beranda</a>
+            <a href="#fitur" class="text-slate-400 hover:text-indigo-400 transition">Fitur</a>
+            <a href="#harga" class="text-slate-400 hover:text-indigo-400 transition">Harga</a>
         </nav>
     </header>
 
-    <!-- Main Content -->
-    <main class="max-w-2xl mx-auto text-center px-4 py-16">
-        <h2 class="text-4xl font-extrabold text-white mb-4">
-            Tampilan Modern Tanpa Ribet
+    <!-- Hero Section -->
+    <section class="max-w-4xl mx-auto text-center px-4 pt-20 pb-16">
+        <!-- Badge Kecil -->
+        <div class="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 px-4 py-1.5 rounded-full text-sm font-medium mb-6">
+            <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
+            Versi 2.0 Sudah Rilis!
+        </div>
+
+        <h2 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight mb-6 leading-tight">
+            Bangun Website Impianmu <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">Lebih Cepat & Mudah</span>
         </h2>
-        <p class="text-slate-400 text-lg mb-8">
-            Website ini menggunakan framework CSS modern. Kamu bisa bikin tombol dengan efek animasi hanya dalam beberapa kata.
+        
+        <p class="text-slate-400 text-lg sm:text-xl max-w-2xl mx-auto mb-10">
+            Kombinasi sempurna antara desain modern, performa tinggi, dan kemudahan kustomisasi tanpa perlu pusing urusan CSS rumit.
         </p>
 
-        <!-- Variasi Tombol Bagus -->
-        <div class="flex flex-wrap justify-center gap-4">
-            <!-- Tombol Utama dengan Efek Glow & Hover -->
-            <button class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-indigo-500/30 transition-all duration-200 active:scale-95">
-                Mulai Sekarang
+        <!-- Tombol Aksi -->
+        <div class="flex flex-wrap justify-center gap-4 mb-16">
+            <button class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3.5 px-8 rounded-xl shadow-lg shadow-indigo-500/30 transition-all duration-200 hover:-translate-y-0.5 active:scale-95">
+                Mulai Gratis
             </button>
-
-            <!-- Tombol Sekunder Outline -->
-            <button class="border border-slate-600 hover:border-slate-400 text-slate-200 font-semibold py-3 px-6 rounded-xl transition-all duration-200 active:scale-95">
-                Pelajari Lebih Lanjut
+            <button class="border border-slate-700 bg-slate-800/50 hover:bg-slate-800 text-slate-200 font-semibold py-3.5 px-8 rounded-xl transition-all duration-200 active:scale-95">
+                Lihat Demo
             </button>
         </div>
-    </main>
+
+        <!-- Statistik -->
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-6 pt-10 border-t border-slate-800 max-w-2xl mx-auto">
+            <div>
+                <h3 class="text-3xl font-bold text-white">99.9%</h3>
+                <p class="text-sm text-slate-400 mt-1">Uptime Server</p>
+            </div>
+            <div>
+                <h3 class="text-3xl font-bold text-white">10K+</h3>
+                <p class="text-sm text-slate-400 mt-1">Pengguna Aktif</p>
+            </div>
+            <div class="col-span-2 md:col-span-1">
+                <h3 class="text-3xl font-bold text-white">4.9/5</h3>
+                <p class="text-sm text-slate-400 mt-1">Rating Pengguna</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Section (Kartu-Kartu) -->
+    <section id="fitur" class="max-w-5xl mx-auto px-4 py-16">
+        <div class="text-center mb-12">
+            <h3 class="text-2xl font-bold text-white mb-2">Kenapa Memilih Kami?</h3>
+            <p class="text-slate-400">Fitur unggulan untuk mendukung kebutuhan websitemu.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Kartu 1 -->
+            <div class="bg-slate-800/50 border border-slate-700/60 p-6 rounded-2xl hover:border-indigo-500/50 transition-all">
+                <div class="w-12 h-12 bg-indigo-500/10 text-indigo-400 rounded-xl flex items-center justify-center font-bold text-xl mb-4">⚡</div>
+                <h4 class="text-lg font-bold text-white mb-2">Super Cepat</h4>
+                <p class="text-slate-400 text-sm">Dioptimalkan untuk kecepatan muat halaman yang maksimal tanpa beban berlebih.</p>
+            </div>
+
+            <!-- Kartu 2 -->
+            <div class="bg-slate-800/50 border border-slate-700/60 p-6 rounded-2xl hover:border-indigo-500/50 transition-all">
+                <div class="w-12 h-12 bg-cyan-500/10 text-cyan-400 rounded-xl flex items-center justify-center font-bold text-xl mb-4">📱</div>
+                <h4 class="text-lg font-bold text-white mb-2">Responsif HP</h4>
+                <p class="text-slate-400 text-sm">Tampilan otomatis menyesuaikan layar smartphone, tablet, maupun monitor PC.</p>
+            </div>
+
+            <!-- Kartu 3 -->
+            <div class="bg-slate-800/50 border border-slate-700/60 p-6 rounded-2xl hover:border-indigo-500/50 transition-all">
+                <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center font-bold text-xl mb-4">🔒</div>
+                <h4 class="text-lg font-bold text-white mb-2">Aman & Terjamin</h4>
+                <p class="text-slate-400 text-sm">Dilengkapi standar keamanan tinggi untuk melindungi data penting pengguna.</p>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="text-center py-6 border-t border-slate-800 text-slate-500 text-sm">
-        &copy; 2026 Website Modern.
+    <footer class="text-center py-8 border-t border-slate-800 text-slate-500 text-sm">
+        &copy; 2026 Website Modern. All rights reserved.
     </footer>
 
 </body>
