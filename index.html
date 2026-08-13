@@ -195,7 +195,7 @@
                 </div>
             </div>
 
-            <!-- TAB 3: LINKS / SOCIALS -->
+            <!-- TAB 3: LINKS / SOCIALS (WITH LIVE FOLLOWERS/STATS) -->
             <div id="socials" class="tab-content max-w-2xl">
                 <span class="inline-block px-4 py-1.5 text-xs font-semibold tracking-widest text-cyan-300 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-6 uppercase">
                     Connect
@@ -205,29 +205,58 @@
                 </h2>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-                    <a href="https://saweria.co/sortamenfy" target="_blank" class="sound-btn flex items-center gap-4 p-4 rounded-2xl bg-white/5 hover:bg-amber-500/10 border border-white/10 hover:border-amber-500/30 text-slate-200 transition-all sm:col-span-2">
-                        <i class="fa-solid fa-heart text-amber-400 text-2xl"></i>
-                        <span class="font-semibold text-base">Saweria (Support Me)</span>
+                    <!-- Saweria -->
+                    <a href="https://saweria.co/sortamenfy" target="_blank" class="sound-btn flex items-center justify-between p-4 rounded-2xl bg-white/5 hover:bg-amber-500/10 border border-white/10 hover:border-amber-500/30 text-slate-200 transition-all sm:col-span-2 group">
+                        <div class="flex items-center gap-4">
+                            <i class="fa-solid fa-heart text-amber-400 text-2xl group-hover:scale-110 transition-transform"></i>
+                            <span class="font-semibold text-base">Saweria (Support Me)</span>
+                        </div>
+                        <span class="text-xs px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 font-medium">Support</span>
                     </a>
-                    <a href="https://www.youtube.com/@ZerryDeP" target="_blank" class="sound-btn flex items-center gap-4 p-4 rounded-2xl bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-500/30 text-slate-200 transition-all">
-                        <i class="fa-brands fa-youtube text-red-500 text-2xl"></i>
-                        <span class="font-semibold text-base">YouTube Channel</span>
+
+                    <!-- YouTube -->
+                    <a href="https://www.youtube.com/@ZerryDeP" target="_blank" class="sound-btn flex items-center justify-between p-4 rounded-2xl bg-white/5 hover:bg-red-500/10 border border-white/10 hover:border-red-500/30 text-slate-200 transition-all group">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-brands fa-youtube text-red-500 text-2xl group-hover:scale-110 transition-transform"></i>
+                            <span class="font-semibold text-base">YouTube</span>
+                        </div>
+                        <img src="https://img.shields.io/youtube/channel/subscribers/UC_ZerryDeP?style=flat-square&color=FF0000&label=Subs&labelColor=1e293b" alt="YouTube Subs" class="h-5 rounded opacity-90">
                     </a>
-                    <a href="https://discord.gg/Fw9weRr7c" target="_blank" class="sound-btn flex items-center gap-4 p-4 rounded-2xl bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-500/30 text-slate-200 transition-all">
-                        <i class="fa-brands fa-discord text-indigo-400 text-2xl"></i>
-                        <span class="font-semibold text-base">Discord Community</span>
+
+                    <!-- Discord -->
+                    <a href="https://discord.gg/Fw9weRr7c" target="_blank" class="sound-btn flex items-center justify-between p-4 rounded-2xl bg-white/5 hover:bg-indigo-500/10 border border-white/10 hover:border-indigo-500/30 text-slate-200 transition-all group">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-brands fa-discord text-indigo-400 text-2xl group-hover:scale-110 transition-transform"></i>
+                            <span class="font-semibold text-base">Discord</span>
+                        </div>
+                        <img src="https://img.shields.io/discord/1006821519395131392?style=flat-square&color=5865F2&label=Online&labelColor=1e293b" alt="Discord Online" class="h-5 rounded opacity-90">
                     </a>
-                    <a href="https://www.tiktok.com/@zerrydep" target="_blank" class="sound-btn flex items-center gap-4 p-4 rounded-2xl bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-500/30 text-slate-200 transition-all">
-                        <i class="fa-brands fa-tiktok text-cyan-400 text-2xl"></i>
-                        <span class="font-semibold text-base">TikTok Profile</span>
+
+                    <!-- TikTok -->
+                    <a href="https://www.tiktok.com/@zerrydep" target="_blank" class="sound-btn flex items-center justify-between p-4 rounded-2xl bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-500/30 text-slate-200 transition-all group">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-brands fa-tiktok text-cyan-400 text-2xl group-hover:scale-110 transition-transform"></i>
+                            <span class="font-semibold text-base">TikTok</span>
+                        </div>
+                        <span class="text-xs px-2.5 py-1 rounded-md bg-white/10 border border-white/10 text-cyan-300 font-mono">@zerrydep</span>
                     </a>
-                    <a href="https://www.instagram.com/zerry3312/" target="_blank" class="sound-btn flex items-center gap-4 p-4 rounded-2xl bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-500/30 text-slate-200 transition-all">
-                        <i class="fa-brands fa-instagram text-pink-500 text-2xl"></i>
-                        <span class="font-semibold text-base">Instagram</span>
+
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/zerry3312/" target="_blank" class="sound-btn flex items-center justify-between p-4 rounded-2xl bg-white/5 hover:bg-pink-500/10 border border-white/10 hover:border-pink-500/30 text-slate-200 transition-all group">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-brands fa-instagram text-pink-500 text-2xl group-hover:scale-110 transition-transform"></i>
+                            <span class="font-semibold text-base">Instagram</span>
+                        </div>
+                        <span class="text-xs px-2.5 py-1 rounded-md bg-white/10 border border-white/10 text-pink-300 font-mono">@zerry3312</span>
                     </a>
-                    <a href="https://x.com/Qin_Zenn" target="_blank" class="sound-btn flex items-center gap-4 p-4 rounded-2xl bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-500/30 text-slate-200 transition-all sm:col-span-2">
-                        <i class="fa-brands fa-x-twitter text-sky-400 text-2xl"></i>
-                        <span class="font-semibold text-base">X (Twitter)</span>
+
+                    <!-- X (Twitter) -->
+                    <a href="https://x.com/Qin_Zenn" target="_blank" class="sound-btn flex items-center justify-between p-4 rounded-2xl bg-white/5 hover:bg-sky-500/10 border border-white/10 hover:border-sky-500/30 text-slate-200 transition-all sm:col-span-2 group">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-brands fa-x-twitter text-sky-400 text-2xl group-hover:scale-110 transition-transform"></i>
+                            <span class="font-semibold text-base">X (Twitter)</span>
+                        </div>
+                        <span class="text-xs px-2.5 py-1 rounded-md bg-white/10 border border-white/10 text-sky-300 font-mono">@Qin_Zenn</span>
                     </a>
                 </div>
 
@@ -406,7 +435,7 @@
         setInterval(updateTimeAndGreeting, 1000);
         updateTimeAndGreeting();
 
-        // 6. Visitor Counter (MojoCounter API)
+        // 6. Visitor Counter (CounterAPI)
         async function fetchVisitorCount() {
             try {
                 const res = await fetch('https://api.counterapi.dev/v1/sortamenfy-landing/visits/up');
