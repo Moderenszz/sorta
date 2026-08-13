@@ -31,6 +31,18 @@
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        /* Custom Discord Card Styling */
+        .discord-card {
+            background: rgba(20, 24, 33, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 10px 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
         /* Custom Cursor Follower */
         #custom-cursor {
             pointer-events: none;
@@ -123,13 +135,20 @@
                     <div class="px-4 py-1.5 bg-cyan-500/10 border border-cyan-400/30 backdrop-blur-md rounded-full text-xs font-semibold tracking-wider text-cyan-300 uppercase">
                         <span id="greeting-text">Welcome!</span>
                     </div>
+                </div>
 
-                    <!-- Discord Live Status Widget -->
-                    <div class="inline-flex items-center gap-2.5 px-4 py-1.5 bg-white/5 border border-white/10 backdrop-blur-md rounded-full">
-                        <span id="discord-status-dot" class="w-2.5 h-2.5 rounded-full bg-gray-500 animate-pulse"></span>
-                        <span id="discord-status-text" class="text-xs font-semibold tracking-wider uppercase text-slate-300">
-                            Connecting...
-                        </span>
+                <!-- Discord Full Profile Widget Card -->
+                <div id="discord-full-profile" class="discord-card mb-8">
+                    <div class="relative">
+                        <img id="dc-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar" class="w-12 h-12 rounded-full object-cover border border-white/10">
+                        <div id="dc-status-badge" class="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full border-2 border-slate-900 bg-slate-500"></div>
+                    </div>
+                    <div class="flex flex-col">
+                        <div class="flex items-center gap-2">
+                            <span id="dc-username" class="font-bold text-white text-base tracking-wide">Loading...</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">PRO</span>
+                        </div>
+                        <span id="dc-activity" class="text-xs text-slate-400">Memuat status...</span>
                     </div>
                 </div>
 
@@ -198,7 +217,7 @@
                 </div>
             </div>
 
-            <!-- TAB FEEDS (BARU: REAL-TIME YOUTUBE FEED & LIVE STREAM) -->
+            <!-- TAB FEEDS (REAL-TIME YOUTUBE FEED & LIVE STREAM) -->
             <div id="feeds" class="tab-content max-w-4xl">
                 <span class="inline-block px-4 py-1.5 text-xs font-semibold tracking-widest text-cyan-300 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-6 uppercase">
                     Latest Content
@@ -535,7 +554,7 @@
             }
         }
 
-        // 8. Live Discord Status (Lanyard API)
+        // 8. Live Discord Full Profile Status (Lanyard API)
         const DISCORD_USER_ID = "1006821519395131392";
 
         async function fetchDiscordStatus() {
@@ -543,23 +562,52 @@
                 const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`);
                 const data = await res.json();
                 if (data.success) {
+                    const user = data.data.discord_user;
                     const status = data.data.discord_status;
-                    const dot = document.getElementById('discord-status-dot');
-                    const text = document.getElementById('discord-status-text');
+                    
+                    // Set Avatar
+                    const avatarUrl = user.avatar 
+                        ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128`
+                        : `https://cdn.discordapp.com/embed/avatars/0.png`;
+                    const avatarEl = document.getElementById('dc-avatar');
+                    if (avatarEl) avatarEl.src = avatarUrl;
 
-                    const statusColors = {
-                        online: "bg-emerald-400 shadow-emerald-500/50",
-                        idle: "bg-amber-400 shadow-amber-500/50",
-                        dnd: "bg-rose-500 shadow-rose-500/50",
-                        offline: "bg-slate-500"
+                    // Set Username
+                    const usernameEl = document.getElementById('dc-username');
+                    if (usernameEl) usernameEl.innerText = user.display_name || user.username;
+
+                    // Set Status Badge & Activity Text
+                    const badgeEl = document.getElementById('dc-status-badge');
+                    const activityEl = document.getElementById('dc-activity');
+
+                    const statusConfig = {
+                        online: { color: "bg-emerald-500", text: "Online" },
+                        idle: { color: "bg-amber-500", text: "Idle" },
+                        dnd: { color: "bg-rose-500", text: "Busy (DND)" },
+                        offline: { color: "bg-slate-500", text: "Offline" }
                     };
 
-                    if (dot) dot.className = `w-2.5 h-2.5 rounded-full ${statusColors[status] || 'bg-slate-500'}`;
-                    if (text) text.innerText = `Discord: ${status}`;
+                    const currentStatus = statusConfig[status] || statusConfig.offline;
+                    if (badgeEl) badgeEl.className = `absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full border-2 border-slate-900 ${currentStatus.color}`;
+
+                    if (data.data.activities && data.data.activities.length > 0) {
+                        const mainActivity = data.data.activities[0];
+                        if (activityEl) {
+                            if (mainActivity.type === 0) {
+                                activityEl.innerText = `Playing ${mainActivity.name}`;
+                            } else if (mainActivity.type === 4) {
+                                activityEl.innerText = mainActivity.state || currentStatus.text;
+                            } else {
+                                activityEl.innerText = mainActivity.name;
+                            }
+                        }
+                    } else {
+                        if (activityEl) activityEl.innerText = currentStatus.text;
+                    }
                 }
             } catch (err) {
-                const text = document.getElementById('discord-status-text');
-                if (text) text.innerText = "Discord Connected";
+                const activityEl = document.getElementById('dc-activity');
+                if (activityEl) activityEl.innerText = "Discord Connected";
             }
         }
 
@@ -571,16 +619,14 @@
 
         async function fetchLatestYouTube() {
             try {
-                // Fetch RSS Feed via RSS2JSON API
                 const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${YT_CHANNEL_ID}`;
                 const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`);
                 const data = await res.json();
 
                 if (data.status === 'ok' && data.items.length > 0) {
-                    const latestVideo = data.items[0]; // Ambil video paling baru dari channel
+                    const latestVideo = data.items[0];
                     const videoId = latestVideo.link.split('v=')[1];
 
-                    // Render iframe video terbaru
                     const container = document.getElementById('youtube-feed-container');
                     if (container) {
                         container.innerHTML = `
@@ -592,7 +638,6 @@
                             </iframe>`;
                     }
 
-                    // Update judul & link
                     const titleEl = document.getElementById('youtube-feed-title');
                     const linkEl = document.getElementById('youtube-feed-link');
                     if (titleEl) titleEl.innerText = latestVideo.title;
@@ -602,7 +647,6 @@
                 console.error("Gagal memuat feed YouTube:", err);
             }
 
-            // Set source iframe Live Stream
             const liveFrame = document.getElementById('youtube-live-frame');
             if (liveFrame) {
                 liveFrame.src = `https://www.youtube.com/embed/live_stream?channel=${YT_CHANNEL_ID}`;
