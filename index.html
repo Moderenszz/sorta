@@ -103,6 +103,9 @@
                 <button onclick="openTab('about')" id="btn-about" class="nav-btn sound-btn px-5 py-2.5 rounded-full hover:text-white transition-all">
                     ABOUT
                 </button>
+                <button onclick="openTab('feeds')" id="btn-feeds" class="nav-btn sound-btn px-5 py-2.5 rounded-full hover:text-white transition-all">
+                    FEEDS
+                </button>
                 <button onclick="openTab('socials')" id="btn-socials" class="nav-btn sound-btn px-5 py-2.5 rounded-full hover:text-white transition-all">
                     LINKS
                 </button>
@@ -195,7 +198,59 @@
                 </div>
             </div>
 
-            <!-- TAB 3: LINKS / SOCIALS -->
+            <!-- TAB FEEDS (BARU: REAL-TIME YOUTUBE FEED & LIVE STREAM) -->
+            <div id="feeds" class="tab-content max-w-4xl">
+                <span class="inline-block px-4 py-1.5 text-xs font-semibold tracking-widest text-cyan-300 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-6 uppercase">
+                    Latest Content
+                </span>
+                <h2 class="text-4xl font-bold text-white mb-2">
+                    YouTube Feeds & Live Stream
+                </h2>
+                <p class="text-slate-300 text-sm mb-8">Video terbaru dan siaran langsung otomatis terupdate secara real-time dari YouTube channel.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Section Video Upload Terbaru -->
+                    <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-semibold text-lg text-white flex items-center gap-2">
+                                    <i class="fa-brands fa-youtube text-red-500"></i> Video Terbaru
+                                </h3>
+                                <span class="text-xs px-2.5 py-1 rounded-full bg-cyan-500/20 text-cyan-300 font-mono">Real-Time Feed</span>
+                            </div>
+                            <div id="youtube-feed-container" class="w-full aspect-video rounded-xl bg-black/40 flex items-center justify-center text-slate-400 text-sm overflow-hidden">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-spinner animate-spin text-cyan-400"></i> Memuat video terbaru...
+                                </div>
+                            </div>
+                            <h4 id="youtube-feed-title" class="text-base font-medium text-white mt-4 line-clamp-2">...</h4>
+                        </div>
+                        <a id="youtube-feed-link" href="#" target="_blank" rel="noopener noreferrer" class="sound-btn mt-4 inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-sm font-medium transition-all">
+                            Tonton di YouTube <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+
+                    <!-- Section Live Stream Status -->
+                    <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-semibold text-lg text-white flex items-center gap-2">
+                                    <i class="fa-solid fa-tower-broadcast text-rose-500"></i> Live Stream Status
+                                </h3>
+                                <span id="live-badge" class="text-xs px-2.5 py-1 rounded-full bg-slate-500/20 text-slate-400 font-mono">Live Player</span>
+                            </div>
+                            <div class="w-full aspect-video rounded-xl bg-black/40 overflow-hidden relative border border-white/5">
+                                <iframe id="youtube-live-frame" class="w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <a href="https://www.youtube.com/channel/UCMfAgJBOWTUq_QKq5dFEsww" target="_blank" rel="noopener noreferrer" class="sound-btn mt-4 inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-red-600/80 hover:bg-red-500 text-white text-sm font-medium transition-all shadow-md">
+                            Kunjungi YouTube Channel <i class="fa-brands fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: LINKS / SOCIALS -->
             <div id="socials" class="tab-content max-w-2xl">
                 <span class="inline-block px-4 py-1.5 text-xs font-semibold tracking-widest text-cyan-300 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-6 uppercase">
                     Connect
@@ -350,11 +405,10 @@
                 osc.start(now);
                 osc.stop(now + 0.08);
             } catch (e) {
-                // Audio Context fallback if blocked by browser policy
+                // Audio Context fallback
             }
         }
 
-        // Event Delegation untuk sound button agar elemen baru/dinamis tetap berbunyi
         document.addEventListener('click', function (e) {
             if (e.target.closest('.sound-btn')) {
                 playBubbleSound();
@@ -511,6 +565,51 @@
 
         fetchDiscordStatus();
         setInterval(fetchDiscordStatus, 10000);
+
+        // 9. Real-Time YouTube Video Terbaru & Live Stream Auto-Fetch
+        const YT_CHANNEL_ID = "UCMfAgJBOWTUq_QKq5dFEsww";
+
+        async function fetchLatestYouTube() {
+            try {
+                // Fetch RSS Feed via RSS2JSON API
+                const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${YT_CHANNEL_ID}`;
+                const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`);
+                const data = await res.json();
+
+                if (data.status === 'ok' && data.items.length > 0) {
+                    const latestVideo = data.items[0]; // Ambil video paling baru dari channel
+                    const videoId = latestVideo.link.split('v=')[1];
+
+                    // Render iframe video terbaru
+                    const container = document.getElementById('youtube-feed-container');
+                    if (container) {
+                        container.innerHTML = `
+                            <iframe class="w-full h-full" 
+                                src="https://www.youtube.com/embed/${videoId}" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>`;
+                    }
+
+                    // Update judul & link
+                    const titleEl = document.getElementById('youtube-feed-title');
+                    const linkEl = document.getElementById('youtube-feed-link');
+                    if (titleEl) titleEl.innerText = latestVideo.title;
+                    if (linkEl) linkEl.href = latestVideo.link;
+                }
+            } catch (err) {
+                console.error("Gagal memuat feed YouTube:", err);
+            }
+
+            // Set source iframe Live Stream
+            const liveFrame = document.getElementById('youtube-live-frame');
+            if (liveFrame) {
+                liveFrame.src = `https://www.youtube.com/embed/live_stream?channel=${YT_CHANNEL_ID}`;
+            }
+        }
+
+        fetchLatestYouTube();
     </script>
 </body>
 </html>
