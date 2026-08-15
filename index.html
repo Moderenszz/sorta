@@ -201,6 +201,14 @@
         <div class="absolute bottom-1/4 right-1/4 w-[35rem] h-[35rem] bg-blue-600/30 rounded-full blur-3xl pointer-events-none"></div>
     </div>
 
+    <!-- Background Music Audio Player (YouTube Lofi Stream via MP3 Alternative Proxy/Direct) -->
+    <audio id="bg-music" src="https://corsproxy.io/?https://rr2---sn-5hnekn7s.googlevideo.com/videoplayback?expire=1710000000&id=UJs6__K7gSY" preload="auto" loop></audio>
+    <!-- Tombol Kontrol Audio Floating Lofi -->
+    <button id="music-toggle" class="fixed bottom-6 right-6 z-[9999] px-4 py-2.5 bg-slate-900/80 border border-cyan-500/30 rounded-full text-xs font-mono text-cyan-300 backdrop-blur-md hover:bg-slate-800 transition-all shadow-xl flex items-center gap-2 group">
+        <i id="music-icon" class="fa-solid fa-music text-cyan-400 animate-pulse"></i>
+        <span id="music-text">STOP LOFI</span>
+    </button>
+
     <!-- Main Container -->
     <div class="relative z-10 flex flex-col justify-between min-h-screen p-6 sm:p-12 md:p-16">
         
@@ -543,6 +551,43 @@
             } catch (e) {}
         }
 
+        // --- BACKGROUND MUSIC LOFI PLAYER SCRIPT ---
+        const bgMusic = document.getElementById('bg-music');
+        const musicToggle = document.getElementById('music-toggle');
+        const musicText = document.getElementById('music-text');
+        const musicIcon = document.getElementById('music-icon');
+        let isMusicPlaying = false;
+
+        // Auto play saat user pertama kali melakukan interaksi klik di mana saja (kebijakan browser)
+        window.addEventListener('click', () => {
+            if (!isMusicPlaying && bgMusic.paused) {
+                bgMusic.volume = 0.5;
+                bgMusic.play().then(() => {
+                    isMusicPlaying = true;
+                    musicText.innerText = "STOP LOFI";
+                    musicIcon.className = "fa-solid fa-music text-cyan-400 animate-pulse";
+                }).catch(e => console.log("Autoplay dicegah browser, menunggu klik manual."));
+            }
+        }, { once: true });
+
+        musicToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); // Mencegah bentrok event
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicText.innerText = "PLAY LOFI";
+                musicIcon.className = "fa-solid fa-play text-slate-400";
+                isMusicPlaying = false;
+            } else {
+                bgMusic.play().then(() => {
+                    musicText.innerText = "STOP LOFI";
+                    musicIcon.className = "fa-solid fa-music text-cyan-400 animate-pulse";
+                    isMusicPlaying = true;
+                }).catch(err => {
+                    console.error("Gagal memutar audio:", err);
+                });
+            }
+        });
+
         // Fungsi Audio Khusus Sfx Black Flash Yuji Itadori (Cursed Energy Impact & Distortion)
         function playBlackFlashSound() {
             try {
@@ -555,7 +600,6 @@
 
                 const now = audioCtx.currentTime;
 
-                // 1. Suara Impact / Pukulan Berat Bergemuruh (Sub-bass drop)
                 const oscImpact = audioCtx.createOscillator();
                 const gainImpact = audioCtx.createGain();
                 oscImpact.type = 'triangle';
@@ -568,9 +612,8 @@
                 oscImpact.connect(gainImpact);
                 gainImpact.connect(audioCtx.destination);
                 oscImpact.start(now);
-                osc.stop ? oscImpact.stop(now + 0.45) : null;
+                oscImpact.stop(now + 0.45);
 
-                // 2. Suara Sambaran Kilat Energi Kutukan (Spark Distortion Tone)
                 const oscSpark = audioCtx.createOscillator();
                 const gainSpark = audioCtx.createGain();
                 oscSpark.type = 'sawtooth';
@@ -585,7 +628,6 @@
                 oscSpark.start(now);
                 oscSpark.stop(now + 0.3);
 
-                // 3. White Noise untuk Efek Hantaman Ruang/Spark Crack (Black Flash distortion lag 0.0001s feel)
                 setTimeout(() => {
                     if (!audioCtx) return;
                     const bufferSize = audioCtx.sampleRate * 0.25;
@@ -611,34 +653,28 @@
                     noiseGain.connect(audioCtx.destination);
 
                     noise.start();
-                }, 80); // Slight delay khas efek hitam petir menyusul hantaman
+                }, 80);
 
             } catch (e) {
                 console.error("Audio error:", e);
             }
         }
 
-        // Fungsi Trigger Efek Visual & Suara Black Flash saat Tombol Saweria (Sortamenfy) Ditekan
         function triggerBlackFlash(event) {
-            // Putar SFX Black Flash
             playBlackFlashSound();
 
-            // Efek Screen Shake pada Body
             document.body.classList.add('shake-screen');
             setTimeout(() => {
                 document.body.classList.remove('shake-screen');
             }, 350);
 
-            // Buat Elemen Overlay Aura Hitam & Ungu Petir Khas Yuji Itadori
             const overlay = document.createElement('div');
             overlay.className = 'black-flash-overlay';
 
-            // Flashbang putih sesaat sebelum petir hitam muncul
             const flash = document.createElement('div');
             flash.className = 'black-flash-flashbang';
             overlay.appendChild(flash);
 
-            // Munculkan gelombang aura petir merah-ungu (Black Flash Sparks) dari titik klik
             const rect = event.currentTarget.getBoundingClientRect();
             const clickX = rect.left + rect.width / 2;
             const clickY = rect.top + rect.height / 2;
@@ -657,7 +693,6 @@
 
             document.body.appendChild(overlay);
 
-            // Hapus elemen overlay setelah animasi selesai
             setTimeout(() => {
                 overlay.remove();
             }, 600);
@@ -669,7 +704,6 @@
             }
         });
 
-        // 3. Floating Canvas Particles
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -722,7 +756,6 @@
         }
         animateParticles();
 
-        // 4. Custom Neon Cursor
         const cursor = document.getElementById('custom-cursor');
         const cursorDot = document.getElementById('custom-cursor-dot');
 
@@ -735,7 +768,6 @@
             }
         });
 
-        // 5. Live Time & Dynamic Greeting Update
         function updateTimeAndGreeting() {
             const now = new Date();
             const hours = now.getHours();
@@ -756,7 +788,6 @@
         setInterval(updateTimeAndGreeting, 1000);
         updateTimeAndGreeting();
 
-        // 6. Visitor Counter Fetch
         async function fetchVisitorCount() {
             try {
                 const res = await fetch('https://api.counterapi.dev/v1/sortamenfy-landing/visits/up');
@@ -770,7 +801,6 @@
         }
         fetchVisitorCount();
 
-        // 7. Contact Form Handler
         function handleContactSubmit(e) {
             e.preventDefault();
             const name = document.getElementById('contact-name').value;
@@ -789,7 +819,6 @@
             }
         }
 
-        // 8. Live Discord Full Profile Status (Lanyard API)
         const DISCORD_USER_ID = "1006821519395131392";
 
         async function fetchDiscordStatus() {
@@ -846,7 +875,6 @@
         fetchDiscordStatus();
         setInterval(fetchDiscordStatus, 10000);
 
-        // 9. Real-Time YouTube Video Terbaru & Live Stream Auto-Fetch
         const YT_CHANNEL_ID = "UCMfAgJBOWTUq_QKq5dFEsww";
 
         async function fetchLatestYouTube() {
