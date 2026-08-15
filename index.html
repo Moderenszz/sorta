@@ -128,6 +128,25 @@
             animation: screenShake 0.25s ease-in-out both;
         }
 
+        /* Getaran intens khusus saat retakan berjalan */
+        @keyframes heavyRumble {
+            0% { transform: translate(0, 0); }
+            10% { transform: translate(-2px, 3px); }
+            20% { transform: translate(3px, -2px); }
+            30% { transform: translate(-4px, -1px); }
+            40% { transform: translate(2px, 4px); }
+            50% { transform: translate(-3px, -3px); }
+            60% { transform: translate(4px, 1px); }
+            70% { transform: translate(-1px, -4px); }
+            80% { transform: translate(2px, 2px); }
+            90% { transform: translate(-2px, -2px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        .rumble-screen {
+            animation: heavyRumble 3.5s ease-in-out infinite;
+        }
+
         .black-flash-overlay {
             position: fixed;
             inset: 0;
@@ -206,7 +225,6 @@
             filter: drop-shadow(0 0 15px #38bdf8) drop-shadow(0 0 35px #0284c7);
             stroke-dasharray: 1200;
             stroke-dashoffset: 1200;
-            /* Durasi retakan menyebar perlahan selama 3.5 detik pertama */
             transition: stroke-dashoffset 3.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
@@ -252,7 +270,7 @@
             100% { top: 100%; opacity: 0; }
         }
 
-        /* Teks "MEJEUH EUY!" Besar Tanpa Kotak Mengambang Bebas di Tengah */
+        /* Teks "MEJEUH EUY!" Besar Tanpa Kotak Mengambang Bebas di Tengah dengan Efek Shiny Shimmer */
         .mejeh-giant-text {
             position: relative;
             z-index: 20;
@@ -274,8 +292,13 @@
         #mejeh-modal.active .mejeh-giant-text {
             transform: scale(1) rotate(0deg);
             opacity: 1;
-            /* Muncul setelah retakan dan petir menyambar (detik ke-2) */
             transition-delay: 2.0s;
+            animation: mejehFloat 3s ease-in-out infinite alternate 3.2s;
+        }
+
+        @keyframes mejehFloat {
+            0% { transform: translateY(0px) scale(1) rotate(0deg); }
+            100% { transform: translateY(-10px) scale(1.02) rotate(1deg); }
         }
     </style>
 </head>
@@ -342,7 +365,7 @@
                 <path class="crack-path crack-path-4" d="M 500 500 L 580 480 L 670 510 L 780 450 L 870 420 L 940 370 L 1000 330" />
             </svg>
             
-            <!-- Teks "MEJEUH EUY!" Keluar Tanpa Kotak Background -->
+            <!-- Teks "MEJEUH EUY!" Keluar Tanpa Kotak Background dengan Efek Shiny -->
             <div class="mejeh-giant-text">
                 MEJEUH EUYY!
             </div>
@@ -713,6 +736,44 @@
             }
         }
 
+        // --- SFX AUDIO SYNTHESIS: SHINY CHIME SAAT KATA "MEJEUH EUY" KELUAR ---
+        function playShinyChimeSound() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                const now = audioCtx.currentTime;
+                // Nada-nada tinggi berurutan ala efek "shiny" / magis kristal (Arpeggio Sinar)
+                const frequencies = [1046.50, 1318.51, 1567.98, 2093.00, 2637.02]; // C6, E6, G6, C7, E7
+
+                frequencies.forEach((freq, index) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+
+                    osc.type = 'sine'; // Suara lembut berkilau khas lonceng/kristal
+                    osc.frequency.setValueAtTime(freq, now + (index * 0.08));
+
+                    // Envelope cepat melengking lalu memudar halus
+                    gain.gain.setValueAtTime(0, now + (index * 0.08));
+                    gain.gain.linearRampToValueAtTime(0.18, now + (index * 0.08) + 0.02);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + (index * 0.08) + 0.8);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start(now + (index * 0.08));
+                    osc.stop(now + (index * 0.08) + 0.85);
+                });
+
+            } catch (e) {
+                console.error("Shiny audio error:", e);
+            }
+        }
+
         const bgMusic = document.getElementById('bg-music');
         const musicToggle = document.getElementById('music-toggle');
         const musicText = document.getElementById('music-text');
@@ -748,13 +809,12 @@
             }
         });
 
-        // --- SISTEM COOLDOWN 1 MENIT & ANIMASI RETAKAN 10 DETIK "MEJEUH EUY" ---
+        // --- SISTEM COOLDOWN 1 MENIT & ANIMASI RETAKAN 10 DETIK + GETARAN + SFX SHINY ---
         let isMejehOnCooldown = false;
 
         function triggerMejehEffect() {
             if (isMejehOnCooldown) return;
 
-            // Aktifkan cooldown 60 detik (1 menit)
             isMejehOnCooldown = true;
             const mejehBtn = document.getElementById('mejeh-btn');
             const mejehBtnText = document.getElementById('mejeh-btn-text');
@@ -777,19 +837,25 @@
                 }
             }, 1000);
 
+            // Suara awal petir / sambaran
             playBlackFlashSound();
-            document.body.classList.add('shake-screen');
-            setTimeout(() => {
-                document.body.classList.remove('shake-screen');
-            }, 300);
+
+            // Aktifkan geteran layar (rumble screen) selama retakan berjalan
+            document.body.classList.add('rumble-screen');
 
             const modal = document.getElementById('mejeh-modal');
             if (modal) {
                 modal.classList.add('active');
             }
 
-            // Animasi berjalan total 10 detik, lalu modal tertutup otomatis
+            // Pada detik ke-2 (pas teks "Mejeuh Euy" muncul keluar), trigger suara SFX Shiny / Chime magis
             setTimeout(() => {
+                playShinyChimeSound();
+            }, 2000);
+
+            // Total durasi efek 10 detik, lalu hentikan geteran dan tutup modal
+            setTimeout(() => {
+                document.body.classList.remove('rumble-screen');
                 closeMejehModal();
             }, 10000);
         }
@@ -799,6 +865,7 @@
             if (modal) {
                 modal.classList.remove('active');
             }
+            document.body.classList.remove('rumble-screen');
         }
 
         document.addEventListener('click', function (e) {
