@@ -160,7 +160,7 @@
             100% { opacity: 0; }
         }
 
-        /* Styling Modal Retakan & Teks Mejeh euy */
+        /* Styling Modal Retakan & Animasi Perlahan "Mejeuh euy" */
         #mejeh-modal {
             position: fixed;
             inset: 0;
@@ -168,11 +168,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(3, 7, 30, 0.85);
-            backdrop-filter: blur(8px);
+            background: rgba(3, 7, 30, 0.9);
+            backdrop-filter: blur(10px);
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
         }
         #mejeh-modal.active {
             opacity: 1;
@@ -184,43 +184,56 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 100vw;
+            height: 100vh;
         }
 
-        /* Animasi Retakan Membelah Layar */
-        .crack-line {
+        /* SVG Retakan Petir Cyan yang menyebar perlahan */
+        .crack-svg {
             position: absolute;
-            background: linear-gradient(90deg, transparent, #38bdf8, #ffffff, #38bdf8, transparent);
-            height: 3px;
-            width: 0;
-            box-shadow: 0 0 15px #38bdf8, 0 0 30px #0284c7;
-            transform-origin: center;
-            transition: width 0.4s cubic-bezier(0.1, 1, 0.3, 1);
-        }
-        #mejeh-modal.active .crack-line-1 {
-            width: 320px;
-            transform: rotate(-12deg);
-        }
-        #mejeh-modal.active .crack-line-2 {
-            width: 280px;
-            transform: rotate(25deg);
-        }
-        #mejeh-modal.active .crack-line-3 {
-            width: 350px;
-            transform: rotate(78deg);
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
         }
 
-        /* Teks Mejeh euy muncul dari tengah retakan */
+        .crack-path {
+            stroke: #38bdf8;
+            stroke-width: 3.5;
+            stroke-linecap: round;
+            fill: none;
+            filter: drop-shadow(0 0 12px #38bdf8) drop-shadow(0 0 25px #0284c7);
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            transition: stroke-dashoffset 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        #mejeh-modal.active .crack-path-1 {
+            stroke-dashoffset: 0;
+            transition-delay: 0.05s;
+        }
+        #mejeh-modal.active .crack-path-2 {
+            stroke-dashoffset: 0;
+            transition-delay: 0.2s;
+        }
+        #mejeh-modal.active .crack-path-3 {
+            stroke-dashoffset: 0;
+            transition-delay: 0.35s;
+        }
+
+        /* Kotak Teks "Mejeuh euy" Keluar dari Tengah Retakan */
         .mejeh-text-box {
             position: relative;
             z-index: 10;
-            transform: scale(0) rotate(-15deg);
+            transform: scale(0) rotate(-10deg);
             opacity: 0;
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
             text-align: center;
         }
         #mejeh-modal.active .mejeh-text-box {
             transform: scale(1) rotate(0deg);
             opacity: 1;
+            transition-delay: 0.5s; /* Muncul setelah retakan hampir selesai */
         }
     </style>
 </head>
@@ -268,25 +281,28 @@
 
     <!-- Background Music Audio Player -->
     <audio id="bg-music" src="https://corsproxy.io/?https://rr2---sn-5hnekn7s.googlevideo.com/videoplayback?expire=1710000000&id=UJs6__K7gSY" preload="auto" loop></audio>
-    <!-- Tombol Kontrol Audio Floating Lofi -->
     <button id="music-toggle" class="sound-btn fixed bottom-6 right-6 z-[9999] px-4 py-2.5 bg-slate-900/80 border border-cyan-500/30 rounded-full text-xs font-mono text-cyan-300 backdrop-blur-md hover:bg-slate-800 transition-all shadow-xl flex items-center gap-2 group">
         <i id="music-icon" class="fa-solid fa-music text-cyan-400 animate-pulse"></i>
         <span id="music-text">STOP LOFI</span>
     </button>
 
-    <!-- MODAL "MEJEH EUY" DARI RETAKAN -->
+    <!-- MODAL "MEJEUH EUY" DENGAN RETAKAN SVG PERLAHAN -->
     <div id="mejeh-modal" onclick="closeMejehModal()">
         <div class="crack-container">
-            <div class="crack-line crack-line-1"></div>
-            <div class="crack-line crack-line-2"></div>
-            <div class="crack-line crack-line-3"></div>
+            <!-- SVG Petir Retakan Membelah Layar -->
+            <svg class="crack-svg" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+                <path class="crack-path crack-path-1" d="M 500 500 L 450 420 L 480 320 L 390 200 L 320 100 L 250 0" />
+                <path class="crack-path crack-path-2" d="M 500 500 L 560 590 L 530 700 L 620 810 L 700 900 L 780 1000" />
+                <path class="crack-path crack-path-3" d="M 500 500 L 400 540 L 300 510 L 180 580 L 100 620 L 0 680" />
+                <path class="crack-path crack-path-1" d="M 500 500 L 610 460 L 720 490 L 830 410 L 910 380 L 1000 320" />
+            </svg>
             
-            <div class="mejeh-text-box p-8 rounded-3xl bg-slate-900/90 border border-cyan-400/50 shadow-2xl shadow-cyan-500/30 backdrop-blur-xl">
-                <span class="text-xs uppercase font-mono text-cyan-400 tracking-widest block mb-2">Secret Event Triggered</span>
+            <div class="mejeh-text-box p-8 rounded-3xl bg-slate-900/95 border border-cyan-400/60 shadow-2xl shadow-cyan-500/40 backdrop-blur-xl max-w-md mx-4">
+                <span class="text-xs uppercase font-mono text-cyan-400 tracking-widest block mb-2">Secret Burst Triggered</span>
                 <h2 class="text-4xl sm:text-6xl font-black text-white tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-white to-blue-400 mb-4">
-                    Mejeh euy!
+                    Mejeuh euy!
                 </h2>
-                <p class="text-slate-300 text-sm sm:text-base max-w-xs mx-auto mb-6">
+                <p class="text-slate-300 text-sm sm:text-base mb-6">
                     Energi petir cyan menyebar sempurna! Tetap semangat berkarya dan ngoding bro! ⚡
                 </p>
                 <button onclick="closeMejehModal()" class="sound-btn px-6 py-2.5 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-xs tracking-wider uppercase hover:scale-105 transition-all shadow-lg shadow-cyan-500/30">
@@ -375,9 +391,9 @@
                     <button onclick="openTab('about')" class="sound-btn px-8 py-4 rounded-full bg-white/10 hover:bg-white/20 text-slate-100 border border-white/20 font-semibold backdrop-blur-md transition-all">
                         MORE INFO
                     </button>
-                    <!-- Tombol Mejeh Euy di kanan More Info -->
-                    <button onclick="triggerMejehEffect()" class="sound-btn px-7 py-4 rounded-full bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-400/40 font-semibold backdrop-blur-md transition-all shadow-lg shadow-cyan-500/20 flex items-center gap-2">
-                        <i class="fa-solid fa-bolt text-cyan-400 animate-pulse"></i> Mejeh euy
+                    <!-- Tombol Mejeuh Euy dengan cooldown & indikator -->
+                    <button id="mejeh-btn" onclick="triggerMejehEffect()" class="sound-btn px-7 py-4 rounded-full bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-400/40 font-semibold backdrop-blur-md transition-all shadow-lg shadow-cyan-500/20 flex items-center gap-2">
+                        <i class="fa-solid fa-bolt text-cyan-400 animate-pulse"></i> <span id="mejeh-btn-text">Mejeuh euy</span>
                     </button>
                 </div>
             </div>
@@ -616,7 +632,6 @@
 
         let audioCtx = null;
 
-        // Fungsi Audio Listrik & Impact Cyan (Electric Spark Sound)
         function playBlackFlashSound() {
             try {
                 if (!audioCtx) {
@@ -628,7 +643,6 @@
 
                 const now = audioCtx.currentTime;
 
-                // Electric Crackle Zap (Cyan/Blue Spark frequency)
                 const oscZap = audioCtx.createOscillator();
                 const gainZap = audioCtx.createGain();
                 oscZap.type = 'sawtooth';
@@ -643,7 +657,6 @@
                 oscZap.start(now);
                 oscZap.stop(now + 0.25);
 
-                // Deep Impact Thud
                 const oscThud = audioCtx.createOscillator();
                 const gainThud = audioCtx.createGain();
                 oscThud.type = 'triangle';
@@ -663,7 +676,6 @@
             }
         }
 
-        // --- BACKGROUND MUSIC LOFI PLAYER SCRIPT ---
         const bgMusic = document.getElementById('bg-music');
         const musicToggle = document.getElementById('music-toggle');
         const musicText = document.getElementById('music-text');
@@ -699,7 +711,61 @@
             }
         });
 
-        // Trigger Efek Petir Cyan + Layar Bergetar
+        // --- SISTEM COOLDOWN & ANIMASI RETAKAN "MEJEUH EUY" ---
+        let isMejehOnCooldown = false;
+
+        function triggerMejehEffect() {
+            if (isMejehOnCooldown) return;
+
+            // Aktifkan cooldown 60 detik (1 menit)
+            isMejehOnCooldown = true;
+            const mejehBtn = document.getElementById('mejeh-btn');
+            const mejehBtnText = document.getElementById('mejeh-btn-text');
+            if (mejehBtn) {
+                mejehBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+
+            let timeLeft = 60;
+            const cdInterval = setInterval(() => {
+                if (timeLeft > 0) {
+                    if (mejehBtnText) mejehBtnText.innerText = `Cooldown (${timeLeft}s)`;
+                    timeLeft--;
+                } else {
+                    clearInterval(cdInterval);
+                    isMejehOnCooldown = false;
+                    if (mejehBtnText) mejehBtnText.innerText = "Mejeuh euy";
+                    if (mejehBtn) {
+                        mejehBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    }
+                }
+            }, 1000);
+
+            playBlackFlashSound();
+            document.body.classList.add('shake-screen');
+            setTimeout(() => {
+                document.body.classList.remove('shake-screen');
+            }, 250);
+
+            const modal = document.getElementById('mejeh-modal');
+            if (modal) {
+                modal.classList.add('active');
+            }
+        }
+
+        function closeMejehModal() {
+            const modal = document.getElementById('mejeh-modal');
+            if (modal) {
+                modal.classList.remove('active');
+            }
+        }
+
+        document.addEventListener('click', function (e) {
+            const btn = e.target.closest('.sound-btn');
+            if (btn && !btn.id.includes('music-toggle') && btn.id !== 'mejeh-btn') {
+                triggerBlackFlash({ currentTarget: btn });
+            }
+        });
+
         function triggerBlackFlash(event) {
             playBlackFlashSound();
 
@@ -735,35 +801,6 @@
                 overlay.remove();
             }, 350);
         }
-
-        // Fungsi khusus untuk tombol "Mejeh euy" (Memicu retakan layar & teks tengah)
-        function triggerMejehEffect() {
-            playBlackFlashSound();
-            document.body.classList.add('shake-screen');
-            setTimeout(() => {
-                document.body.classList.remove('shake-screen');
-            }, 250);
-
-            const modal = document.getElementById('mejeh-modal');
-            if (modal) {
-                modal.classList.add('active');
-            }
-        }
-
-        function closeMejehModal() {
-            const modal = document.getElementById('mejeh-modal');
-            if (modal) {
-                modal.classList.remove('active');
-            }
-        }
-
-        // Pasang event ke semua tombol bersistem .sound-btn secara otomatis
-        document.addEventListener('click', function (e) {
-            const btn = e.target.closest('.sound-btn');
-            if (btn && !btn.id.includes('music-toggle')) {
-                triggerBlackFlash({ currentTarget: btn });
-            }
-        });
 
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
