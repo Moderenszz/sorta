@@ -97,11 +97,71 @@
             transform: translate(-50%, -50%);
             z-index: 10000;
         }
+
+        /* Black Flash Aura & Impact Animation */
+        @keyframes blackFlashShockwave {
+            0% {
+                transform: scale(0.2);
+                opacity: 1;
+                box-shadow: 0 0 0 0 rgba(192, 132, 252, 0.9), 0 0 0 0 rgba(147, 51, 234, 0.8);
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(3.5);
+                opacity: 0;
+                box-shadow: 0 0 100px 50px rgba(168, 85, 247, 0), 0 0 200px 100px rgba(99, 102, 241, 0);
+            }
+        }
+
+        @keyframes screenShake {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            20% { transform: translate(-12px, 8px) rotate(-1deg); }
+            40% { transform: translate(12px, -10px) rotate(1.5deg); }
+            60% { transform: translate(-8px, -6px) rotate(-1deg); }
+            80% { transform: translate(8px, 6px) rotate(0.5deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        .shake-screen {
+            animation: screenShake 0.35s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        }
+
+        .black-flash-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 999999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .black-flash-spark {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(216,180,254,0.9) 30%, rgba(147,51,234,0.6) 60%, transparent 100%);
+            border-radius: 50%;
+            animation: blackFlashShockwave 0.5s ease-out forwards;
+        }
+
+        .black-flash-flashbang {
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.9);
+            animation: flashbangFade 0.4s ease-out forwards;
+        }
+
+        @keyframes flashbangFade {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
     </style>
 </head>
 <body class="relative min-h-screen bg-slate-950 flex flex-col justify-between overflow-x-hidden text-white">
 
-    <!-- CINEMATIC INTRO SCREEN (3-5 Detik, Auto Dismiss, Non-Clickable) -->
+    <!-- CINEMATIC INTRO SCREEN -->
     <div id="intro-screen">
         <div class="absolute inset-0 bg-gradient-to-br from-[#03071e] via-[#03045e] to-[#0077b6] opacity-95 -z-10"></div>
         <div class="absolute w-[30rem] h-[30rem] bg-cyan-500/15 rounded-full blur-3xl pointer-events-none"></div>
@@ -117,7 +177,6 @@
                 Roblox Developer & Digital Creator
             </p>
 
-            <!-- Preview Tech & Socials di Intro -->
             <div class="flex flex-wrap justify-center gap-2 mb-4">
                 <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs text-slate-300 flex items-center gap-1.5"><i class="fa-solid fa-gamepad text-cyan-400"></i> Luau</span>
                 <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs text-slate-300 flex items-center gap-1.5"><i class="fa-brands fa-youtube text-red-500"></i> YouTube</span>
@@ -155,7 +214,6 @@
                     <span class="font-bold tracking-widest text-2xl bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-200 block">
                         SORTAMENFY
                     </span>
-                    <!-- Live Time Badge -->
                     <span id="live-time" class="text-xs text-cyan-300 font-mono tracking-wider">
                         00:00:00 WIB
                     </span>
@@ -186,7 +244,6 @@
             <div id="home" class="tab-content active max-w-3xl">
                 
                 <div class="flex flex-wrap items-center gap-3 mb-6">
-                    <!-- Dynamic Greeting Badge -->
                     <div class="px-4 py-1.5 bg-cyan-500/10 border border-cyan-400/30 backdrop-blur-md rounded-full text-xs font-semibold tracking-wider text-cyan-300 uppercase">
                         <span id="greeting-text">Welcome!</span>
                     </div>
@@ -272,7 +329,7 @@
                 </div>
             </div>
 
-            <!-- TAB FEEDS (REAL-TIME YOUTUBE FEED & LIVE STREAM) -->
+            <!-- TAB FEEDS -->
             <div id="feeds" class="tab-content max-w-4xl">
                 <span class="inline-block px-4 py-1.5 text-xs font-semibold tracking-widest text-cyan-300 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-6 uppercase">
                     Latest Content
@@ -283,7 +340,6 @@
                 <p class="text-slate-300 text-sm mb-8">Video terbaru dan siaran langsung otomatis terupdate secara real-time dari YouTube channel.</p>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Section Video Upload Terbaru -->
                     <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md flex flex-col justify-between">
                         <div>
                             <div class="flex items-center justify-between mb-4">
@@ -304,7 +360,6 @@
                         </a>
                     </div>
 
-                    <!-- Section Live Stream Status -->
                     <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md flex flex-col justify-between">
                         <div>
                             <div class="flex items-center justify-between mb-4">
@@ -334,13 +389,13 @@
                 </h2>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-                    <!-- Saweria -->
-                    <a href="https://saweria.co/sortamenfy" target="_blank" rel="noopener noreferrer" class="sound-btn flex items-center justify-between p-4 rounded-2xl bg-white/5 hover:bg-amber-500/10 border border-white/10 hover:border-amber-500/30 text-slate-200 transition-all sm:col-span-2 group">
-                        <div class="flex items-center gap-4">
+                    <!-- Saweria dengan Trigger Black Flash Yuji Itadori -->
+                    <a href="https://saweria.co/sortamenfy" onclick="triggerBlackFlash(event)" target="_blank" rel="noopener noreferrer" class="sound-btn flex items-center justify-between p-4 rounded-2xl bg-white/5 hover:bg-amber-500/10 border border-white/10 hover:border-amber-500/30 text-slate-200 transition-all sm:col-span-2 group relative overflow-hidden">
+                        <div class="flex items-center gap-4 relative z-10">
                             <i class="fa-solid fa-heart text-amber-400 text-2xl group-hover:scale-110 transition-transform"></i>
-                            <span class="font-semibold text-base">Saweria (Support Me)</span>
+                            <span class="font-semibold text-base">Saweria (Support Me) <span class="text-xs text-purple-400 ml-2 font-mono">[⚡ Black Flash Strike!]</span></span>
                         </div>
-                        <span class="text-xs px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 font-medium">Support</span>
+                        <span class="text-xs px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 font-medium relative z-10">Support</span>
                     </a>
 
                     <!-- YouTube -->
@@ -411,7 +466,6 @@
         <footer class="flex flex-wrap items-center justify-between text-sm text-slate-400 border-t border-white/10 pt-6 gap-4">
             <div class="flex items-center gap-4">
                 <span>&copy; 2026 Sortamenfy. All rights reserved.</span>
-                <!-- Visitor Counter Badge -->
                 <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-cyan-300 flex items-center gap-1.5">
                     <i class="fa-solid fa-eye text-cyan-400"></i>
                     <span id="visit-count">...</span> views
@@ -427,7 +481,6 @@
 
     <!-- JavaScript Root -->
     <script>
-        // Auto dismiss cinematic intro after ~3.5 seconds
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 const intro = document.getElementById('intro-screen');
@@ -438,7 +491,6 @@
             }, 3200);
         });
 
-        // 1. Tab Navigation Function
         function openTab(tabName) {
             const tabs = document.querySelectorAll('.tab-content');
             tabs.forEach(tab => tab.classList.remove('active'));
@@ -461,7 +513,6 @@
             }
         }
 
-        // 2. Audio Context Sound Effect
         let audioCtx = null;
         function playBubbleSound() {
             try {
@@ -489,13 +540,131 @@
 
                 osc.start(now);
                 osc.stop(now + 0.08);
+            } catch (e) {}
+        }
+
+        // Fungsi Audio Khusus Sfx Black Flash Yuji Itadori (Cursed Energy Impact & Distortion)
+        function playBlackFlashSound() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                const now = audioCtx.currentTime;
+
+                // 1. Suara Impact / Pukulan Berat Bergemuruh (Sub-bass drop)
+                const oscImpact = audioCtx.createOscillator();
+                const gainImpact = audioCtx.createGain();
+                oscImpact.type = 'triangle';
+                oscImpact.frequency.setValueAtTime(180, now);
+                oscImpact.frequency.exponentialRampToValueAtTime(30, now + 0.45);
+
+                gainImpact.gain.setValueAtTime(0.7, now);
+                gainImpact.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+
+                oscImpact.connect(gainImpact);
+                gainImpact.connect(audioCtx.destination);
+                oscImpact.start(now);
+                osc.stop ? oscImpact.stop(now + 0.45) : null;
+
+                // 2. Suara Sambaran Kilat Energi Kutukan (Spark Distortion Tone)
+                const oscSpark = audioCtx.createOscillator();
+                const gainSpark = audioCtx.createGain();
+                oscSpark.type = 'sawtooth';
+                oscSpark.frequency.setValueAtTime(900, now);
+                oscSpark.frequency.exponentialRampToValueAtTime(120, now + 0.3);
+
+                gainSpark.gain.setValueAtTime(0.4, now);
+                gainSpark.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+
+                oscSpark.connect(gainSpark);
+                gainSpark.connect(audioCtx.destination);
+                oscSpark.start(now);
+                oscSpark.stop(now + 0.3);
+
+                // 3. White Noise untuk Efek Hantaman Ruang/Spark Crack (Black Flash distortion lag 0.0001s feel)
+                setTimeout(() => {
+                    if (!audioCtx) return;
+                    const bufferSize = audioCtx.sampleRate * 0.25;
+                    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                    const data = buffer.getChannelData(0);
+                    for (let i = 0; i < bufferSize; i++) {
+                        data[i] = Math.random() * 2 - 1;
+                    }
+
+                    const noise = audioCtx.createBufferSource();
+                    noise.buffer = buffer;
+
+                    const filter = audioCtx.createBiquadFilter();
+                    filter.type = 'bandpass';
+                    filter.frequency.value = 800;
+
+                    const noiseGain = audioCtx.createGain();
+                    noiseGain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+                    noiseGain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+
+                    noise.connect(filter);
+                    filter.connect(noiseGain);
+                    noiseGain.connect(audioCtx.destination);
+
+                    noise.start();
+                }, 80); // Slight delay khas efek hitam petir menyusul hantaman
+
             } catch (e) {
-                // Audio Context fallback
+                console.error("Audio error:", e);
             }
         }
 
+        // Fungsi Trigger Efek Visual & Suara Black Flash saat Tombol Saweria (Sortamenfy) Ditekan
+        function triggerBlackFlash(event) {
+            // Putar SFX Black Flash
+            playBlackFlashSound();
+
+            // Efek Screen Shake pada Body
+            document.body.classList.add('shake-screen');
+            setTimeout(() => {
+                document.body.classList.remove('shake-screen');
+            }, 350);
+
+            // Buat Elemen Overlay Aura Hitam & Ungu Petir Khas Yuji Itadori
+            const overlay = document.createElement('div');
+            overlay.className = 'black-flash-overlay';
+
+            // Flashbang putih sesaat sebelum petir hitam muncul
+            const flash = document.createElement('div');
+            flash.className = 'black-flash-flashbang';
+            overlay.appendChild(flash);
+
+            // Munculkan gelombang aura petir merah-ungu (Black Flash Sparks) dari titik klik
+            const rect = event.currentTarget.getBoundingClientRect();
+            const clickX = rect.left + rect.width / 2;
+            const clickY = rect.top + rect.height / 2;
+
+            for (let i = 0; i < 4; i++) {
+                const spark = document.createElement('div');
+                spark.className = 'black-flash-spark';
+                const size = Math.random() * 300 + 200;
+                spark.style.width = `${size}px`;
+                spark.style.height = `${size}px`;
+                spark.style.left = `${clickX - size / 2}px`;
+                spark.style.top = `${clickY - size / 2}px`;
+                spark.style.animationDelay = `${i * 0.05}s`;
+                overlay.appendChild(spark);
+            }
+
+            document.body.appendChild(overlay);
+
+            // Hapus elemen overlay setelah animasi selesai
+            setTimeout(() => {
+                overlay.remove();
+            }, 600);
+        }
+
         document.addEventListener('click', function (e) {
-            if (e.target.closest('.sound-btn')) {
+            if (e.target.closest('.sound-btn') && !e.target.closest('a[onclick*="triggerBlackFlash"]')) {
                 playBubbleSound();
             }
         });
@@ -682,7 +851,7 @@
 
         async function fetchLatestYouTube() {
             try {
-                const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${UCMfAgJBOWTUq_QKq5dFEsww}`;
+                const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${YT_CHANNEL_ID}`;
                 const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`);
                 const data = await res.json();
 
@@ -712,7 +881,7 @@
 
             const liveFrame = document.getElementById('youtube-live-frame');
             if (liveFrame) {
-                liveFrame.src = `https://www.youtube.com/embed/live_stream?channel=${UCMfAgJBOWTUq_QKq5dFEsww}`;
+                liveFrame.src = `https://www.youtube.com/embed/live_stream?channel=${YT_CHANNEL_ID}`;
             }
         }
 
