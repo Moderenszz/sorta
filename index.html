@@ -98,17 +98,20 @@
             z-index: 10000;
         }
 
-        /* Black Flash Minimalist & Optimized Impact (Yuji Itadori Style: Red sparks + dark aura) */
-        @keyframes blackFlashBurst {
+        /* Black Flash Lightning Spark (Bukan bulet, tapi garis petir tajam ala Yuji Itadori) */
+        @keyframes lightningFlash {
             0% {
-                transform: scale(0.5);
+                transform: scale(0.4) rotate(var(--rot, 0deg));
                 opacity: 1;
-                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8), 0 0 0 0 rgba(0, 0, 0, 0.9);
+                filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.9));
+            }
+            50% {
+                opacity: 1;
             }
             100% {
-                transform: scale(1.6);
+                transform: scale(1.4) rotate(var(--rot, 0deg));
                 opacity: 0;
-                box-shadow: 0 0 35px 20px rgba(239, 68, 68, 0), 0 0 60px 30px rgba(0, 0, 0, 0);
+                filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0));
             }
         }
 
@@ -136,11 +139,13 @@
             overflow: hidden;
         }
 
-        .black-flash-spark {
+        .black-flash-lightning {
             position: absolute;
-            background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(239,68,68,0.85) 30%, rgba(153,27,27,0.6) 65%, rgba(0,0,0,0.8) 100%);
-            border-radius: 50%;
-            animation: blackFlashBurst 0.3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, transparent 40%, rgba(239, 68, 68, 0.95) 50%, transparent 60%);
+            clip-path: polygon(50% 0%, 20% 40%, 60% 45%, 10% 100%, 90% 50%, 40% 45%);
+            animation: lightningFlash 0.3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
         }
 
         .black-flash-vignette {
@@ -605,7 +610,7 @@
             }
         });
 
-        // Trigger Black Flash Optimal (VFX Merah-Hitam proporsional + Layar Bergetar + Suara Listrik)
+        // Trigger Black Flash dengan efek petir tajam (bukan bulat) + layar bergetar
         function triggerBlackFlash(event) {
             playBlackFlashSound();
 
@@ -625,17 +630,15 @@
             const clickX = rect.left + rect.width / 2;
             const clickY = rect.top + rect.height / 2;
 
-            // Membuat percikan aura merah-hitam proporsional agar tidak lag / tidak terlalu besar
-            for (let i = 0; i < 3; i++) {
-                const spark = document.createElement('div');
-                spark.className = 'black-flash-spark';
-                const size = Math.random() * 120 + 90;
-                spark.style.width = `${size}px`;
-                spark.style.height = `${size}px`;
-                spark.style.left = `${clickX - size / 2}px`;
-                spark.style.top = `${clickY - size / 2}px`;
-                spark.style.animationDelay = `${i * 0.03}s`;
-                overlay.appendChild(spark);
+            // Membuat percikan sambaran petir tajam menyerupai cursed energy Yuji Itadori
+            for (let i = 0; i < 4; i++) {
+                const lightning = document.createElement('div');
+                lightning.className = 'black-flash-lightning';
+                lightning.style.left = `${clickX - 45}px`;
+                lightning.style.top = `${clickY - 45}px`;
+                lightning.style.setProperty('--rot', `${Math.random() * 360}deg`);
+                lightning.style.animationDelay = `${i * 0.02}s`;
+                overlay.appendChild(lightning);
             }
 
             document.body.appendChild(overlay);
