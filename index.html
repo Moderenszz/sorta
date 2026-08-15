@@ -160,7 +160,7 @@
             100% { opacity: 0; }
         }
 
-        /* Styling Modal Retakan & Animasi Perlahan "Mejeuh euy" */
+        /* Styling Cinematic "Mejeuh euyy!" Langsung Full Layar Tanpa Kotak (Durasi Total ~10 Detik) */
         #mejeh-modal {
             position: fixed;
             inset: 0;
@@ -168,11 +168,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(3, 7, 30, 0.9);
-            backdrop-filter: blur(10px);
+            background: rgba(3, 7, 30, 0.95);
+            backdrop-filter: blur(12px);
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
         #mejeh-modal.active {
             opacity: 1;
@@ -186,9 +186,10 @@
             justify-content: center;
             width: 100vw;
             height: 100vh;
+            overflow: hidden;
         }
 
-        /* SVG Retakan Petir Cyan yang menyebar perlahan */
+        /* SVG Retakan yang Menyebar Perlahan Dari Kecil ke Gede (Total Animasi 10 Detik) */
         .crack-svg {
             position: absolute;
             inset: 0;
@@ -199,41 +200,82 @@
 
         .crack-path {
             stroke: #38bdf8;
-            stroke-width: 3.5;
+            stroke-width: 4;
             stroke-linecap: round;
             fill: none;
-            filter: drop-shadow(0 0 12px #38bdf8) drop-shadow(0 0 25px #0284c7);
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            transition: stroke-dashoffset 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            filter: drop-shadow(0 0 15px #38bdf8) drop-shadow(0 0 35px #0284c7);
+            stroke-dasharray: 1200;
+            stroke-dashoffset: 1200;
+            /* Durasi retakan menyebar perlahan selama 3.5 detik pertama */
+            transition: stroke-dashoffset 3.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         #mejeh-modal.active .crack-path-1 {
             stroke-dashoffset: 0;
-            transition-delay: 0.05s;
+            transition-delay: 0.1s;
         }
         #mejeh-modal.active .crack-path-2 {
             stroke-dashoffset: 0;
-            transition-delay: 0.2s;
+            transition-delay: 0.4s;
         }
         #mejeh-modal.active .crack-path-3 {
             stroke-dashoffset: 0;
-            transition-delay: 0.35s;
+            transition-delay: 0.7s;
+        }
+        #mejeh-modal.active .crack-path-4 {
+            stroke-dashoffset: 0;
+            transition-delay: 1.0s;
         }
 
-        /* Kotak Teks "Mejeuh euy" Keluar dari Tengah Retakan */
-        .mejeh-text-box {
-            position: relative;
-            z-index: 10;
-            transform: scale(0) rotate(-10deg);
+        /* Animasi Petir Menyambar dari Atas ke Bawah di Layar */
+        .top-lightning-bolt {
+            position: absolute;
+            top: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #38bdf8, #ffffff, #38bdf8, transparent);
+            box-shadow: 0 0 25px #38bdf8, 0 0 50px #0284c7;
             opacity: 0;
-            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        #mejeh-modal.active .top-lightning-bolt {
+            animation: strikeLightningDown 0.8s ease-in-out 1.2s forwards;
+        }
+
+        @keyframes strikeLightningDown {
+            0% { top: -100%; opacity: 0; }
+            30% { opacity: 1; }
+            50% { top: 0%; opacity: 1; filter: brightness(2); }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        /* Teks "MEJEUH EUY!" Besar Tanpa Kotak Mengambang Bebas di Tengah */
+        .mejeh-giant-text {
+            position: relative;
+            z-index: 20;
+            font-size: clamp(3rem, 9vw, 9rem);
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: #ffffff;
+            background: linear-gradient(135deg, #ffffff 20%, #38bdf8 60%, #1d4ed8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 35px rgba(56, 189, 248, 0.7));
+            transform: scale(0.1) rotate(-8deg);
+            opacity: 0;
+            transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 1s ease;
             text-align: center;
         }
-        #mejeh-modal.active .mejeh-text-box {
+
+        #mejeh-modal.active .mejeh-giant-text {
             transform: scale(1) rotate(0deg);
             opacity: 1;
-            transition-delay: 0.5s; /* Muncul setelah retakan hampir selesai */
+            /* Muncul setelah retakan dan petir menyambar (detik ke-2) */
+            transition-delay: 2.0s;
         }
     </style>
 </head>
@@ -286,28 +328,23 @@
         <span id="music-text">STOP LOFI</span>
     </button>
 
-    <!-- MODAL "MEJEUH EUY" DENGAN RETAKAN SVG PERLAHAN -->
-    <div id="mejeh-modal" onclick="closeMejehModal()">
+    <!-- MODAL "MEJEUH EUY" FULL ANIMASI 10 DETIK TANPA KOTAK -->
+    <div id="mejeh-modal">
         <div class="crack-container">
-            <!-- SVG Petir Retakan Membelah Layar -->
+            <!-- Petir Menyambar dari Atas ke Bawah -->
+            <div class="top-lightning-bolt"></div>
+
+            <!-- SVG Retakan Kecil Membesar Menyeluruh -->
             <svg class="crack-svg" viewBox="0 0 1000 1000" preserveAspectRatio="none">
-                <path class="crack-path crack-path-1" d="M 500 500 L 450 420 L 480 320 L 390 200 L 320 100 L 250 0" />
-                <path class="crack-path crack-path-2" d="M 500 500 L 560 590 L 530 700 L 620 810 L 700 900 L 780 1000" />
-                <path class="crack-path crack-path-3" d="M 500 500 L 400 540 L 300 510 L 180 580 L 100 620 L 0 680" />
-                <path class="crack-path crack-path-1" d="M 500 500 L 610 460 L 720 490 L 830 410 L 910 380 L 1000 320" />
+                <path class="crack-path crack-path-1" d="M 500 500 L 470 450 L 490 360 L 410 250 L 350 150 L 280 40 L 220 0" />
+                <path class="crack-path crack-path-2" d="M 500 500 L 530 550 L 520 640 L 590 730 L 660 820 L 730 920 L 800 1000" />
+                <path class="crack-path crack-path-3" d="M 500 500 L 420 520 L 330 500 L 220 560 L 140 600 L 50 650 L 0 690" />
+                <path class="crack-path crack-path-4" d="M 500 500 L 580 480 L 670 510 L 780 450 L 870 420 L 940 370 L 1000 330" />
             </svg>
             
-            <div class="mejeh-text-box p-8 rounded-3xl bg-slate-900/95 border border-cyan-400/60 shadow-2xl shadow-cyan-500/40 backdrop-blur-xl max-w-md mx-4">
-                <span class="text-xs uppercase font-mono text-cyan-400 tracking-widest block mb-2">Secret Burst Triggered</span>
-                <h2 class="text-4xl sm:text-6xl font-black text-white tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-white to-blue-400 mb-4">
-                    Mejeuh euy!
-                </h2>
-                <p class="text-slate-300 text-sm sm:text-base mb-6">
-                    Energi petir cyan menyebar sempurna! Tetap semangat berkarya dan ngoding bro! ⚡
-                </p>
-                <button onclick="closeMejehModal()" class="sound-btn px-6 py-2.5 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-xs tracking-wider uppercase hover:scale-105 transition-all shadow-lg shadow-cyan-500/30">
-                    Tutup
-                </button>
+            <!-- Teks "MEJEUH EUY!" Keluar Tanpa Kotak Background -->
+            <div class="mejeh-giant-text">
+                MEJEUH EUYY!
             </div>
         </div>
     </div>
@@ -391,7 +428,7 @@
                     <button onclick="openTab('about')" class="sound-btn px-8 py-4 rounded-full bg-white/10 hover:bg-white/20 text-slate-100 border border-white/20 font-semibold backdrop-blur-md transition-all">
                         MORE INFO
                     </button>
-                    <!-- Tombol Mejeuh Euy dengan cooldown & indikator -->
+                    <!-- Tombol Mejeuh Euy dengan Cooldown 1 Menit -->
                     <button id="mejeh-btn" onclick="triggerMejehEffect()" class="sound-btn px-7 py-4 rounded-full bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-400/40 font-semibold backdrop-blur-md transition-all shadow-lg shadow-cyan-500/20 flex items-center gap-2">
                         <i class="fa-solid fa-bolt text-cyan-400 animate-pulse"></i> <span id="mejeh-btn-text">Mejeuh euy</span>
                     </button>
@@ -711,7 +748,7 @@
             }
         });
 
-        // --- SISTEM COOLDOWN & ANIMASI RETAKAN "MEJEUH EUY" ---
+        // --- SISTEM COOLDOWN 1 MENIT & ANIMASI RETAKAN 10 DETIK "MEJEUH EUY" ---
         let isMejehOnCooldown = false;
 
         function triggerMejehEffect() {
@@ -744,12 +781,17 @@
             document.body.classList.add('shake-screen');
             setTimeout(() => {
                 document.body.classList.remove('shake-screen');
-            }, 250);
+            }, 300);
 
             const modal = document.getElementById('mejeh-modal');
             if (modal) {
                 modal.classList.add('active');
             }
+
+            // Animasi berjalan total 10 detik, lalu modal tertutup otomatis
+            setTimeout(() => {
+                closeMejehModal();
+            }, 10000);
         }
 
         function closeMejehModal() {
