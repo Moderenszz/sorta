@@ -98,35 +98,31 @@
             z-index: 10000;
         }
 
-        /* Black Flash Aura & Impact Animation */
-        @keyframes blackFlashShockwave {
+        /* Black Flash Minimalist & Optimized Impact (Yuji Itadori Style: Red sparks + dark aura) */
+        @keyframes blackFlashBurst {
             0% {
-                transform: scale(0.2);
+                transform: scale(0.5);
                 opacity: 1;
-                box-shadow: 0 0 0 0 rgba(192, 132, 252, 0.9), 0 0 0 0 rgba(147, 51, 234, 0.8), 0 0 0 0 rgba(255, 255, 255, 1);
-            }
-            50% {
-                opacity: 0.9;
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8), 0 0 0 0 rgba(0, 0, 0, 0.9);
             }
             100% {
-                transform: scale(4.5);
+                transform: scale(1.6);
                 opacity: 0;
-                box-shadow: 0 0 150px 80px rgba(168, 85, 247, 0), 0 0 300px 150px rgba(99, 102, 241, 0), 0 0 50px 20px rgba(255, 255, 255, 0);
+                box-shadow: 0 0 35px 20px rgba(239, 68, 68, 0), 0 0 60px 30px rgba(0, 0, 0, 0);
             }
         }
 
         @keyframes screenShake {
             0% { transform: translate(0, 0) rotate(0deg); }
-            15% { transform: translate(-16px, 12px) rotate(-1.5deg); }
-            30% { transform: translate(16px, -14px) rotate(2deg); }
-            45% { transform: translate(-12px, -10px) rotate(-1.5deg); }
-            60% { transform: translate(12px, 10px) rotate(1deg); }
-            75% { transform: translate(-6px, -4px) rotate(-0.5deg); }
+            20% { transform: translate(-5px, 4px) rotate(-0.5deg); }
+            40% { transform: translate(5px, -4px) rotate(0.5deg); }
+            60% { transform: translate(-3px, -2px) rotate(-0.3deg); }
+            80% { transform: translate(3px, 2px) rotate(0.2deg); }
             100% { transform: translate(0, 0) rotate(0deg); }
         }
 
         .shake-screen {
-            animation: screenShake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+            animation: screenShake 0.25s ease-in-out both;
         }
 
         .black-flash-overlay {
@@ -142,19 +138,19 @@
 
         .black-flash-spark {
             position: absolute;
-            background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(216,180,254,0.95) 25%, rgba(147,51,234,0.7) 55%, transparent 100%);
+            background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(239,68,68,0.85) 30%, rgba(153,27,27,0.6) 65%, rgba(0,0,0,0.8) 100%);
             border-radius: 50%;
-            animation: blackFlashShockwave 0.55s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+            animation: blackFlashBurst 0.3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
         }
 
-        .black-flash-flashbang {
+        .black-flash-vignette {
             position: absolute;
             inset: 0;
-            background: rgba(255, 255, 255, 0.95);
-            animation: flashbangFade 0.45s cubic-bezier(0.1, 1, 0.1, 1) forwards;
+            box-shadow: inset 0 0 80px rgba(239, 68, 68, 0.6), inset 0 0 140px rgba(0, 0, 0, 0.85);
+            animation: vignetteFade 0.3s ease-out forwards;
         }
 
-        @keyframes flashbangFade {
+        @keyframes vignetteFade {
             0% { opacity: 1; }
             100% { opacity: 0; }
         }
@@ -526,7 +522,7 @@
 
         let audioCtx = null;
 
-        // Fungsi Audio Cursed Energy Impact & Distortion (Black Flash Yuji Itadori Style)
+        // Fungsi Audio Listrik & Impact Cursed Energy (Yuji Itadori Black Flash Sound)
         function playBlackFlashSound() {
             try {
                 if (!audioCtx) {
@@ -538,63 +534,35 @@
 
                 const now = audioCtx.currentTime;
 
-                // Sub-bass heavy impact
-                const oscImpact = audioCtx.createOscillator();
-                const gainImpact = audioCtx.createGain();
-                oscImpact.type = 'triangle';
-                oscImpact.frequency.setValueAtTime(200, now);
-                oscImpact.frequency.exponentialRampToValueAtTime(25, now + 0.5);
+                // Electric Crackle (Sawtooth high-pitched zap)
+                const oscZap = audioCtx.createOscillator();
+                const gainZap = audioCtx.createGain();
+                oscZap.type = 'sawtooth';
+                oscZap.frequency.setValueAtTime(1400, now);
+                oscZap.frequency.exponentialRampToValueAtTime(120, now + 0.22);
 
-                gainImpact.gain.setValueAtTime(0.8, now);
-                gainImpact.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+                gainZap.gain.setValueAtTime(0.3, now);
+                gainZap.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
 
-                oscImpact.connect(gainImpact);
-                gainImpact.connect(audioCtx.destination);
-                oscImpact.start(now);
-                oscImpact.stop(now + 0.5);
+                oscZap.connect(gainZap);
+                gainZap.connect(audioCtx.destination);
+                oscZap.start(now);
+                oscZap.stop(now + 0.22);
 
-                // Sparks crackle frequency
-                const oscSpark = audioCtx.createOscillator();
-                const gainSpark = audioCtx.createGain();
-                oscSpark.type = 'sawtooth';
-                oscSpark.frequency.setValueAtTime(1000, now);
-                oscSpark.frequency.exponentialRampToValueAtTime(100, now + 0.35);
+                // Deep Impact Thud
+                const oscThud = audioCtx.createOscillator();
+                const gainThud = audioCtx.createGain();
+                oscThud.type = 'triangle';
+                oscThud.frequency.setValueAtTime(150, now);
+                oscThud.frequency.exponentialRampToValueAtTime(30, now + 0.25);
 
-                gainSpark.gain.setValueAtTime(0.45, now);
-                gainSpark.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+                gainThud.gain.setValueAtTime(0.5, now);
+                gainThud.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
 
-                oscSpark.connect(gainSpark);
-                gainSpark.connect(audioCtx.destination);
-                oscSpark.start(now);
-                oscSpark.stop(now + 0.35);
-
-                // Distortion Noise Burst
-                setTimeout(() => {
-                    if (!audioCtx) return;
-                    const bufferSize = audioCtx.sampleRate * 0.3;
-                    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-                    const data = buffer.getChannelData(0);
-                    for (let i = 0; i < bufferSize; i++) {
-                        data[i] = Math.random() * 2 - 1;
-                    }
-
-                    const noise = audioCtx.createBufferSource();
-                    noise.buffer = buffer;
-
-                    const filter = audioCtx.createBiquadFilter();
-                    filter.type = 'bandpass';
-                    filter.frequency.value = 900;
-
-                    const noiseGain = audioCtx.createGain();
-                    noiseGain.gain.setValueAtTime(0.6, audioCtx.currentTime);
-                    noiseGain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-
-                    noise.connect(filter);
-                    filter.connect(noiseGain);
-                    noiseGain.connect(audioCtx.destination);
-
-                    noise.start();
-                }, 60);
+                oscThud.connect(gainThud);
+                gainThud.connect(audioCtx.destination);
+                oscThud.start(now);
+                oscThud.stop(now + 0.25);
 
             } catch (e) {
                 console.error("Audio error:", e);
@@ -637,35 +605,36 @@
             }
         });
 
-        // Global Event Listener untuk SEMUA tombol (.sound-btn) memicu Black Flash
+        // Trigger Black Flash Optimal (VFX Merah-Hitam proporsional + Layar Bergetar + Suara Listrik)
         function triggerBlackFlash(event) {
             playBlackFlashSound();
 
             document.body.classList.add('shake-screen');
             setTimeout(() => {
                 document.body.classList.remove('shake-screen');
-            }, 400);
+            }, 250);
 
             const overlay = document.createElement('div');
             overlay.className = 'black-flash-overlay';
 
-            const flash = document.createElement('div');
-            flash.className = 'black-flash-flashbang';
-            overlay.appendChild(flash);
+            const vignette = document.createElement('div');
+            vignette.className = 'black-flash-vignette';
+            overlay.appendChild(vignette);
 
             const rect = event.currentTarget.getBoundingClientRect();
             const clickX = rect.left + rect.width / 2;
             const clickY = rect.top + rect.height / 2;
 
-            for (let i = 0; i < 5; i++) {
+            // Membuat percikan aura merah-hitam proporsional agar tidak lag / tidak terlalu besar
+            for (let i = 0; i < 3; i++) {
                 const spark = document.createElement('div');
                 spark.className = 'black-flash-spark';
-                const size = Math.random() * 350 + 200;
+                const size = Math.random() * 120 + 90;
                 spark.style.width = `${size}px`;
                 spark.style.height = `${size}px`;
                 spark.style.left = `${clickX - size / 2}px`;
                 spark.style.top = `${clickY - size / 2}px`;
-                spark.style.animationDelay = `${i * 0.04}s`;
+                spark.style.animationDelay = `${i * 0.03}s`;
                 overlay.appendChild(spark);
             }
 
@@ -673,10 +642,10 @@
 
             setTimeout(() => {
                 overlay.remove();
-            }, 600);
+            }, 350);
         }
 
-        // Pasang trigger ke setiap elemen tombol bersistem .sound-btn secara otomatis
+        // Pasang event ke semua tombol bersistem .sound-btn secara otomatis
         document.addEventListener('click', function (e) {
             const btn = e.target.closest('.sound-btn');
             if (btn) {
