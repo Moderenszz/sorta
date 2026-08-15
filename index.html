@@ -98,12 +98,12 @@
             z-index: 10000;
         }
 
-        /* Black Flash Lightning Spark (Bukan bulet, tapi garis petir tajam ala Yuji Itadori) */
+        /* Black Flash Lightning Spark (Tema Biru/Cyan Tajam) */
         @keyframes lightningFlash {
             0% {
                 transform: scale(0.4) rotate(var(--rot, 0deg));
                 opacity: 1;
-                filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.9));
+                filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.95));
             }
             50% {
                 opacity: 1;
@@ -111,7 +111,7 @@
             100% {
                 transform: scale(1.4) rotate(var(--rot, 0deg));
                 opacity: 0;
-                filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0));
+                filter: drop-shadow(0 0 20px rgba(14, 165, 233, 0));
             }
         }
 
@@ -143,7 +143,7 @@
             position: absolute;
             width: 90px;
             height: 90px;
-            background: linear-gradient(135deg, transparent 40%, rgba(239, 68, 68, 0.95) 50%, transparent 60%);
+            background: linear-gradient(135deg, transparent 40%, rgba(56, 189, 248, 0.95) 50%, transparent 60%);
             clip-path: polygon(50% 0%, 20% 40%, 60% 45%, 10% 100%, 90% 50%, 40% 45%);
             animation: lightningFlash 0.3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
         }
@@ -151,13 +151,76 @@
         .black-flash-vignette {
             position: absolute;
             inset: 0;
-            box-shadow: inset 0 0 80px rgba(239, 68, 68, 0.6), inset 0 0 140px rgba(0, 0, 0, 0.85);
+            box-shadow: inset 0 0 80px rgba(14, 165, 233, 0.6), inset 0 0 140px rgba(0, 0, 0, 0.85);
             animation: vignetteFade 0.3s ease-out forwards;
         }
 
         @keyframes vignetteFade {
             0% { opacity: 1; }
             100% { opacity: 0; }
+        }
+
+        /* Styling Modal Retakan & Teks Mejeh euy */
+        #mejeh-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(3, 7, 30, 0.85);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #mejeh-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .crack-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Animasi Retakan Membelah Layar */
+        .crack-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, #38bdf8, #ffffff, #38bdf8, transparent);
+            height: 3px;
+            width: 0;
+            box-shadow: 0 0 15px #38bdf8, 0 0 30px #0284c7;
+            transform-origin: center;
+            transition: width 0.4s cubic-bezier(0.1, 1, 0.3, 1);
+        }
+        #mejeh-modal.active .crack-line-1 {
+            width: 320px;
+            transform: rotate(-12deg);
+        }
+        #mejeh-modal.active .crack-line-2 {
+            width: 280px;
+            transform: rotate(25deg);
+        }
+        #mejeh-modal.active .crack-line-3 {
+            width: 350px;
+            transform: rotate(78deg);
+        }
+
+        /* Teks Mejeh euy muncul dari tengah retakan */
+        .mejeh-text-box {
+            position: relative;
+            z-index: 10;
+            transform: scale(0) rotate(-15deg);
+            opacity: 0;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+            text-align: center;
+        }
+        #mejeh-modal.active .mejeh-text-box {
+            transform: scale(1) rotate(0deg);
+            opacity: 1;
         }
     </style>
 </head>
@@ -210,6 +273,28 @@
         <i id="music-icon" class="fa-solid fa-music text-cyan-400 animate-pulse"></i>
         <span id="music-text">STOP LOFI</span>
     </button>
+
+    <!-- MODAL "MEJEH EUY" DARI RETAKAN -->
+    <div id="mejeh-modal" onclick="closeMejehModal()">
+        <div class="crack-container">
+            <div class="crack-line crack-line-1"></div>
+            <div class="crack-line crack-line-2"></div>
+            <div class="crack-line crack-line-3"></div>
+            
+            <div class="mejeh-text-box p-8 rounded-3xl bg-slate-900/90 border border-cyan-400/50 shadow-2xl shadow-cyan-500/30 backdrop-blur-xl">
+                <span class="text-xs uppercase font-mono text-cyan-400 tracking-widest block mb-2">Secret Event Triggered</span>
+                <h2 class="text-4xl sm:text-6xl font-black text-white tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-white to-blue-400 mb-4">
+                    Mejeh euy!
+                </h2>
+                <p class="text-slate-300 text-sm sm:text-base max-w-xs mx-auto mb-6">
+                    Energi petir cyan menyebar sempurna! Tetap semangat berkarya dan ngoding bro! ⚡
+                </p>
+                <button onclick="closeMejehModal()" class="sound-btn px-6 py-2.5 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-xs tracking-wider uppercase hover:scale-105 transition-all shadow-lg shadow-cyan-500/30">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Main Container -->
     <div class="relative z-10 flex flex-col justify-between min-h-screen p-6 sm:p-12 md:p-16">
@@ -283,12 +368,16 @@
                 <p class="text-slate-200 text-lg sm:text-xl leading-relaxed mb-10 font-medium">
                     "Selamat datang di tempat kreasiku! Mari ciptakan hal-hal seru, berbagi karya, dan nikmati setiap momen dengan penuh warna."
                 </p>
-                <div class="flex flex-wrap gap-4">
+                <div class="flex flex-wrap items-center gap-4">
                     <button onclick="openTab('socials')" class="sound-btn px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold shadow-lg shadow-cyan-500/25 transition-all transform hover:-translate-y-0.5">
                         EXPLORE LINKS
                     </button>
                     <button onclick="openTab('about')" class="sound-btn px-8 py-4 rounded-full bg-white/10 hover:bg-white/20 text-slate-100 border border-white/20 font-semibold backdrop-blur-md transition-all">
                         MORE INFO
+                    </button>
+                    <!-- Tombol Mejeh Euy di kanan More Info -->
+                    <button onclick="triggerMejehEffect()" class="sound-btn px-7 py-4 rounded-full bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-400/40 font-semibold backdrop-blur-md transition-all shadow-lg shadow-cyan-500/20 flex items-center gap-2">
+                        <i class="fa-solid fa-bolt text-cyan-400 animate-pulse"></i> Mejeh euy
                     </button>
                 </div>
             </div>
@@ -527,7 +616,7 @@
 
         let audioCtx = null;
 
-        // Fungsi Audio Listrik & Impact Cursed Energy (Yuji Itadori Black Flash Sound)
+        // Fungsi Audio Listrik & Impact Cyan (Electric Spark Sound)
         function playBlackFlashSound() {
             try {
                 if (!audioCtx) {
@@ -539,35 +628,35 @@
 
                 const now = audioCtx.currentTime;
 
-                // Electric Crackle (Sawtooth high-pitched zap)
+                // Electric Crackle Zap (Cyan/Blue Spark frequency)
                 const oscZap = audioCtx.createOscillator();
                 const gainZap = audioCtx.createGain();
                 oscZap.type = 'sawtooth';
-                oscZap.frequency.setValueAtTime(1400, now);
-                oscZap.frequency.exponentialRampToValueAtTime(120, now + 0.22);
+                oscZap.frequency.setValueAtTime(1600, now);
+                oscZap.frequency.exponentialRampToValueAtTime(150, now + 0.25);
 
-                gainZap.gain.setValueAtTime(0.3, now);
-                gainZap.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+                gainZap.gain.setValueAtTime(0.35, now);
+                gainZap.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
 
                 oscZap.connect(gainZap);
                 gainZap.connect(audioCtx.destination);
                 oscZap.start(now);
-                oscZap.stop(now + 0.22);
+                oscZap.stop(now + 0.25);
 
                 // Deep Impact Thud
                 const oscThud = audioCtx.createOscillator();
                 const gainThud = audioCtx.createGain();
                 oscThud.type = 'triangle';
-                oscThud.frequency.setValueAtTime(150, now);
-                oscThud.frequency.exponentialRampToValueAtTime(30, now + 0.25);
+                oscThud.frequency.setValueAtTime(140, now);
+                oscThud.frequency.exponentialRampToValueAtTime(25, now + 0.3);
 
                 gainThud.gain.setValueAtTime(0.5, now);
-                gainThud.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+                gainThud.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
 
                 oscThud.connect(gainThud);
                 gainThud.connect(audioCtx.destination);
                 oscThud.start(now);
-                oscThud.stop(now + 0.25);
+                oscThud.stop(now + 0.3);
 
             } catch (e) {
                 console.error("Audio error:", e);
@@ -610,7 +699,7 @@
             }
         });
 
-        // Trigger Black Flash dengan efek petir tajam (bukan bulat) + layar bergetar
+        // Trigger Efek Petir Cyan + Layar Bergetar
         function triggerBlackFlash(event) {
             playBlackFlashSound();
 
@@ -630,7 +719,6 @@
             const clickX = rect.left + rect.width / 2;
             const clickY = rect.top + rect.height / 2;
 
-            // Membuat percikan sambaran petir tajam menyerupai cursed energy Yuji Itadori
             for (let i = 0; i < 4; i++) {
                 const lightning = document.createElement('div');
                 lightning.className = 'black-flash-lightning';
@@ -648,10 +736,31 @@
             }, 350);
         }
 
+        // Fungsi khusus untuk tombol "Mejeh euy" (Memicu retakan layar & teks tengah)
+        function triggerMejehEffect() {
+            playBlackFlashSound();
+            document.body.classList.add('shake-screen');
+            setTimeout(() => {
+                document.body.classList.remove('shake-screen');
+            }, 250);
+
+            const modal = document.getElementById('mejeh-modal');
+            if (modal) {
+                modal.classList.add('active');
+            }
+        }
+
+        function closeMejehModal() {
+            const modal = document.getElementById('mejeh-modal');
+            if (modal) {
+                modal.classList.remove('active');
+            }
+        }
+
         // Pasang event ke semua tombol bersistem .sound-btn secara otomatis
         document.addEventListener('click', function (e) {
             const btn = e.target.closest('.sound-btn');
-            if (btn) {
+            if (btn && !btn.id.includes('music-toggle')) {
                 triggerBlackFlash({ currentTarget: btn });
             }
         });
@@ -687,7 +796,7 @@
                 if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
             }
             draw() {
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.fillStyle = `rgba(56, 189, 248, ${this.opacity})`;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
