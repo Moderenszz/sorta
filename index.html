@@ -17,19 +17,19 @@
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #040806; /* Gelap pekat yang sangat nyaman */
+            background-color: #020403; /* Gelap pekat maksimal, sangat ramah mata */
             color: #94a3b8;
         }
-        /* Custom smooth gradient glow dengan intensitas cahaya yang sudah diredupin */
+        /* Custom smooth gradient glow yang udah diredupin banget biar super adem */
         .glow-bg {
-            background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.04) 0%, rgba(4, 8, 6, 0.98) 65%);
+            background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.02) 0%, rgba(2, 4, 3, 0.99) 70%);
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-white glow-bg">
 
     <!-- Navbar / Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-[#040806]/80 backdrop-blur-md border-b border-emerald-500/10">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-[#020403]/90 backdrop-blur-md border-b border-emerald-500/10">
         <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
             <a href="#home" class="font-bold text-white tracking-wider text-lg flex items-center gap-2">
                 <span class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></span>
@@ -38,6 +38,9 @@
             <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
                 <a href="#home" class="hover:text-emerald-400 transition-colors">Home</a>
                 <a href="#about" class="hover:text-emerald-400 transition-colors">About</a>
+                <a href="#minigame" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-gamepad text-emerald-400"></i> Mini Game
+                </a>
                 <a href="https://moderenszz.github.io/mengetik" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
                     <i class="fa-solid fa-keyboard text-emerald-400"></i> Test Mengetik
                 </a>
@@ -67,8 +70,8 @@
                 <a href="#about" class="px-6 py-3 rounded-xl bg-white text-slate-950 font-semibold hover:bg-slate-200 transition-all text-sm shadow-md">
                     Kenalan Lebih Dekat <i class="fa-solid fa-arrow-down ml-1"></i>
                 </a>
-                <a href="https://moderenszz.github.io/mengetik" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold transition-all text-sm flex items-center gap-2">
-                    <i class="fa-solid fa-keyboard text-emerald-400"></i> Test Mengetik
+                <a href="#minigame" class="px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold transition-all text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-gamepad text-emerald-400"></i> Main Mini Game
                 </a>
             </div>
         </section>
@@ -105,6 +108,44 @@
             </div>
         </section>
 
+        <!-- SECTION: MINI GAME (TARGET CLICKER) -->
+        <section id="minigame" class="py-24 px-6 max-w-4xl mx-auto border-t border-emerald-500/10">
+            <div class="text-center mb-12">
+                <span class="text-xs font-semibold tracking-widest text-emerald-400 uppercase bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">Interactive Zone</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-white mt-4">Reflex Target Game</h2>
+                <p class="text-slate-400 text-sm mt-2">Seberapa cepat refleks jari lu? Klik tombol "Mulai" dan kumpulkan skor sebanyak mungkin dalam 10 detik!</p>
+            </div>
+
+            <!-- Game Box -->
+            <div class="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-emerald-500/20 max-w-xl mx-auto text-center relative overflow-hidden shadow-2xl">
+                <!-- Stats Bar -->
+                <div class="flex justify-between items-center mb-6 text-sm font-semibold text-slate-300">
+                    <div class="bg-white/5 px-4 py-2 rounded-xl border border-white/10">
+                        Skor: <span id="score" class="text-emerald-400 text-base font-bold">0</span>
+                    </div>
+                    <div class="bg-white/5 px-4 py-2 rounded-xl border border-white/10">
+                        Waktu: <span id="timer" class="text-cyan-400 text-base font-bold">10</span>s
+                    </div>
+                </div>
+
+                <!-- Arena Area -->
+                <div id="game-area" class="h-64 bg-[#050907] rounded-xl border border-white/10 relative flex items-center justify-center overflow-hidden cursor-crosshair">
+                    <div id="game-message" class="text-slate-400 text-sm px-4">
+                        Tekan tombol di bawah untuk mulai bermain!
+                    </div>
+                    <!-- Target Button -->
+                    <button id="target-btn" class="hidden absolute w-12 h-12 bg-emerald-500 hover:bg-emerald-400 rounded-full shadow-lg shadow-emerald-500/50 transition-transform active:scale-90 flex items-center justify-center text-slate-950 font-bold text-xs">
+                        🎯
+                    </button>
+                </div>
+
+                <!-- Control Button -->
+                <button id="start-game-btn" onclick="startGame()" class="mt-6 w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition-all shadow-lg shadow-emerald-600/20">
+                    Mulai Game 🚀
+                </button>
+            </div>
+        </section>
+
         <!-- SECTION: SOCIAL LINKS -->
         <section id="socials" class="py-24 px-6 max-w-4xl mx-auto border-t border-emerald-500/10">
             <div class="text-center mb-16">
@@ -137,7 +178,7 @@
                         <i class="fa-brands fa-youtube text-red-500 text-2xl group-hover:scale-110 transition-transform"></i>
                         <span class="font-semibold text-base">YouTube</span>
                     </div>
-                    <img src="https://img.shields.io/youtube/channel/subscribers/UCMfAgJBOWTUq_QKq5dFEsww?style=flat-square&color=FF0000&label=Subs&labelColor=040806" alt="YouTube Subs" class="h-5 rounded opacity-90">
+                    <img src="https://img.shields.io/youtube/channel/subscribers/UCMfAgJBOWTUq_QKq5dFEsww?style=flat-square&color=FF0000&label=Subs&labelColor=020403" alt="YouTube Subs" class="h-5 rounded opacity-90">
                 </a>
 
                 <!-- Discord -->
@@ -146,7 +187,7 @@
                         <i class="fa-brands fa-discord text-emerald-400 text-2xl group-hover:scale-110 transition-transform"></i>
                         <span class="font-semibold text-base">Discord Server</span>
                     </div>
-                    <img src="https://img.shields.io/discord/1510954608208384120?style=flat-square&color=10B981&label=Online&labelColor=040806" alt="Discord Online" class="h-5 rounded opacity-90">
+                    <img src="https://img.shields.io/discord/1510954608208384120?style=flat-square&color=10B981&label=Online&labelColor=020403" alt="Discord Online" class="h-5 rounded opacity-90">
                 </a>
 
                 <!-- TikTok -->
@@ -185,5 +226,68 @@
         <p>&copy; 2026 Zerry. Built with clean code & coffee.</p>
     </footer>
 
+    <!-- Mini Game Script -->
+    <script>
+        let score = 0;
+        let timeLeft = 10;
+        let gameInterval = null;
+        let isPlaying = false;
+
+        const scoreDisplay = document.getElementById('score');
+        const timerDisplay = document.getElementById('timer');
+        const gameArea = document.getElementById('game-area');
+        const gameMessage = document.getElementById('game-message');
+        const targetBtn = document.getElementById('target-btn');
+        const startGameBtn = document.getElementById('start-game-btn');
+
+        function startGame() {
+            if (isPlaying) return;
+            isPlaying = true;
+            score = 0;
+            timeLeft = 10;
+            scoreDisplay.textContent = score;
+            timerDisplay.textContent = timeLeft;
+            gameMessage.classList.add('hidden');
+            targetBtn.classList.remove('hidden');
+            startGameBtn.disabled = true;
+            startGameBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+            moveTarget();
+
+            gameInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(gameInterval);
+                    isPlaying = false;
+                    targetBtn.classList.add('hidden');
+                    gameMessage.classList.remove('hidden');
+                    gameMessage.innerHTML = `Waktu Habis! Skor akhir lu: <b class="text-emerald-400">${score}</b> 🎉`;
+                    startGameBtn.disabled = false;
+                    startGameBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    startGameBtn.textContent = 'Main Lagi 🔄';
+                }
+            }, 1000);
+        }
+
+        function moveTarget() {
+            if (!isPlaying) return;
+            const maxX = gameArea.clientWidth - 50;
+            const maxY = gameArea.clientHeight - 50;
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            targetBtn.style.left = randomX + 'px';
+            targetBtn.style.top = randomY + 'px';
+        }
+
+        targetBtn.addEventListener('click', () => {
+            if (!isPlaying) return;
+            score++;
+            scoreDisplay.textContent = score;
+            moveTarget();
+        });
+    </script>
 </body>
 </html>
