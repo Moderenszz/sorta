@@ -3,1124 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sortamenfy | Personal Hub & Portfolio</title>
+    <title>pelukciumfirst - Minecraft Personal Website</title>
+    
+    <!-- Favicon Minecraft Style -->
+    <link rel="icon" type="image/png" href="https://minecraft.wiki/images/Grass_Block_JE8_BE6.png">
 
-    <!-- Meta Tags untuk Discord Preview & Open Graph -->
-    <meta property="og:title" content="Sortamenfy — Welcome to My World">
-    <meta property="og:description" content="Selamat datang di tempat kreasiku! Mari ciptakan hal-hal seru, berbagi karya, dan nikmati setiap momen dengan penuh warna.">
-    <meta property="og:image" content="https://moderenszz.github.io/sorta/preview.png">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="theme-color" content="#0077b6">
-
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome untuk Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts: Press Start 2P (Pixel Font Ala Minecraft) & VT323 -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+
     <style>
+        /* Menerapkan font gaya pixel / terminal */
+        .font-pixel {
+            font-family: 'Press Start 2P', monospace;
+        }
+        .font-vt {
+            font-family: 'VT323', monospace;
+        }
+
+        /* Tema Background Ala Minecraft Dirt/Stone Background dengan Efek Gelap */
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            cursor: default;
-        }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.4s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        /* Custom Discord Card Styling */
-        .discord-card {
-            background: rgba(20, 24, 33, 0.75);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 10px 16px;
-            display: inline-flex;
-            align-items: center;
-            gap: 14px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-        /* Cinematic Intro Video Style Styling */
-        #intro-screen {
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-            background: #03071e;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-        }
-        #intro-screen.fade-out {
-            opacity: 0;
-            visibility: hidden;
-        }
-        .intro-content {
-            animation: introZoom 3.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            transform: scale(0.9);
-        }
-        @keyframes introZoom {
-            0% { opacity: 0; transform: scale(0.85); filter: blur(10px); }
-            25% { opacity: 1; transform: scale(1); filter: blur(0px); }
-            75% { opacity: 1; transform: scale(1); filter: blur(0px); }
-            100% { opacity: 0; transform: scale(1.05); filter: blur(8px); pointer-events: none; }
-        }
-        /* Custom Cursor Follower */
-        #custom-cursor {
-            pointer-events: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 24px;
-            height: 24px;
-            border: 2px solid rgba(56, 189, 248, 0.6);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: transform 0.08s ease-out, width 0.2s, height 0.2s, background-color 0.2s;
-            z-index: 9999;
-            box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
-        }
-        #custom-cursor-dot {
-            pointer-events: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 6px;
-            height: 6px;
-            background-color: #38bdf8;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10000;
+            background-color: #111111;
+            background-image: 
+                radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+            color: #d1d5db;
         }
 
-        /* Black Flash Lightning Spark (Tema Biru/Cyan Tajam) */
-        @keyframes lightningFlash {
-            0% {
-                transform: scale(0.4) rotate(var(--rot, 0deg));
-                opacity: 1;
-                filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.95));
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1.4) rotate(var(--rot, 0deg));
-                opacity: 0;
-                filter: drop-shadow(0 0 20px rgba(14, 165, 233, 0));
-            }
+        /* Kotak UI ala Kotak Inventaris / UI Minecraft */
+        .mc-box {
+            background-color: #2b2b2b;
+            border: 4px solid #373737;
+            box-shadow: inset -4px -4px 0px #1e1e1e, inset 4px 4px 0px #484848;
+            border-radius: 0px; /* Bentuk kotak tajam ala game klasik */
         }
 
-        @keyframes screenShake {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            20% { transform: translate(-5px, 4px) rotate(-0.5deg); }
-            40% { transform: translate(5px, -4px) rotate(0.5deg); }
-            60% { transform: translate(-3px, -2px) rotate(-0.3deg); }
-            80% { transform: translate(3px, 2px) rotate(0.2deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
+        .mc-button {
+            background-color: #585858;
+            border: 3px solid #222222;
+            box-shadow: inset -3px -3px 0px #383838, inset 3px 3px 0px #787878;
+            transition: all 0.1s ease;
         }
 
-        .shake-screen {
-            animation: screenShake 0.25s ease-in-out both;
+        .mc-button:hover {
+            background-color: #6a6a6a;
+            box-shadow: inset -3px -3px 0px #484848, inset 3px 3px 0px #8a8a8a;
         }
 
-        /* Getaran intens khusus saat retakan berjalan */
-        @keyframes heavyRumble {
-            0% { transform: translate(0, 0); }
-            10% { transform: translate(-2px, 3px); }
-            20% { transform: translate(3px, -2px); }
-            30% { transform: translate(-4px, -1px); }
-            40% { transform: translate(2px, 4px); }
-            50% { transform: translate(-3px, -3px); }
-            60% { transform: translate(4px, 1px); }
-            70% { transform: translate(-1px, -4px); }
-            80% { transform: translate(2px, 2px); }
-            90% { transform: translate(-2px, -2px); }
-            100% { transform: translate(0, 0); }
+        .mc-button:active {
+            box-shadow: inset 3px 3px 0px #222222;
         }
 
-        .rumble-screen {
-            animation: heavyRumble 3.5s ease-in-out infinite;
+        /* Input form kotak pixel */
+        .mc-input {
+            background-color: #1a1a1a;
+            border: 3px solid #333333;
+            box-shadow: inset 2px 2px 0px #0a0a0a;
+            border-radius: 0px;
         }
-
-        .black-flash-overlay {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 999999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .black-flash-lightning {
-            position: absolute;
-            width: 90px;
-            height: 90px;
-            background: linear-gradient(135deg, transparent 40%, rgba(56, 189, 248, 0.95) 50%, transparent 60%);
-            clip-path: polygon(50% 0%, 20% 40%, 60% 45%, 10% 100%, 90% 50%, 40% 45%);
-            animation: lightningFlash 0.3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
-        }
-
-        .black-flash-vignette {
-            position: absolute;
-            inset: 0;
-            box-shadow: inset 0 0 80px rgba(14, 165, 233, 0.6), inset 0 0 140px rgba(0, 0, 0, 0.85);
-            animation: vignetteFade 0.3s ease-out forwards;
-        }
-
-        @keyframes vignetteFade {
-            0% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-
-        /* Styling Cinematic "Mejeuh euyy!" Langsung Full Layar Tanpa Kotak (Durasi Total ~10 Detik) */
-        #mejeh-modal {
-            position: fixed;
-            inset: 0;
-            z-index: 999999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(3, 7, 30, 0.95);
-            backdrop-filter: blur(12px);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-        #mejeh-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .crack-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* SVG Retakan yang Menyebar Perlahan Dari Kecil ke Gede (Total Animasi 10 Detik) */
-        .crack-svg {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .crack-path {
-            stroke: #38bdf8;
-            stroke-width: 4;
-            stroke-linecap: round;
-            fill: none;
-            filter: drop-shadow(0 0 15px #38bdf8) drop-shadow(0 0 35px #0284c7);
-            stroke-dasharray: 1200;
-            stroke-dashoffset: 1200;
-            transition: stroke-dashoffset 3.5s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        #mejeh-modal.active .crack-path-1 {
-            stroke-dashoffset: 0;
-            transition-delay: 0.1s;
-        }
-        #mejeh-modal.active .crack-path-2 {
-            stroke-dashoffset: 0;
-            transition-delay: 0.4s;
-        }
-        #mejeh-modal.active .crack-path-3 {
-            stroke-dashoffset: 0;
-            transition-delay: 0.7s;
-        }
-        #mejeh-modal.active .crack-path-4 {
-            stroke-dashoffset: 0;
-            transition-delay: 1.0s;
-        }
-
-        /* Animasi Petir Menyambar dari Atas ke Bawah di Layar */
-        .top-lightning-bolt {
-            position: absolute;
-            top: -100%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent, #38bdf8, #ffffff, #38bdf8, transparent);
-            box-shadow: 0 0 25px #38bdf8, 0 0 50px #0284c7;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        #mejeh-modal.active .top-lightning-bolt {
-            animation: strikeLightningDown 0.8s ease-in-out 1.2s forwards;
-        }
-
-        @keyframes strikeLightningDown {
-            0% { top: -100%; opacity: 0; }
-            30% { opacity: 1; }
-            50% { top: 0%; opacity: 1; filter: brightness(2); }
-            100% { top: 100%; opacity: 0; }
-        }
-
-        /* Teks "MEJEUH EUY!" Besar Tanpa Kotak Mengambang Bebas di Tengah dengan Efek Shiny Shimmer */
-        .mejeh-giant-text {
-            position: relative;
-            z-index: 20;
-            font-size: clamp(3rem, 9vw, 9rem);
-            font-weight: 900;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            color: #ffffff;
-            background: linear-gradient(135deg, #ffffff 20%, #38bdf8 60%, #1d4ed8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 35px rgba(56, 189, 248, 0.7));
-            transform: scale(0.1) rotate(-8deg);
-            opacity: 0;
-            transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 1s ease;
-            text-align: center;
-        }
-
-        #mejeh-modal.active .mejeh-giant-text {
-            transform: scale(1) rotate(0deg);
-            opacity: 1;
-            transition-delay: 2.0s;
-            animation: mejehFloat 3s ease-in-out infinite alternate 3.2s;
-        }
-
-        @keyframes mejehFloat {
-            0% { transform: translateY(0px) scale(1) rotate(0deg); }
-            100% { transform: translateY(-10px) scale(1.02) rotate(1deg); }
+        .mc-input:focus {
+            border-color: #55ff55;
+            outline: none;
         }
     </style>
 </head>
-<body class="relative min-h-screen bg-slate-950 flex flex-col justify-between overflow-x-hidden text-white">
+<body class="min-h-screen flex flex-col items-center justify-between p-4 sm:p-8">
 
-    <!-- CINEMATIC INTRO SCREEN -->
-    <div id="intro-screen">
-        <div class="absolute inset-0 bg-gradient-to-br from-[#03071e] via-[#03045e] to-[#0077b6] opacity-95 -z-10"></div>
-        <div class="absolute w-[30rem] h-[30rem] bg-cyan-500/15 rounded-full blur-3xl pointer-events-none"></div>
-        
-        <div class="intro-content text-center px-6 max-w-xl">
-            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-2xl shadow-cyan-500/40 font-bold text-2xl mx-auto mb-5">
-                S
-            </div>
-            <h1 class="text-3xl sm:text-4xl font-black tracking-widest text-white mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-200 to-blue-400">
-                SORTAMENFY
-            </h1>
-            <p class="text-cyan-300 text-xs sm:text-sm font-mono tracking-widest uppercase mb-6">
-                Roblox Developer & Digital Creator
-            </p>
+    <!-- Audio Efek Klik Button (Suara Kayu/UI Minecraft) -->
+    <audio id="mc-click-sound" src="https://www.myinstants.com/media/sounds/minecraft-click.mp3" preload="auto"></audio>
 
-            <div class="flex flex-wrap justify-center gap-2 mb-4">
-                <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs text-slate-300 flex items-center gap-1.5"><i class="fa-solid fa-gamepad text-cyan-400"></i> Luau</span>
-                <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs text-slate-300 flex items-center gap-1.5"><i class="fa-brands fa-youtube text-red-500"></i> YouTube</span>
-                <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs text-slate-300 flex items-center gap-1.5"><i class="fa-brands fa-discord text-indigo-400"></i> Discord</span>
-                <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs text-slate-300 flex items-center gap-1.5"><i class="fa-brands fa-tiktok text-cyan-400"></i> TikTok</span>
-            </div>
-            
-            <div class="w-32 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent mx-auto rounded-full opacity-70"></div>
+    <!-- Header / Banner Ala Game Menu -->
+    <header class="w-full max-w-2xl text-center mb-6">
+        <div class="mc-box p-4 inline-block mb-2">
+            <span class="text-xs font-pixel text-yellow-400 tracking-wider">MINECRAFT SERVER OWNER & DEVELOPER</span>
         </div>
-    </div>
+        <h1 class="text-3xl sm:text-5xl font-pixel text-white tracking-widest drop-shadow-[0_4px_0_#000]">
+            PELUKCIUMFIRST
+        </h1>
+    </header>
 
-    <!-- Custom Cursor -->
-    <div id="custom-cursor" class="hidden md:block"></div>
-    <div id="custom-cursor-dot" class="hidden md:block"></div>
-
-    <!-- Canvas Partikel Background -->
-    <canvas id="particleCanvas" class="fixed inset-0 z-0 pointer-events-none"></canvas>
-
-    <!-- Background Gradasi Biru -->
-    <div class="fixed inset-0 z-0 bg-gradient-to-br from-[#03071e]/80 via-[#03045e]/80 to-[#0077b6]/80 -z-10">
-        <div class="absolute top-1/4 left-1/4 w-[30rem] h-[30rem] bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-[35rem] h-[35rem] bg-blue-600/30 rounded-full blur-3xl pointer-events-none"></div>
-    </div>
-
-    <!-- Background Music Audio Player -->
-    <audio id="bg-music" src="https://corsproxy.io/?https://rr2---sn-5hnekn7s.googlevideo.com/videoplayback?expire=1710000000&id=UJs6__K7gSY" preload="auto" loop></audio>
-    <button id="music-toggle" class="sound-btn fixed bottom-6 right-6 z-[9999] px-4 py-2.5 bg-slate-900/80 border border-cyan-500/30 rounded-full text-xs font-mono text-cyan-300 backdrop-blur-md hover:bg-slate-800 transition-all shadow-xl flex items-center gap-2 group">
-        <i id="music-icon" class="fa-solid fa-music text-cyan-400 animate-pulse"></i>
-        <span id="music-text">STOP LOFI</span>
-    </button>
-
-    <!-- MODAL "MEJEUH EUY" FULL ANIMASI 10 DETIK TANPA KOTAK -->
-    <div id="mejeh-modal">
-        <div class="crack-container">
-            <!-- Petir Menyambar dari Atas ke Bawah -->
-            <div class="top-lightning-bolt"></div>
-
-            <!-- SVG Retakan Kecil Membesar Menyeluruh -->
-            <svg class="crack-svg" viewBox="0 0 1000 1000" preserveAspectRatio="none">
-                <path class="crack-path crack-path-1" d="M 500 500 L 470 450 L 490 360 L 410 250 L 350 150 L 280 40 L 220 0" />
-                <path class="crack-path crack-path-2" d="M 500 500 L 530 550 L 520 640 L 590 730 L 660 820 L 730 920 L 800 1000" />
-                <path class="crack-path crack-path-3" d="M 500 500 L 420 520 L 330 500 L 220 560 L 140 600 L 50 650 L 0 690" />
-                <path class="crack-path crack-path-4" d="M 500 500 L 580 480 L 670 510 L 780 450 L 870 420 L 940 370 L 1000 330" />
-            </svg>
+    <!-- Konten Utama (Tab Socials & Contact) -->
+    <main class="w-full flex justify-center mb-6">
+        <div id="socials" class="tab-content w-full max-w-2xl mc-box p-6 sm:p-8">
             
-            <!-- Teks "MEJEUH EUY!" Keluar Tanpa Kotak Background dengan Efek Shiny -->
-            <div class="mejeh-giant-text">
-                MEJEUH EUYY!
+            <!-- Badge Connect -->
+            <div class="flex justify-between items-center mb-6">
+                <span class="inline-block px-3 py-1 text-xs font-pixel text-emerald-300 bg-emerald-950 border-2 border-emerald-500 uppercase">
+                    [ CONNECT_MENU ]
+                </span>
+                <span class="text-xs font-vt text-zinc-400 text-2xl">v1.20.4_survival</span>
             </div>
+
+            <h2 class="text-2xl sm:text-3xl font-pixel text-white mb-6 border-b-4 border-zinc-700 pb-3">
+                Social Links & Contact
+            </h2>
+            
+            <!-- Grid Sosial Media -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                
+                <!-- Saweria -->
+                <a href="https://saweria.co/sortamenfy" target="_blank" rel="noopener noreferrer" class="sound-btn mc-button flex items-center justify-between p-4 text-slate-200 group sm:col-span-2">
+                    <div class="flex items-center gap-4">
+                        <i class="fa-solid fa-heart text-amber-400 text-2xl group-hover:scale-110 transition-transform"></i>
+                        <span class="font-semibold text-base font-vt text-2xl">Saweria (Support Me)</span>
+                    </div>
+                    <span class="text-xs px-3 py-1 bg-amber-950 border border-amber-500 text-amber-300 font-pixel">SUPPORT</span>
+                </a>
+
+                <!-- YouTube -->
+                <a href="https://www.youtube.com/channel/UCMfAgJBOWTUq_QKq5dFEsww" target="_blank" rel="noopener noreferrer" class="sound-btn mc-button flex items-center justify-between p-4 text-slate-200 group">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-brands fa-youtube text-red-500 text-2xl group-hover:scale-110 transition-transform"></i>
+                        <span class="font-semibold text-base font-vt text-2xl">YouTube</span>
+                    </div>
+                    <img src="https://img.shields.io/youtube/channel/subscribers/UCMfAgJBOWTUq_QKq5dFEsww?style=flat-square&color=FF0000&label=Subs&labelColor=1e293b" alt="YouTube Subs" class="h-5 opacity-90 border border-red-500">
+                </a>
+
+                <!-- Discord -->
+                <a href="https://discord.gg/Fw9weRr7c" target="_blank" rel="noopener noreferrer" class="sound-btn mc-button flex items-center justify-between p-4 text-slate-200 group">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-brands fa-discord text-indigo-400 text-2xl group-hover:scale-110 transition-transform"></i>
+                        <span class="font-semibold text-base font-vt text-2xl">Discord</span>
+                    </div>
+                    <img src="https://img.shields.io/discord/1510954608208384120?style=flat-square&color=5865F2&label=Online&labelColor=1e293b" alt="Discord Online" class="h-5 opacity-90 border border-indigo-500">
+                </a>
+
+                <!-- TikTok -->
+                <a href="https://www.tiktok.com/@zerrydep" target="_blank" rel="noopener noreferrer" class="sound-btn mc-button flex items-center justify-between p-4 text-slate-200 group">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-brands fa-tiktok text-cyan-400 text-2xl group-hover:scale-110 transition-transform"></i>
+                        <span class="font-semibold text-base font-vt text-2xl">TikTok</span>
+                    </div>
+                    <span class="text-xs px-2.5 py-1 bg-black border border-cyan-500 text-cyan-300 font-mono">@zerrydep</span>
+                </a>
+
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/zerry3312/" target="_blank" rel="noopener noreferrer" class="sound-btn mc-button flex items-center justify-between p-4 text-slate-200 group">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-brands fa-instagram text-pink-500 text-2xl group-hover:scale-110 transition-transform"></i>
+                        <span class="font-semibold text-base font-vt text-2xl">Instagram</span>
+                    </div>
+                    <span class="text-xs px-2.5 py-1 bg-black border border-pink-500 text-pink-300 font-mono">@zerry3312</span>
+                </a>
+
+                <!-- X (Twitter) -->
+                <a href="https://x.com/Qin_Zenn" target="_blank" rel="noopener noreferrer" class="sound-btn mc-button flex items-center justify-between p-4 text-slate-200 sm:col-span-2 group">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-brands fa-x-twitter text-sky-400 text-2xl group-hover:scale-110 transition-transform"></i>
+                        <span class="font-semibold text-base font-vt text-2xl">X (Twitter)</span>
+                    </div>
+                    <span class="text-xs px-2.5 py-1 bg-black border border-sky-500 text-sky-300 font-mono">@Qin_Zenn</span>
+                </a>
+            </div>
+
+            <!-- Quick Message Form Ala Kotak Buku Pesan -->
+            <div class="p-5 mc-box bg-[#1e1e1e]">
+                <h3 class="text-lg font-pixel text-yellow-300 mb-4 flex items-center gap-2 text-sm">
+                    <i class="fa-regular fa-paper-plane text-emerald-400"></i> Kirim Pesan Cepat
+                </h3>
+                <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+                    <input type="text" id="contact-name" placeholder="Nama / Username kamu" required class="w-full px-4 py-3 mc-input text-white font-vt text-xl placeholder-zinc-500">
+                    <textarea id="contact-message" rows="3" placeholder="Pesan kamu..." required class="w-full px-4 py-3 mc-input text-white font-vt text-xl placeholder-zinc-500"></textarea>
+                    <button type="submit" class="sound-btn w-full py-3 mc-button bg-[#3c8527] hover:bg-[#4ea235] text-white font-pixel text-xs tracking-wider border-emerald-700">
+                        [ KIRIM PESAN ]
+                    </button>
+                </form>
+                <p id="contact-status" class="text-xs font-pixel text-emerald-400 mt-3 hidden"></p>
+            </div>
+
         </div>
-    </div>
+    </main>
 
-    <!-- Main Container -->
-    <div class="relative z-10 flex flex-col justify-between min-h-screen p-6 sm:p-12 md:p-16">
-        
-        <!-- Header Navigasi -->
-        <header class="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
-            <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20 font-bold text-xl">
-                    S
-                </div>
-                <div>
-                    <span class="font-bold tracking-widest text-2xl bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-200 block">
-                        SORTAMENFY
-                    </span>
-                    <span id="live-time" class="text-xs text-cyan-300 font-mono tracking-wider">
-                        00:00:00 WIB
-                    </span>
-                </div>
-            </div>
+    <!-- Footer -->
+    <footer class="w-full text-center text-xs font-vt text-zinc-500 text-xl">
+        <p>&copy; 2026 pelukciumfirst. All blocks reserved.</p>
+    </footer>
 
-            <!-- Menu Navigasi -->
-            <nav class="flex items-center gap-2 sm:gap-4 text-sm font-medium text-slate-300">
-                <button onclick="openTab('home')" id="btn-home" class="nav-btn sound-btn px-5 py-2.5 rounded-full transition-all text-white bg-cyan-500/20 border border-cyan-400/30 shadow-md">
-                    HOME
-                </button>
-                <button onclick="openTab('about')" id="btn-about" class="nav-btn sound-btn px-5 py-2.5 rounded-full hover:text-white transition-all">
-                    ABOUT
-                </button>
-                <button onclick="openTab('feeds')" id="btn-feeds" class="nav-btn sound-btn px-5 py-2.5 rounded-full hover:text-white transition-all">
-                    FEEDS
-                </button>
-                <button onclick="openTab('socials')" id="btn-socials" class="nav-btn sound-btn px-5 py-2.5 rounded-full hover:text-white transition-all">
-                    LINKS
-                </button>
-            </nav>
-        </header>
-
-        <!-- Dynamic Content Section -->
-        <section class="my-auto py-12">
-            
-            <!-- TAB 1: HOME -->
-            <div id="home" class="tab-content active max-w-3xl">
-                
-                <div class="flex flex-wrap items-center gap-3 mb-6">
-                    <div class="px-4 py-1.5 bg-cyan-500/10 border border-cyan-400/30 backdrop-blur-md rounded-full text-xs font-semibold tracking-wider text-cyan-300 uppercase">
-                        <span id="greeting-text">Welcome!</span>
-                    </div>
-                </div>
-
-                <!-- Discord Full Profile Widget Card -->
-                <div id="discord-full-profile" class="discord-card mb-8">
-                    <div class="relative">
-                        <img id="dc-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar" class="w-12 h-12 rounded-full object-cover border border-white/10">
-                        <div id="dc-status-badge" class="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full border-2 border-slate-900 bg-slate-500"></div>
-                    </div>
-                    <div class="flex flex-col">
-                        <div class="flex items-center gap-2">
-                            <span id="dc-username" class="font-bold text-white text-base tracking-wide">Loading...</span>
-                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">PRO</span>
-                        </div>
-                        <span id="dc-activity" class="text-xs text-slate-400">Memuat status...</span>
-                    </div>
-                </div>
-
-                <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tight text-white mb-6 leading-none">
-                    WELCOME TO <br>
-                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">
-                        MY WORLD
-                    </span>
-                </h1>
-                <p class="text-slate-200 text-lg sm:text-xl leading-relaxed mb-10 font-medium">
-                    "Selamat datang di tempat kreasiku! Mari ciptakan hal-hal seru, berbagi karya, dan nikmati setiap momen dengan penuh warna."
-                </p>
-                <div class="flex flex-wrap items-center gap-4">
-                    <button onclick="openTab('socials')" class="sound-btn px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold shadow-lg shadow-cyan-500/25 transition-all transform hover:-translate-y-0.5">
-                        EXPLORE LINKS
-                    </button>
-                    <button onclick="openTab('about')" class="sound-btn px-8 py-4 rounded-full bg-white/10 hover:bg-white/20 text-slate-100 border border-white/20 font-semibold backdrop-blur-md transition-all">
-                        MORE INFO
-                    </button>
-                    <!-- Tombol Mejeuh Euy dengan Cooldown 1 Menit -->
-                    <button id="mejeh-btn" onclick="triggerMejehEffect()" class="sound-btn px-7 py-4 rounded-full bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-400/40 font-semibold backdrop-blur-md transition-all shadow-lg shadow-cyan-500/20 flex items-center gap-2">
-                        <i class="fa-solid fa-bolt text-cyan-400 animate-pulse"></i> <span id="mejeh-btn-text">Mejeuh euy</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- TAB 2: ABOUT -->
-            <div id="about" class="tab-content max-w-3xl">
-                <span class="inline-block px-4 py-1.5 text-xs font-semibold tracking-widest text-cyan-300 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-6 uppercase">
-                    About Me
-                </span>
-                <h2 class="text-4xl sm:text-6xl font-bold text-white mb-6">
-                    About Sortamenfy
-                </h2>
-                <p class="text-slate-200 text-lg leading-relaxed mb-8">
-                    Selamat datang di ruang kreatif digital saya. Di sini kamu bisa melihat karya development, aktivitas komunitas, dan berkenalan lebih dekat lewat tautan sosial media resmi!
-                </p>
-
-                <!-- Skill & Tech Stack Badges -->
-                <div class="mb-8">
-                    <h3 class="text-sm font-semibold tracking-wider text-slate-400 uppercase mb-4">Tech & Skills Stack</h3>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/10 transition-all text-sm font-medium flex items-center gap-2">
-                            <i class="fa-solid fa-gamepad text-cyan-400"></i> Roblox Luau
-                        </span>
-                        <span class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-blue-400/50 hover:bg-blue-500/10 transition-all text-sm font-medium flex items-center gap-2">
-                            <i class="fa-brands fa-html5 text-orange-400"></i> HTML5 & CSS3
-                        </span>
-                        <span class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-amber-400/50 hover:bg-amber-500/10 transition-all text-sm font-medium flex items-center gap-2">
-                            <i class="fa-brands fa-js text-yellow-400"></i> JavaScript
-                        </span>
-                        <span class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-sky-400/50 hover:bg-sky-500/10 transition-all text-sm font-medium flex items-center gap-2">
-                            <i class="fa-solid fa-code text-sky-400"></i> Tailwind CSS
-                        </span>
-                        <span class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-purple-400/50 hover:bg-purple-500/10 transition-all text-sm font-medium flex items-center gap-2">
-                            <i class="fa-brands fa-git-alt text-red-400"></i> Git & GitHub
-                        </span>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-lg">
-                    <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
-                        <div class="text-3xl font-bold text-cyan-400">Creation</div>
-                        <div class="text-sm text-slate-300 mt-2">Digital & Game Development Projects</div>
-                    </div>
-                    <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
-                        <div class="text-3xl font-bold text-blue-400">Community</div>
-                        <div class="text-sm text-slate-300 mt-2">Interactive Gaming & Support</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB FEEDS -->
-            <div id="feeds" class="tab-content max-w-4xl">
-                <span class="inline-block px-4 py-1.5 text-xs font-semibold tracking-widest text-cyan-300 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-6 uppercase">
-                    Latest Content
-                </span>
-                <h2 class="text-4xl font-bold text-white mb-2">
-                    YouTube Feeds & Live Stream
-                </h2>
-                <p class="text-slate-300 text-sm mb-8">Video terbaru dan siaran langsung otomatis terupdate secara real-time dari YouTube channel.</p>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="font-semibold text-lg text-white flex items-center gap-2">
-                                    <i class="fa-brands fa-youtube text-red-500"></i> Video Terbaru
-                                </h3>
-                                <span class="text-xs px-2.5 py-1 rounded-full bg-cyan-500/20 text-cyan-300 font-mono">Real-Time Feed</span>
-                            </div>
-                            <div id="youtube-feed-container" class="w-full aspect-video rounded-xl bg-black/40 flex items-center justify-center text-slate-400 text-sm overflow-hidden">
-                                <div class="flex items-center gap-2">
-                                    <i class="fa-solid fa-spinner animate-spin text-cyan-400"></i> Memuat video terbaru...
-                                </div>
-                            </div>
-                            <h4 id="youtube-feed-title" class="text-base font-medium text-white mt-4 line-clamp-2">...</h4>
-                        </div>
-                        <a id="youtube-feed-link" href="#" target="_blank" rel="noopener noreferrer" class="sound-btn mt-4 inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-sm font-medium transition-all">
-                            Tonton di YouTube <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
-                        </a>
-                    </div>
-
-                    <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="font-semibold text-lg text-white flex items-center gap-2">
-                                    <i class="fa-solid fa-tower-broadcast text-rose-500"></i> Live Stream Status
-                                </h3>
-                                <span id="live-badge" class="text-xs px-2.5 py-1 rounded-full bg-slate-500/20 text-slate-400 font-mono">Live Player</span>
-                            </div>
-                            <div class="w-full aspect-video rounded-xl bg-black/40 overflow-hidden relative border border-white/5">
-                                <iframe id="youtube-live-frame" class="w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
-                            </div>
-                        </div>
-                        <a href="https://www.youtube.com/channel/UCMfAgJBOWTUq_QKq5dFEsww" target="_blank" rel="noopener noreferrer" class="sound-btn mt-4 inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-red-600/80 hover:bg-red-500 text-white text-sm font-medium transition-all shadow-md">
-                            Kunjungi YouTube Channel <i class="fa-brands fa-youtube"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 4: LINKS / SOCIALS -->
-            <div id="socials" class="tab-content max-w-2xl">
-                <span class="inline-block px-4 py-1.5 text-xs font-semibold tracking-widest text-cyan-300 bg-cyan-500/10 border border-cyan-500/20 rounded-full mb-6 uppercase">
-                    Connect
-                </span>
-                <h2 class="text-4xl font-bold text-white mb-8">
-                    Social Links & Contact
-                </h2>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-                    <!-- Saweria -->
-                    <a href="https://saweria.co/sortamenfy" target="_blank" rel="noopener noreferrer" class="sound-btn flex items-center justify-between p-4 rounded-2xl bg-white/5 hover:bg-amber-500/10 border border-white/10 hover:border-amber-500/30 text-slate-200 transition-all sm:col-span-2 group">
-                        <div class="flex items-center gap-4">
-                            <i class="fa-solid fa-heart text-amber-400 text-2xl group-hover:scale-110 transition-transform"></i>
-                            <span class="font-semibold text-base">Saweria (Support Me)</span>
-                        </div>
-                        <span class="text-xs px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 font-medium">Support</span>
-                    </a>
-
-                    <!-- YouTube -->
-                    <a href="https://www.youtube.com/channel/UCMfAgJBOWTUq_QKq5dFEsww" target="_blank" rel="noopener noreferrer" class="sound-btn flex items-center justify-between p-4 rounded-2xl bg-white/5 hover:bg-red-500/10 border border-white/10 hover:border-red-500/30 text-slate-200 transition-all group">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-brands fa-youtube text-red-500 text-2xl group-hover:scale-110 transition-transform"></i>
-                            <span class="font-semibold text-base">YouTube</span>
-                        </div>
-                        <img src="https://img.shields.io/youtube/channel/subscribers/UCMfAgJBOWTUq_QKq5dFEsww?style=flat-square&color=FF0000&label=Subs&labelColor=1e293b" alt="YouTube Subs" class="h-5 rounded opacity-90">
-                    </a>
-
-                    <!-- Discord -->
-                    <a href="https://discord.gg/Fw9weRr7c" target="_blank" rel="noopener noreferrer" class="sound-btn flex items-center justify-between p-4 rounded-2xl bg-white/5 hover:bg-indigo-500/10 border border-white/10 hover:border-indigo-500/30 text-slate-200 transition-all group">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-brands fa-discord text-indigo-400 text-2xl group-hover:scale-110 transition-transform"></i>
-                            <span class="font-semibold text-base">Discord</span>
-                        </div>
-                        <img src="https://img.shields.io/discord/1510954608208384120?style=flat-square&color=5865F2&label=Online&labelColor=1e293b" alt="Discord Online" class="h-5 rounded opacity-90">
-                    </a>
-
-                    <!-- TikTok -->
-                    <a href="https://www.tiktok.com/@zerrydep" target="_blank" rel="noopener noreferrer" class="sound-btn flex items-center justify-between p-4 rounded-2xl bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-500/30 text-slate-200 transition-all group">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-brands fa-tiktok text-cyan-400 text-2xl group-hover:scale-110 transition-transform"></i>
-                            <span class="font-semibold text-base">TikTok</span>
-                        </div>
-                        <span class="text-xs px-2.5 py-1 rounded-md bg-white/10 border border-white/10 text-cyan-300 font-mono">@zerrydep</span>
-                    </a>
-
-                    <!-- Instagram -->
-                    <a href="https://www.instagram.com/zerry3312/" target="_blank" rel="noopener noreferrer" class="sound-btn flex items-center justify-between p-4 rounded-2xl bg-white/5 hover:bg-pink-500/10 border border-white/10 hover:border-pink-500/30 text-slate-200 transition-all group">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-brands fa-instagram text-pink-500 text-2xl group-hover:scale-110 transition-transform"></i>
-                            <span class="font-semibold text-base">Instagram</span>
-                        </div>
-                        <span class="text-xs px-2.5 py-1 rounded-md bg-white/10 border border-white/10 text-pink-300 font-mono">@zerry3312</span>
-                    </a>
-
-                    <!-- X (Twitter) -->
-                    <a href="https://x.com/Qin_Zenn" target="_blank" rel="noopener noreferrer" class="sound-btn flex items-center justify-between p-4 rounded-2xl bg-white/5 hover:bg-sky-500/10 border border-white/10 hover:border-sky-500/30 text-slate-200 transition-all sm:col-span-2 group">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-brands fa-x-twitter text-sky-400 text-2xl group-hover:scale-110 transition-transform"></i>
-                            <span class="font-semibold text-base">X (Twitter)</span>
-                        </div>
-                        <span class="text-xs px-2.5 py-1 rounded-md bg-white/10 border border-white/10 text-sky-300 font-mono">@Qin_Zenn</span>
-                    </a>
-                </div>
-
-                <!-- Quick Message Form -->
-                <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
-                    <h3 class="text-lg font-semibold mb-4 text-white flex items-center gap-2">
-                        <i class="fa-regular fa-paper-plane text-cyan-400"></i> Kirim Pesan Cepat
-                    </h3>
-                    <form onsubmit="handleContactSubmit(event)" class="space-y-4">
-                        <input type="text" id="contact-name" placeholder="Nama / Username kamu" required class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400 transition-all">
-                        <textarea id="contact-message" rows="3" placeholder="Pesan kamu..." required class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400 transition-all"></textarea>
-                        <button type="submit" class="sound-btn w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 font-semibold hover:from-cyan-400 hover:to-blue-500 transition-all shadow-md">
-                            Kirim Pesan
-                        </button>
-                    </form>
-                    <p id="contact-status" class="text-xs text-cyan-300 mt-2 hidden"></p>
-                </div>
-            </div>
-
-        </section>
-
-        <!-- Footer -->
-        <footer class="flex flex-wrap items-center justify-between text-sm text-slate-400 border-t border-white/10 pt-6 gap-4">
-            <div class="flex items-center gap-4">
-                <span>&copy; 2026 Sortamenfy. All rights reserved.</span>
-                <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-cyan-300 flex items-center gap-1.5">
-                    <i class="fa-solid fa-eye text-cyan-400"></i>
-                    <span id="visit-count">...</span> views
-                </span>
-            </div>
-            <div class="flex items-center gap-6">
-                <a href="https://discord.gg/Fw9weRr7c" target="_blank" rel="noopener noreferrer" class="sound-btn hover:text-cyan-400 transition-colors">Discord</a>
-                <a href="https://x.com/Qin_Zenn" target="_blank" rel="noopener noreferrer" class="sound-btn hover:text-cyan-400 transition-colors">Twitter</a>
-            </div>
-        </footer>
-
-    </div>
-
-    <!-- JavaScript Root -->
+    <!-- JavaScript Interaktif & Audio Efek -->
     <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                const intro = document.getElementById('intro-screen');
-                if (intro) {
-                    intro.classList.add('fade-out');
-                    playBlackFlashSound();
-                }
-            }, 3200);
-        });
-
-        function openTab(tabName) {
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.remove('active'));
-
-            const targetTab = document.getElementById(tabName);
-            if (targetTab) {
-                targetTab.classList.add('active');
-            }
-
-            const buttons = document.querySelectorAll('.nav-btn');
-            buttons.forEach(btn => {
-                if (!btn.id.includes('music-toggle')) {
-                    btn.classList.remove('text-white', 'bg-cyan-500/20', 'border', 'border-cyan-400/30', 'shadow-md');
-                    btn.classList.add('text-slate-300');
+        // Fungsi untuk memainkan efek suara klik Minecraft setiap tombol ditekan
+        const clickSound = document.getElementById('mc-click-sound');
+        
+        document.querySelectorAll('.sound-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                if(clickSound) {
+                    clickSound.currentTime = 0;
+                    clickSound.play().catch(e => console.log("Audio blocked by browser policy"));
                 }
             });
-
-            const activeBtn = document.getElementById('btn-' + tabName);
-            if (activeBtn) {
-                activeBtn.classList.add('text-white', 'bg-cyan-500/20', 'border', 'border-cyan-400/30', 'shadow-md');
-                activeBtn.classList.remove('text-slate-300');
-            }
-        }
-
-        let audioCtx = null;
-
-        function playBlackFlashSound() {
-            try {
-                if (!audioCtx) {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                }
-                if (audioCtx.state === 'suspended') {
-                    audioCtx.resume();
-                }
-
-                const now = audioCtx.currentTime;
-
-                const oscZap = audioCtx.createOscillator();
-                const gainZap = audioCtx.createGain();
-                oscZap.type = 'sawtooth';
-                oscZap.frequency.setValueAtTime(1600, now);
-                oscZap.frequency.exponentialRampToValueAtTime(150, now + 0.25);
-
-                gainZap.gain.setValueAtTime(0.35, now);
-                gainZap.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
-
-                oscZap.connect(gainZap);
-                gainZap.connect(audioCtx.destination);
-                oscZap.start(now);
-                oscZap.stop(now + 0.25);
-
-                const oscThud = audioCtx.createOscillator();
-                const gainThud = audioCtx.createGain();
-                oscThud.type = 'triangle';
-                oscThud.frequency.setValueAtTime(140, now);
-                oscThud.frequency.exponentialRampToValueAtTime(25, now + 0.3);
-
-                gainThud.gain.setValueAtTime(0.5, now);
-                gainThud.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
-
-                oscThud.connect(gainThud);
-                gainThud.connect(audioCtx.destination);
-                oscThud.start(now);
-                oscThud.stop(now + 0.3);
-
-            } catch (e) {
-                console.error("Audio error:", e);
-            }
-        }
-
-        // --- SFX AUDIO SYNTHESIS: SHINY CHIME SAAT KATA "MEJEUH EUY" KELUAR ---
-        function playShinyChimeSound() {
-            try {
-                if (!audioCtx) {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                }
-                if (audioCtx.state === 'suspended') {
-                    audioCtx.resume();
-                }
-
-                const now = audioCtx.currentTime;
-                // Nada-nada tinggi berurutan ala efek "shiny" / magis kristal (Arpeggio Sinar)
-                const frequencies = [1046.50, 1318.51, 1567.98, 2093.00, 2637.02]; // C6, E6, G6, C7, E7
-
-                frequencies.forEach((freq, index) => {
-                    const osc = audioCtx.createOscillator();
-                    const gain = audioCtx.createGain();
-
-                    osc.type = 'sine'; // Suara lembut berkilau khas lonceng/kristal
-                    osc.frequency.setValueAtTime(freq, now + (index * 0.08));
-
-                    // Envelope cepat melengking lalu memudar halus
-                    gain.gain.setValueAtTime(0, now + (index * 0.08));
-                    gain.gain.linearRampToValueAtTime(0.18, now + (index * 0.08) + 0.02);
-                    gain.gain.exponentialRampToValueAtTime(0.0001, now + (index * 0.08) + 0.8);
-
-                    osc.connect(gain);
-                    gain.connect(audioCtx.destination);
-
-                    osc.start(now + (index * 0.08));
-                    osc.stop(now + (index * 0.08) + 0.85);
-                });
-
-            } catch (e) {
-                console.error("Shiny audio error:", e);
-            }
-        }
-
-        const bgMusic = document.getElementById('bg-music');
-        const musicToggle = document.getElementById('music-toggle');
-        const musicText = document.getElementById('music-text');
-        const musicIcon = document.getElementById('music-icon');
-        let isMusicPlaying = false;
-
-        window.addEventListener('click', () => {
-            if (!isMusicPlaying && bgMusic.paused) {
-                bgMusic.volume = 0.5;
-                bgMusic.play().then(() => {
-                    isMusicPlaying = true;
-                    musicText.innerText = "STOP LOFI";
-                    musicIcon.className = "fa-solid fa-music text-cyan-400 animate-pulse";
-                }).catch(e => console.log("Autoplay dicegah browser."));
-            }
-        }, { once: true });
-
-        musicToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (isMusicPlaying) {
-                bgMusic.pause();
-                musicText.innerText = "PLAY LOFI";
-                musicIcon.className = "fa-solid fa-play text-slate-400";
-                isMusicPlaying = false;
-            } else {
-                bgMusic.play().then(() => {
-                    musicText.innerText = "STOP LOFI";
-                    musicIcon.className = "fa-solid fa-music text-cyan-400 animate-pulse";
-                    isMusicPlaying = true;
-                }).catch(err => {
-                    console.error("Gagal memutar audio:", err);
-                });
-            }
         });
 
-        // --- SISTEM COOLDOWN 1 MENIT & ANIMASI RETAKAN 10 DETIK + GETARAN + SFX SHINY ---
-        let isMejehOnCooldown = false;
-
-        function triggerMejehEffect() {
-            if (isMejehOnCooldown) return;
-
-            isMejehOnCooldown = true;
-            const mejehBtn = document.getElementById('mejeh-btn');
-            const mejehBtnText = document.getElementById('mejeh-btn-text');
-            if (mejehBtn) {
-                mejehBtn.classList.add('opacity-50', 'cursor-not-allowed');
-            }
-
-            let timeLeft = 60;
-            const cdInterval = setInterval(() => {
-                if (timeLeft > 0) {
-                    if (mejehBtnText) mejehBtnText.innerText = `Cooldown (${timeLeft}s)`;
-                    timeLeft--;
-                } else {
-                    clearInterval(cdInterval);
-                    isMejehOnCooldown = false;
-                    if (mejehBtnText) mejehBtnText.innerText = "Mejeuh euy";
-                    if (mejehBtn) {
-                        mejehBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                    }
-                }
-            }, 1000);
-
-            // Suara awal petir / sambaran
-            playBlackFlashSound();
-
-            // Aktifkan geteran layar (rumble screen) selama retakan berjalan
-            document.body.classList.add('rumble-screen');
-
-            const modal = document.getElementById('mejeh-modal');
-            if (modal) {
-                modal.classList.add('active');
-            }
-
-            // Pada detik ke-2 (pas teks "Mejeuh Euy" muncul keluar), trigger suara SFX Shiny / Chime magis
-            setTimeout(() => {
-                playShinyChimeSound();
-            }, 2000);
-
-            // Total durasi efek 10 detik, lalu hentikan geteran dan tutup modal
-            setTimeout(() => {
-                document.body.classList.remove('rumble-screen');
-                closeMejehModal();
-            }, 10000);
-        }
-
-        function closeMejehModal() {
-            const modal = document.getElementById('mejeh-modal');
-            if (modal) {
-                modal.classList.remove('active');
-            }
-            document.body.classList.remove('rumble-screen');
-        }
-
-        document.addEventListener('click', function (e) {
-            const btn = e.target.closest('.sound-btn');
-            if (btn && !btn.id.includes('music-toggle') && btn.id !== 'mejeh-btn') {
-                triggerBlackFlash({ currentTarget: btn });
-            }
-        });
-
-        function triggerBlackFlash(event) {
-            playBlackFlashSound();
-
-            document.body.classList.add('shake-screen');
-            setTimeout(() => {
-                document.body.classList.remove('shake-screen');
-            }, 250);
-
-            const overlay = document.createElement('div');
-            overlay.className = 'black-flash-overlay';
-
-            const vignette = document.createElement('div');
-            vignette.className = 'black-flash-vignette';
-            overlay.appendChild(vignette);
-
-            const rect = event.currentTarget.getBoundingClientRect();
-            const clickX = rect.left + rect.width / 2;
-            const clickY = rect.top + rect.height / 2;
-
-            for (let i = 0; i < 4; i++) {
-                const lightning = document.createElement('div');
-                lightning.className = 'black-flash-lightning';
-                lightning.style.left = `${clickX - 45}px`;
-                lightning.style.top = `${clickY - 45}px`;
-                lightning.style.setProperty('--rot', `${Math.random() * 360}deg`);
-                lightning.style.animationDelay = `${i * 0.02}s`;
-                overlay.appendChild(lightning);
-            }
-
-            document.body.appendChild(overlay);
-
-            setTimeout(() => {
-                overlay.remove();
-            }, 350);
-        }
-
-        const canvas = document.getElementById('particleCanvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        class Particle {
-            constructor() {
-                this.reset();
-            }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = (Math.random() - 0.5) * 0.5;
-                this.speedY = (Math.random() - 0.5) * 0.5;
-                this.opacity = Math.random() * 0.5 + 0.2;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-            }
-            draw() {
-                ctx.fillStyle = `rgba(56, 189, 248, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        for (let i = 0; i < 60; i++) {
-            particles.push(new Particle());
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animateParticles);
-        }
-        animateParticles();
-
-        const cursor = document.getElementById('custom-cursor');
-        const cursorDot = document.getElementById('custom-cursor-dot');
-
-        window.addEventListener('mousemove', (e) => {
-            if (cursor && cursorDot) {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-                cursorDot.style.left = e.clientX + 'px';
-                cursorDot.style.top = e.clientY + 'px';
-            }
-        });
-
-        function updateTimeAndGreeting() {
-            const now = new Date();
-            const hours = now.getHours();
-            
-            const timeString = now.toLocaleTimeString('id-ID', { hour12: false }) + " WIB";
-            const timeEl = document.getElementById('live-time');
-            if (timeEl) timeEl.innerText = timeString;
-
-            let greeting = "Welcome! 👋";
-            if (hours >= 4 && hours < 11) greeting = "Good Morning! ☀️";
-            else if (hours >= 11 && hours < 15) greeting = "Good Afternoon! 🌤️";
-            else if (hours >= 15 && hours < 18) greeting = "Good Evening! 🌆";
-            else greeting = "Good Night! 🌙";
-
-            const greetingEl = document.getElementById('greeting-text');
-            if (greetingEl) greetingEl.innerText = greeting;
-        }
-        setInterval(updateTimeAndGreeting, 1000);
-        updateTimeAndGreeting();
-
-        async function fetchVisitorCount() {
-            try {
-                const res = await fetch('https://api.counterapi.dev/v1/sortamenfy-landing/visits/up');
-                const data = await res.json();
-                const countEl = document.getElementById('visit-count');
-                if (countEl) countEl.innerText = data.count ? data.count.toLocaleString() : '1,200+';
-            } catch (err) {
-                const countEl = document.getElementById('visit-count');
-                if (countEl) countEl.innerText = '1,250+';
-            }
-        }
-        fetchVisitorCount();
-
-        function handleContactSubmit(e) {
-            e.preventDefault();
+        // Handler untuk Form Kontak Cepat
+        function handleContactSubmit(event) {
+            event.preventDefault();
             const name = document.getElementById('contact-name').value;
+            const message = document.getElementById('contact-message').value;
             const status = document.getElementById('contact-status');
 
-            if (status) {
-                status.classList.remove('hidden');
-                status.innerText = `Terima kasih ${name}! Pesan berhasil dikirim.`;
-                
-                document.getElementById('contact-name').value = '';
-                document.getElementById('contact-message').value = '';
+            // Simulasi pengiriman pesan berhasil
+            status.textContent = `> Pesan dari ${name} berhasil dikirim ke server!`;
+            status.classList.remove('hidden');
 
-                setTimeout(() => {
-                    status.classList.add('hidden');
-                }, 4000);
-            }
+            // Reset Form
+            document.getElementById('contact-name').value = '';
+            document.getElementById('contact-message').value = '';
+
+            setTimeout(() => {
+                status.classList.add('hidden');
+            }, 5000);
         }
-
-        const DISCORD_USER_ID = "1006821519395131392";
-
-        async function fetchDiscordStatus() {
-            try {
-                const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`);
-                const data = await res.json();
-                if (data.success) {
-                    const user = data.data.discord_user;
-                    const status = data.data.discord_status;
-                    
-                    const avatarUrl = user.avatar 
-                        ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128`
-                        : `https://cdn.discordapp.com/embed/avatars/0.png`;
-                    const avatarEl = document.getElementById('dc-avatar');
-                    if (avatarEl) avatarEl.src = avatarUrl;
-
-                    const usernameEl = document.getElementById('dc-username');
-                    if (usernameEl) usernameEl.innerText = user.display_name || user.username;
-
-                    const badgeEl = document.getElementById('dc-status-badge');
-                    const activityEl = document.getElementById('dc-activity');
-
-                    const statusConfig = {
-                        online: { color: "bg-emerald-500", text: "Online" },
-                        idle: { color: "bg-amber-500", text: "Idle" },
-                        dnd: { color: "bg-rose-500", text: "Busy (DND)" },
-                        offline: { color: "bg-slate-500", text: "Offline" }
-                    };
-
-                    const currentStatus = statusConfig[status] || statusConfig.offline;
-                    if (badgeEl) badgeEl.className = `absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full border-2 border-slate-900 ${currentStatus.color}`;
-
-                    if (data.data.activities && data.data.activities.length > 0) {
-                        const mainActivity = data.data.activities[0];
-                        if (activityEl) {
-                            if (mainActivity.type === 0) {
-                                activityEl.innerText = `Playing ${mainActivity.name}`;
-                            } else if (mainActivity.type === 4) {
-                                activityEl.innerText = mainActivity.state || currentStatus.text;
-                            } else {
-                                activityEl.innerText = mainActivity.name;
-                            }
-                        }
-                    } else {
-                        if (activityEl) activityEl.innerText = currentStatus.text;
-                    }
-                }
-            } catch (err) {
-                const activityEl = document.getElementById('dc-activity');
-                if (activityEl) activityEl.innerText = "Discord Connected";
-            }
-        }
-
-        fetchDiscordStatus();
-        setInterval(fetchDiscordStatus, 10000);
-
-        const YT_CHANNEL_ID = "UCMfAgJBOWTUq_QKq5dFEsww";
-
-        async function fetchLatestYouTube() {
-            try {
-                const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${YT_CHANNEL_ID}`;
-                const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`);
-                const data = await res.json();
-
-                if (data.status === 'ok' && data.items.length > 0) {
-                    const latestVideo = data.items[0];
-                    const videoId = latestVideo.link.split('v=')[1];
-
-                    const container = document.getElementById('youtube-feed-container');
-                    if (container) {
-                        container.innerHTML = `
-                            <iframe class="w-full h-full" 
-                                src="https://www.youtube.com/embed/${videoId}" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen>
-                            </iframe>`;
-                    }
-
-                    const titleEl = document.getElementById('youtube-feed-title');
-                    const linkEl = document.getElementById('youtube-feed-link');
-                    if (titleEl) titleEl.innerText = latestVideo.title;
-                    if (linkEl) linkEl.href = latestVideo.link;
-                }
-            } catch (err) {
-                console.error("Gagal memuat feed YouTube:", err);
-            }
-
-            const liveFrame = document.getElementById('youtube-live-frame');
-            if (liveFrame) {
-                liveFrame.src = `https://www.youtube.com/embed/live_stream?channel=${YT_CHANNEL_ID}`;
-            }
-        }
-
-        fetchLatestYouTube();
     </script>
 </body>
 </html>
