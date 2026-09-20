@@ -1,293 +1,39 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zerry — Software & Game Developer</title>
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- FontAwesome untuk Icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Google Fonts: Plus Jakarta Sans -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #020403; /* Gelap pekat maksimal, sangat ramah mata */
-            color: #94a3b8;
-        }
-        /* Custom smooth gradient glow yang udah diredupin banget biar super adem */
-        .glow-bg {
-            background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.02) 0%, rgba(2, 4, 3, 0.99) 70%);
-        }
-    </style>
+    <title>Panel Minecraft Luar</title>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-white glow-bg">
+<body>
+    <h1>Kontrol Minecraft dari Luar Codespaces</h1>
+    <p>Status: <span id="status">Memuat...</span></p>
+    <p>IP Pinggy: <span id="ip">-</span></p>
+    
+    <button onclick="controlServer('start')">Nyalakan</button>
+    <button onclick="controlServer('stop')">Matikan</button>
 
-    <!-- Navbar / Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-[#020403]/90 backdrop-blur-md border-b border-emerald-500/10">
-        <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-            <a href="#home" class="font-bold text-white tracking-wider text-lg flex items-center gap-2">
-                <span class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></span>
-                Zerry
-            </a>
-            <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
-                <a href="#home" class="hover:text-emerald-400 transition-colors">Home</a>
-                <a href="#about" class="hover:text-emerald-400 transition-colors">About</a>
-                <a href="#minigame" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
-                    <i class="fa-solid fa-gamepad text-emerald-400"></i> Mini Game
-                </a>
-                <a href="https://moderenszz.github.io/mengetik" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
-                    <i class="fa-solid fa-keyboard text-emerald-400"></i> Test Mengetik
-                </a>
-                <a href="#socials" class="hover:text-emerald-400 transition-colors">Socials</a>
-            </nav>
-            <a href="https://discord.gg/JuAR7qN8S" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition-all shadow-lg shadow-emerald-600/20 flex items-center gap-2">
-                <i class="fa-brands fa-discord"></i> Join Discord
-            </a>
-        </div>
-    </header>
-
-    <!-- Main Content Container -->
-    <main class="flex-grow pt-24">
-
-        <!-- SECTION: HOME / HERO -->
-        <section id="home" class="min-h-[85vh] flex flex-col items-center justify-center text-center px-6 max-w-4xl mx-auto">
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold mb-6 uppercase tracking-widest">
-                <i class="fa-solid fa-code"></i> Software & Game Developer
-            </div>
-            <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight mb-6 leading-tight">
-                Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Zerry</span>
-            </h1>
-            <p class="text-base sm:text-lg text-slate-400 max-w-2xl mb-10 leading-relaxed">
-                Seorang introvert yang menikmati ketenangan untuk fokus merakit kode, membangun mekanik game, dan menciptakan sistem digital yang kreatif.
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="#about" class="px-6 py-3 rounded-xl bg-white text-slate-950 font-semibold hover:bg-slate-200 transition-all text-sm shadow-md">
-                    Kenalan Lebih Dekat <i class="fa-solid fa-arrow-down ml-1"></i>
-                </a>
-                <a href="#minigame" class="px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold transition-all text-sm flex items-center gap-2">
-                    <i class="fa-solid fa-gamepad text-emerald-400"></i> Main Mini Game
-                </a>
-            </div>
-        </section>
-
-        <!-- SECTION: ABOUT ME -->
-        <section id="about" class="py-24 px-6 max-w-4xl mx-auto border-t border-emerald-500/10">
-            <div class="text-center mb-16">
-                <span class="text-xs font-semibold tracking-widest text-emerald-400 uppercase bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">Introduction</span>
-                <h2 class="text-3xl sm:text-4xl font-bold text-white mt-4">Tentang Saya</h2>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Card 1: Introvert & Personal -->
-                <div class="p-8 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-emerald-500/30 transition-all">
-                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-xl mb-6 border border-emerald-500/20">
-                        <i class="fa-solid fa-user-secret"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Si Pendiam yang Fokus</h3>
-                    <p class="text-slate-400 leading-relaxed text-sm">
-                        Menjadi seorang introvert memberiku ruang untuk berpikir mendalam. Alih-alih keramaian, aku lebih memilih menghabiskan waktu di depan layar untuk mengeksplorasi logika pemrograman dan memecahkan berbagai tantangan kode.
-                    </p>
-                </div>
-
-                <!-- Card 2: Coding & Game Dev -->
-                <div class="p-8 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-emerald-500/30 transition-all">
-                    <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 text-xl mb-6 border border-cyan-500/20">
-                        <i class="fa-solid fa-gamepad"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Tukang Coding & Game</h3>
-                    <p class="text-slate-400 leading-relaxed text-sm">
-                        Berkecimpung di dunia development, mulai dari scripting game (seperti Roblox Studio dengan Luau), membuat bot utilitas Python, hingga mengelola server game secara mandiri dengan penuh dedikasi.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION: MINI GAME (TARGET CLICKER) -->
-        <section id="minigame" class="py-24 px-6 max-w-4xl mx-auto border-t border-emerald-500/10">
-            <div class="text-center mb-12">
-                <span class="text-xs font-semibold tracking-widest text-emerald-400 uppercase bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">Interactive Zone</span>
-                <h2 class="text-3xl sm:text-4xl font-bold text-white mt-4">Reflex Target Game</h2>
-                <p class="text-slate-400 text-sm mt-2">Seberapa cepat refleks jari lu? Klik tombol "Mulai" dan kumpulkan skor sebanyak mungkin dalam 10 detik!</p>
-            </div>
-
-            <!-- Game Box -->
-            <div class="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-emerald-500/20 max-w-xl mx-auto text-center relative overflow-hidden shadow-2xl">
-                <!-- Stats Bar -->
-                <div class="flex justify-between items-center mb-6 text-sm font-semibold text-slate-300">
-                    <div class="bg-white/5 px-4 py-2 rounded-xl border border-white/10">
-                        Skor: <span id="score" class="text-emerald-400 text-base font-bold">0</span>
-                    </div>
-                    <div class="bg-white/5 px-4 py-2 rounded-xl border border-white/10">
-                        Waktu: <span id="timer" class="text-cyan-400 text-base font-bold">10</span>s
-                    </div>
-                </div>
-
-                <!-- Arena Area -->
-                <div id="game-area" class="h-64 bg-[#050907] rounded-xl border border-white/10 relative flex items-center justify-center overflow-hidden cursor-crosshair">
-                    <div id="game-message" class="text-slate-400 text-sm px-4">
-                        Tekan tombol di bawah untuk mulai bermain!
-                    </div>
-                    <!-- Target Button -->
-                    <button id="target-btn" class="hidden absolute w-12 h-12 bg-emerald-500 hover:bg-emerald-400 rounded-full shadow-lg shadow-emerald-500/50 transition-transform active:scale-90 flex items-center justify-center text-slate-950 font-bold text-xs">
-                        🎯
-                    </button>
-                </div>
-
-                <!-- Control Button -->
-                <button id="start-game-btn" onclick="startGame()" class="mt-6 w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition-all shadow-lg shadow-emerald-600/20">
-                    Mulai Game 🚀
-                </button>
-            </div>
-        </section>
-
-        <!-- SECTION: SOCIAL LINKS -->
-        <section id="socials" class="py-24 px-6 max-w-4xl mx-auto border-t border-emerald-500/10">
-            <div class="text-center mb-16">
-                <span class="text-xs font-semibold tracking-widest text-emerald-400 uppercase bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">Connect</span>
-                <h2 class="text-3xl sm:text-4xl font-bold text-white mt-4">Social Links & Contact</h2>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <!-- Saweria -->
-                <a href="https://saweria.co/sortamenfy" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] hover:bg-amber-500/10 border border-white/10 hover:border-amber-500/30 text-slate-200 transition-all sm:col-span-2 group">
-                    <div class="flex items-center gap-4">
-                        <i class="fa-solid fa-heart text-amber-400 text-2xl group-hover:scale-110 transition-transform"></i>
-                        <span class="font-semibold text-base">Saweria (Support Me)</span>
-                    </div>
-                    <span class="text-xs px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 font-medium">Support</span>
-                </a>
-
-                <!-- Roblox -->
-                <a href="https://www.roblox.com/users/9800618294/profile?friendshipSourceType=PlayerSearch" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] hover:bg-red-500/10 border border-white/10 hover:border-red-500/30 text-slate-200 transition-all sm:col-span-2 group">
-                    <div class="flex items-center gap-4">
-                        <i class="fa-solid fa-cube text-red-400 text-2xl group-hover:scale-110 transition-transform"></i>
-                        <span class="font-semibold text-base">Roblox Profile</span>
-                    </div>
-                    <span class="text-xs px-3 py-1 rounded-full bg-red-500/20 border border-red-500/30 text-red-300 font-medium">Profile</span>
-                </a>
-
-                <!-- YouTube -->
-                <a href="https://www.youtube.com/channel/UCMfAgJBOWTUq_QKq5dFEsww" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] hover:bg-red-500/10 border border-white/10 hover:border-red-500/30 text-slate-200 transition-all group">
-                    <div class="flex items-center gap-3">
-                        <i class="fa-brands fa-youtube text-red-500 text-2xl group-hover:scale-110 transition-transform"></i>
-                        <span class="font-semibold text-base">YouTube</span>
-                    </div>
-                    <img src="https://img.shields.io/youtube/channel/subscribers/UCMfAgJBOWTUq_QKq5dFEsww?style=flat-square&color=FF0000&label=Subs&labelColor=020403" alt="YouTube Subs" class="h-5 rounded opacity-90">
-                </a>
-
-                <!-- Discord -->
-                <a href="https://discord.gg/JuAR7qN8S" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] hover:bg-emerald-500/10 border border-white/10 hover:border-emerald-500/30 text-slate-200 transition-all group">
-                    <div class="flex items-center gap-3">
-                        <i class="fa-brands fa-discord text-emerald-400 text-2xl group-hover:scale-110 transition-transform"></i>
-                        <span class="font-semibold text-base">Discord Server</span>
-                    </div>
-                    <img src="https://img.shields.io/discord/1510954608208384120?style=flat-square&color=10B981&label=Online&labelColor=020403" alt="Discord Online" class="h-5 rounded opacity-90">
-                </a>
-
-                <!-- TikTok -->
-                <a href="https://www.tiktok.com/@zerrydep" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-500/30 text-slate-200 transition-all group">
-                    <div class="flex items-center gap-3">
-                        <i class="fa-brands fa-tiktok text-cyan-400 text-2xl group-hover:scale-110 transition-transform"></i>
-                        <span class="font-semibold text-base">TikTok</span>
-                    </div>
-                    <span class="text-xs px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-cyan-300 font-mono">@zerrydep</span>
-                </a>
-
-                <!-- Instagram -->
-                <a href="https://www.instagram.com/zerry3312/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] hover:bg-pink-500/10 border border-white/10 hover:border-pink-500/30 text-slate-200 transition-all group">
-                    <div class="flex items-center gap-3">
-                        <i class="fa-brands fa-instagram text-pink-500 text-2xl group-hover:scale-110 transition-transform"></i>
-                        <span class="font-semibold text-base">Instagram</span>
-                    </div>
-                    <span class="text-xs px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-pink-300 font-mono">@zerry3312</span>
-                </a>
-
-                <!-- X (Twitter) -->
-                <a href="https://x.com/Qin_Zenn" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] hover:bg-sky-500/10 border border-white/10 hover:border-sky-500/30 text-slate-200 transition-all sm:col-span-2 group">
-                    <div class="flex items-center gap-3">
-                        <i class="fa-brands fa-x-twitter text-sky-400 text-2xl group-hover:scale-110 transition-transform"></i>
-                        <span class="font-semibold text-base">X (Twitter)</span>
-                    </div>
-                    <span class="text-xs px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-sky-300 font-mono">@Qin_Zenn</span>
-                </a>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="py-8 text-center text-xs text-slate-500 border-t border-emerald-500/10">
-        <p>&copy; 2026 Zerry. Built with clean code & coffee.</p>
-    </footer>
-
-    <!-- Mini Game Script -->
     <script>
-        let score = 0;
-        let timeLeft = 10;
-        let gameInterval = null;
-        let isPlaying = false;
+        // Ganti URL ini dengan URL Public Port 5000 dari GitHub Codespaces kamu
+        const BACKEND_URL = "https://port-5000-app.app.github.dev"; 
 
-        const scoreDisplay = document.getElementById('score');
-        const timerDisplay = document.getElementById('timer');
-        const gameArea = document.getElementById('game-area');
-        const gameMessage = document.getElementById('game-message');
-        const targetBtn = document.getElementById('target-btn');
-        const startGameBtn = document.getElementById('start-game-btn');
-
-        function startGame() {
-            if (isPlaying) return;
-            isPlaying = true;
-            score = 0;
-            timeLeft = 10;
-            scoreDisplay.textContent = score;
-            timerDisplay.textContent = timeLeft;
-            gameMessage.classList.add('hidden');
-            targetBtn.classList.remove('hidden');
-            startGameBtn.disabled = true;
-            startGameBtn.classList.add('opacity-50', 'cursor-not-allowed');
-
-            moveTarget();
-
-            gameInterval = setInterval(() => {
-                timeLeft--;
-                timerDisplay.textContent = timeLeft;
-
-                if (timeLeft <= 0) {
-                    clearInterval(gameInterval);
-                    isPlaying = false;
-                    targetBtn.classList.add('hidden');
-                    gameMessage.classList.remove('hidden');
-                    gameMessage.innerHTML = `Waktu Habis! Skor akhir lu: <b class="text-emerald-400">${score}</b> 🎉`;
-                    startGameBtn.disabled = false;
-                    startGameBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                    startGameBtn.textContent = 'Main Lagi 🔄';
-                }
-            }, 1000);
+        async function updateStatus() {
+            try {
+                let res = await fetch(`${BACKEND_URL}/status`);
+                let data = await res.json();
+                document.getElementById('status').innerText = data.running ? "ONLINE" : "OFFLINE";
+                document.getElementById('ip').innerText = data.ip;
+            } catch (e) {
+                document.getElementById('status').innerText = "Gagal terhubung ke Codespaces";
+            }
         }
 
-        function moveTarget() {
-            if (!isPlaying) return;
-            const maxX = gameArea.clientWidth - 50;
-            const maxY = gameArea.clientHeight - 50;
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
-
-            targetBtn.style.left = randomX + 'px';
-            targetBtn.style.top = randomY + 'px';
+        async function controlServer(action) {
+            await fetch(`${BACKEND_URL}/${action}`, { method: 'POST' });
+            setTimeout(updateStatus, 1000);
         }
 
-        targetBtn.addEventListener('click', () => {
-            if (!isPlaying) return;
-            score++;
-            scoreDisplay.textContent = score;
-            moveTarget();
-        });
+        setInterval(updateStatus, 3000);
+        updateStatus();
     </script>
 </body>
 </html>
