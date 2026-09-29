@@ -14,6 +14,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -51,9 +52,57 @@
             z-index: 99;
         }
 
+        /* Top Sidebar Navigasi Cepat & Ganti Bahasa */
+        .top-navbar {
+            position: sticky;
+            top: 0;
+            background: rgba(9, 13, 22, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            z-index: 100;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .lang-switcher {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .lang-switcher:hover {
+            border-color: #e11d48;
+            background: rgba(225, 29, 72, 0.15);
+        }
+
         header {
             text-align: center;
-            padding: 70px 20px 30px;
+            padding: 60px 20px 30px;
         }
 
         header h1 {
@@ -130,7 +179,7 @@
             height: 22px;
             border-radius: 50%;
             border: 3px solid #111827;
-            background-color: #64748b; /* Default offline */
+            background-color: #64748b;
         }
 
         .profile-info h2 {
@@ -235,26 +284,38 @@
     <!-- Efek Border & Sisi Samping -->
     <div class="page-border-glow"></div>
 
+    <!-- Top Sidebar Navigasi & Ganti Bahasa -->
+    <nav class="top-navbar">
+        <div class="nav-links">
+            <a href="#profile"><i class="fa-solid fa-user"></i> <span class="tr" data-id="nav_profile">Profil</span></a>
+            <a href="#roblox"><i class="fa-solid fa-gamepad"></i> Roblox</a>
+            <a href="#discord"><i class="fa-brands fa-discord"></i> Discord</a>
+        </div>
+        <button class="lang-switcher" onclick="toggleLanguage()">
+            <i class="fa-solid fa-globe"></i> <span id="lang-label">EN / ID</span>
+        </button>
+    </nav>
+
     <header>
-        <h1>Developer Profile</h1>
-        <p>Roblox Development & Discord Server Architect Expert</p>
+        <h1 class="tr" data-id="main_title">Developer Profile</h1>
+        <p class="tr" data-id="main_subtitle">Roblox Development & Discord Server Architect Expert</p>
     </header>
 
     <div class="container">
         
-        <!-- SECTION: MY PROFILE & LIVE STATUS -->
-        <h2 class="section-title">My Profile</h2>
+        <!-- SECTION: MY PROFILE -->
+        <div id="profile"></div>
+        <h2 class="section-title tr" data-id="sec_profile">My Profile</h2>
         <div class="profile-card">
             <div class="profile-avatar-container">
                 <div class="profile-avatar">
                     <i class="fa-solid fa-user"></i>
                 </div>
-                <!-- Indikator Warna Status Lanyard -->
                 <div id="dot-status" class="status-indicator"></div>
             </div>
             <div class="profile-info">
                 <h2>Roblox & Discord Creator</h2>
-                <p>Spesialis pengembang game Roblox berskala penuh serta arsitek komunitas Discord profesional.</p>
+                <p class="tr" data-id="profile_desc">Spesialis pengembang game Roblox berskala penuh serta arsitek komunitas Discord profesional.</p>
                 <div class="status-badge">
                     <i class="fa-brands fa-discord" style="color: #5865F2;"></i>
                     <span id="lanyard-status-text">Memuat status Discord...</span>
@@ -263,73 +324,61 @@
         </div>
 
         <!-- SECTION: ROBLOX -->
+        <div id="roblox"></div>
         <h2 class="section-title">What I Can Do in Roblox</h2>
         <div class="skills-grid">
-            <!-- Scripter -->
             <div class="card">
                 <i class="fa-solid fa-code"></i>
-                <h3>Luau Scripter</h3>
-                <p>Membuat sistem game kompleks, mekanik gameplay interaktif, data saving, dan optimasi performa script di Roblox Studio.</p>
+                <h3 class="tr" data-id="rbx_1_title">Luau Scripter</h3>
+                <p class="tr" data-id="rbx_1_desc">Membuat sistem game kompleks, mekanik gameplay interaktif, data saving, dan optimasi performa script di Roblox Studio.</p>
             </div>
-
-            <!-- UI Designer -->
             <div class="card">
                 <i class="fa-solid fa-window-maximize"></i>
-                <h3>UI Designer</h3>
-                <p>Merancang antarmuka pengguna (User Interface) game yang modern, bersih, responsif, dan nyaman untuk pemain.</p>
+                <h3 class="tr" data-id="rbx_2_title">UI Designer</h3>
+                <p class="tr" data-id="rbx_2_desc">Merancang antarmuka pengguna (User Interface) game yang modern, bersih, responsif, dan nyaman untuk pemain.</p>
             </div>
-
-            <!-- VFX Maker -->
             <div class="card">
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
-                <h3>VFX Maker</h3>
-                <p>Menambahkan efek visual partikel, sihir, serangan, dan animasi pendukung yang memukau untuk atmosfer game.</p>
+                <h3 class="tr" data-id="rbx_3_title">VFX Maker</h3>
+                <p class="tr" data-id="rbx_3_desc">Menambahkan efek visual partikel, sihir, serangan, dan animasi pendukung yang memukau untuk atmosfer game.</p>
             </div>
-
-            <!-- Graphics Maker -->
             <div class="card">
                 <i class="fa-solid fa-palette"></i>
-                <h3>Graphics Maker</h3>
-                <p>Membuat desain grafis berkualitas tinggi untuk kebutuhan thumbnail game, icon, logo, dan materi promosi visual.</p>
+                <h3 class="tr" data-id="rbx_4_title">Graphics Maker</h3>
+                <p class="tr" data-id="rbx_4_desc">Membuat desain grafis berkualitas tinggi untuk kebutuhan thumbnail game, icon, logo, dan materi promosi visual.</p>
             </div>
         </div>
 
         <!-- SECTION: DISCORD -->
+        <div id="discord"></div>
         <h2 class="section-title">What I Can Do in Discord</h2>
         <div class="skills-grid">
-            <!-- Server Setup & Management -->
             <div class="card discord-card">
                 <i class="fa-solid fa-server"></i>
-                <h3>Server Architecture & Setup</h3>
-                <p>Membangun struktur server Discord profesional dari nol, pengaturan kategori/channel yang rapi, serta sistem role permissions yang aman.</p>
+                <h3 class="tr" data-id="dc_1_title">Server Architecture & Setup</h3>
+                <p class="tr" data-id="dc_1_desc">Membangun struktur server Discord profesional dari nol, pengaturan kategori/channel yang rapi, serta sistem role permissions yang aman.</p>
             </div>
-
-            <!-- Discord Server Design -->
             <div class="card discord-card">
                 <i class="fa-solid fa-paintbrush"></i>
-                <h3>Server Layout & Design</h3>
-                <p>Merancang estetika server yang menarik, pembuatan teks banner/channel estetik, role icon kustom, dan tata letak visual komunitas.</p>
+                <h3 class="tr" data-id="dc_2_title">Server Layout & Design</h3>
+                <p class="tr" data-id="dc_2_desc">Merancang estetika server yang menarik, pembuatan teks banner/channel estetik, role icon kustom, dan tata letak visual komunitas.</p>
             </div>
-
-            <!-- Bot Integration -->
             <div class="card discord-card">
                 <i class="fa-solid fa-robot"></i>
-                <h3>Bot Integration & Config</h3>
-                <p>Mengintegrasikan dan mengonfigurasi bot otomatisasi populer (seperti sistem verifikasi, tiket support, musik, moderasi, dan level).</p>
+                <h3 class="tr" data-id="dc_3_title">Bot Integration & Config</h3>
+                <p class="tr" data-id="dc_3_desc">Mengintegrasikan dan mengonfigurasi bot otomatisasi populer (seperti sistem verifikasi, tiket support, musik, moderasi, dan level).</p>
             </div>
-
-            <!-- Community & Security Management -->
             <div class="card discord-card">
                 <i class="fa-solid fa-shield-halved"></i>
-                <h3>Security & Verification System</h3>
-                <p>Melindungi server dari ancaman raid, bot spam, dengan sistem keamanan berlapis dan verifikasi anggota yang ketat.</p>
+                <h3 class="tr" data-id="dc_4_title">Security & Verification System</h3>
+                <p class="tr" data-id="dc_4_desc">Melindungi server dari ancaman raid, bot spam, dengan sistem keamanan berlapis dan verifikasi anggota yang ketat.</p>
             </div>
         </div>
 
     </div>
 
     <footer>
-        <p>Hubungi dan ikuti perkembangan karya saya di bawah ini:</p>
+        <p class="tr" data-id="footer_text">Hubungi dan ikuti perkembangan karya saya di bawah ini:</p>
         <div class="social-links">
             <a href="https://github.com" target="_blank"><i class="fa-brands fa-github"></i></a>
             <a href="https://discord.com" target="_blank"><i class="fa-brands fa-discord"></i></a>
@@ -338,8 +387,76 @@
         <p style="margin-top: 20px;">&copy; 2026 Professional Developer. All rights reserved.</p>
     </footer>
 
-    <!-- Script Integrasi Lanyard API -->
+    <!-- Script Integrasi Lanyard API & Multi-Language -->
     <script>
+        // Kamus Terjemahan Bahasa (Indonesia & English)
+        const translations = {
+            id: {
+                nav_profile: "Profil",
+                main_title: "Developer Profile",
+                main_subtitle: "Roblox Development & Discord Server Architect Expert",
+                sec_profile: "My Profile",
+                profile_desc: "Spesialis pengembang game Roblox berskala penuh serta arsitek komunitas Discord profesional.",
+                rbx_1_title: "Luau Scripter",
+                rbx_1_desc: "Membuat sistem game kompleks, mekanik gameplay interaktif, data saving, dan optimasi performa script di Roblox Studio.",
+                rbx_2_title: "UI Designer",
+                rbx_2_desc: "Merancang antarmuka pengguna (User Interface) game yang modern, bersih, responsif, dan nyaman untuk pemain.",
+                rbx_3_title: "VFX Maker",
+                rbx_3_desc: "Menambahkan efek visual partikel, sihir, serangan, dan animasi pendukung yang memukau untuk atmosfer game.",
+                rbx_4_title: "Graphics Maker",
+                rbx_4_desc: "Membuat desain grafis berkualitas tinggi untuk kebutuhan thumbnail game, icon, logo, dan materi promosi visual.",
+                dc_1_title: "Server Architecture & Setup",
+                dc_1_desc: "Membangun struktur server Discord profesional dari nol, pengaturan kategori/channel yang rapi, serta sistem role permissions yang aman.",
+                dc_2_title: "Server Layout & Design",
+                dc_2_desc: "Merancang estetika server yang menarik, pembuatan teks banner/channel estetik, role icon kustom, dan tata letak visual komunitas.",
+                dc_3_title: "Bot Integration & Config",
+                dc_3_desc: "Mengintegrasikan dan mengonfigurasi bot otomatisasi populer (seperti sistem verifikasi, tiket support, musik, moderasi, dan level).",
+                dc_4_title: "Security & Verification System",
+                dc_4_desc: "Melindungi server dari ancaman raid, bot spam, dengan sistem keamanan berlapis dan verifikasi anggota yang ketat.",
+                footer_text: "Hubungi dan ikuti perkembangan karya saya di bawah ini:"
+            },
+            en: {
+                nav_profile: "Profile",
+                main_title: "Developer Profile",
+                main_subtitle: "Roblox Development & Discord Server Architect Expert",
+                sec_profile: "My Profile",
+                profile_desc: "Specialist full-scale Roblox game developer and professional Discord community architect.",
+                rbx_1_title: "Luau Scripter",
+                rbx_1_desc: "Creating complex game systems, interactive gameplay mechanics, data saving, and script performance optimization in Roblox Studio.",
+                rbx_2_title: "UI Designer",
+                rbx_2_desc: "Designing modern, clean, responsive, and player-friendly game User Interfaces.",
+                rbx_3_title: "VFX Maker",
+                rbx_3_desc: "Adding stunning particle effects, magic, attacks, and supporting animations to enhance the game atmosphere.",
+                rbx_4_title: "Graphics Maker",
+                rbx_4_desc: "Creating high-quality graphic designs for game thumbnails, icons, logos, and visual promotional materials.",
+                dc_1_title: "Server Architecture & Setup",
+                dc_1_desc: "Building professional Discord server structures from scratch, neat category/channel organization, and secure role permission systems.",
+                dc_2_title: "Server Layout & Design",
+                dc_2_desc: "Designing appealing server aesthetics, aesthetic banners/channel text, custom role icons, and community visual layouts.",
+                dc_3_title: "Bot Integration & Config",
+                dc_3_desc: "Integrating and configuring popular automation bots (such as verification systems, support tickets, music, moderation, and leveling).",
+                dc_4_title: "Security & Verification System",
+                dc_4_desc: "Protecting servers from raid threats and spam bots with multi-layered security systems and strict member verification.",
+                footer_text: "Contact and follow my work progress below:"
+            }
+        };
+
+        let currentLang = 'id'; // Default Bahasa Indonesia
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'id' ? 'en' : 'id';
+            document.getElementById('lang-label').innerText = currentLang === 'id' ? 'EN / ID' : 'ID / EN';
+            
+            // Perbarui semua teks yang memiliki class 'tr'
+            document.querySelectorAll('.tr').forEach(element => {
+                let key = element.getAttribute('data-id');
+                if (translations[currentLang][key]) {
+                    element.innerText = translations[currentLang][key];
+                }
+            });
+        }
+
+        // Integrasi Lanyard API untuk status Discord
         async function fetchDiscordStatus() {
             try {
                 let response = await fetch('https://api.lanyard.rest/v1/users/1006821519395131392');
@@ -351,16 +468,16 @@
                     let dotElem = document.getElementById('dot-status');
                     
                     if (status === 'online') {
-                        textElem.innerText = 'Online di Discord';
+                        textElem.innerText = currentLang === 'id' ? 'Online di Discord' : 'Online on Discord';
                         dotElem.style.backgroundColor = '#22c55e'; // Hijau
                     } else if (status === 'idle') {
-                        textElem.innerText = 'Idle (Siaga)';
+                        textElem.innerText = currentLang === 'id' ? 'Idle (Siaga)' : 'Idle';
                         dotElem.style.backgroundColor = '#eab308'; // Kuning
                     } else if (status === 'dnd') {
-                        textElem.innerText = 'Do Not Disturb (Jangan Ganggu)';
+                        textElem.innerText = currentLang === 'id' ? 'Do Not Disturb (Jangan Ganggu)' : 'Do Not Disturb';
                         dotElem.style.backgroundColor = '#ef4444'; // Merah
                     } else {
-                        textElem.innerText = 'Offline / Invisible';
+                        textElem.innerText = currentLang === 'id' ? 'Offline / Invisible' : 'Offline / Invisible';
                         dotElem.style.backgroundColor = '#64748b'; // Abu-abu
                     }
                 }
