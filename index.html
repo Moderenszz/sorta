@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofolio Roblox Developer</title>
+    <title>Roblox & Discord Developer Portfolio</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <!-- FontAwesome untuk Icon -->
@@ -17,30 +17,43 @@
         }
 
         body {
-            background-color: #0f172a;
+            background-color: #090d16;
             color: #f8fafc;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* Background Bertema Roblox (Pattern & Gradient) */
+        /* Detail Background & Sisi-Sisi (Glow & Vignette Effect) */
         body::before {
             content: "";
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.8)), 
-                        radial-gradient(circle, #e11d48 0%, transparent 70%);
-            background-size: cover;
-            z-index: -1;
-            opacity: 0.4;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(225, 29, 72, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(88, 101, 242, 0.15) 0%, transparent 40%),
+                linear-gradient(135deg, #090d16 0%, #111827 50%, #090d16 100%);
+            z-index: -2;
+        }
+
+        /* Border Glow di Sisi-Sisi Halaman */
+        .page-border-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 4px solid rgba(225, 29, 72, 0.2);
+            box-shadow: inset 0 0 50px rgba(225, 29, 72, 0.1);
+            pointer-events: none;
+            z-index: 99;
         }
 
         header {
             text-align: center;
-            padding: 80px 20px 40px;
+            padding: 90px 20px 40px;
         }
 
         header h1 {
@@ -50,7 +63,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 10px;
-            text-shadow: 0 4px 10px rgba(225, 29, 72, 0.4);
+            text-shadow: 0 4px 15px rgba(225, 29, 72, 0.5);
         }
 
         header p {
@@ -64,16 +77,26 @@
             padding: 20px;
         }
 
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 50px 0 25px;
+            color: #ffffff;
+            border-left: 5px solid #e11d48;
+            padding-left: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 25px;
-            margin-top: 40px;
         }
 
         .card {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(17, 24, 39, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
             padding: 30px 20px;
             text-align: center;
@@ -84,13 +107,22 @@
         .card:hover {
             transform: translateY(-8px);
             border-color: #e11d48;
-            box-shadow: 0 10px 25px rgba(225, 29, 72, 0.3);
+            box-shadow: 0 10px 30px rgba(225, 29, 72, 0.3);
+        }
+
+        .card.discord-card:hover {
+            border-color: #5865F2;
+            box-shadow: 0 10px 30px rgba(88, 101, 242, 0.3);
         }
 
         .card i {
             font-size: 3rem;
             color: #e11d48;
             margin-bottom: 20px;
+        }
+
+        .card.discord-card i {
+            color: #5865F2;
         }
 
         .card h3 {
@@ -107,10 +139,10 @@
 
         footer {
             text-align: center;
-            padding: 50px 20px;
+            padding: 60px 20px;
             color: #64748b;
             font-size: 0.9rem;
-            margin-top: 50px;
+            margin-top: 60px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
@@ -120,53 +152,92 @@
 
         .social-links a {
             color: #94a3b8;
-            font-size: 1.5rem;
-            margin: 0 10px;
+            font-size: 1.6rem;
+            margin: 0 12px;
             transition: color 0.3s ease;
         }
 
         .social-links a:hover {
-            color: #e11d48;
+            color: #ffffff;
         }
     </style>
 </head>
 <body>
 
+    <!-- Efek Border & Sisi Samping -->
+    <div class="page-border-glow"></div>
+
     <header>
-        <h1>Roblox Developer Portofolio</h1>
-        <p>Menciptakan pengalaman game yang imersif, interaktif, dan bervisual menakjubkan</p>
+        <h1>Developer Profile</h1>
+        <p>Roblox Development & Discord Server Architect Expert</p>
     </header>
 
     <div class="container">
+        
+        <!-- SECTION: ROBLOX -->
+        <h2 class="section-title">What I Can Do in Roblox</h2>
         <div class="skills-grid">
             <!-- Scripter -->
             <div class="card">
                 <i class="fa-solid fa-code"></i>
                 <h3>Luau Scripter</h3>
-                <p>Membuat sistem game yang kompleks, mekanik gameplay yang mulus, dan optimasi performa script di Roblox Studio.</p>
+                <p>Membuat sistem game kompleks, mekanik gameplay interaktif, data saving, dan optimasi performa script di Roblox Studio.</p>
             </div>
 
             <!-- UI Designer -->
             <div class="card">
                 <i class="fa-solid fa-window-maximize"></i>
                 <h3>UI Designer</h3>
-                <p>Merancang antarmuka pengguna (User Interface) yang modern, bersih, responsif, dan nyaman dipandang mata.</p>
+                <p>Merancang antarmuka pengguna (User Interface) game yang modern, bersih, responsif, dan nyaman untuk pemain.</p>
             </div>
 
             <!-- VFX Maker -->
             <div class="card">
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
                 <h3>VFX Maker</h3>
-                <p>Menambahkan efek visual partikel, sihir, dan animasi ledakan yang memukau untuk memperkuat atmosfer game.</p>
+                <p>Menambahkan efek visual partikel, sihir, serangan, dan animasi pendukung yang memukau untuk atmosfer game.</p>
             </div>
 
             <!-- Graphics Maker -->
             <div class="card">
                 <i class="fa-solid fa-palette"></i>
                 <h3>Graphics Maker</h3>
-                <p>Membuat desain grafis berkualitas tinggi untuk kebutuhan thumbnail, icon game, dan materi promosi visual lainnya.</p>
+                <p>Membuat desain grafis berkualitas tinggi untuk kebutuhan thumbnail game, icon, logo, dan materi promosi visual.</p>
             </div>
         </div>
+
+        <!-- SECTION: DISCORD -->
+        <h2 class="section-title">What I Can Do in Discord</h2>
+        <div class="skills-grid">
+            <!-- Server Setup & Management -->
+            <div class="card discord-card">
+                <i class="fa-solid fa-server"></i>
+                <h3>Server Architecture & Setup</h3>
+                <p>Membangun struktur server Discord profesional dari nol, pengaturan kategori/channel yang rapi, serta sistem role permissions yang aman.</p>
+            </div>
+
+            <!-- Discord Server Design -->
+            <div class="card discord-card">
+                <i class="fa-solid fa-paintbrush"></i>
+                <h3>Server Layout & Design</h3>
+                <p>Merancang estetika server yang menarik, pembuatan teks banner/channel estetik, role icon kustom, dan tata letak visual komunitas.</p>
+            </div>
+
+            <!-- Bot Integration -->
+            <div class="card discord-card">
+                <i class="fa-solid fa-robot"></i>
+                <h3>Bot Integration & Config</h3>
+                <p>Mengintegrasikan dan mengonfigurasi bot otomatisasi populer (seperti sistem verifikasi, tiket support, musik, moderasi, dan level).</p>
+            </div>
+
+            <!-- Community & Security Management -->
+            <div class="card discord-card">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h3>Security & Verification System</h3>
+                <p>Melindungi server dari ancaman raid, bot spam, dengan sistem keamanan berlapis dan verifikasi anggota yang ketat.</p>
+            </div>
+        </div>
+
     </div>
 
     <footer>
@@ -176,7 +247,7 @@
             <a href="https://discord.com" target="_blank"><i class="fa-brands fa-discord"></i></a>
             <a href="https://roblox.com" target="_blank"><i class="fa-solid fa-gamepad"></i></a>
         </div>
-        <p style="margin-top: 20px;">&copy; 2026 Roblox Developer. All rights reserved.</p>
+        <p style="margin-top: 20px;">&copy; 2026 Professional Developer. All rights reserved.</p>
     </footer>
 
 </body>
